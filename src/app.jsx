@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 import { 
   createBrowserRouter,
   RouterProvider,
@@ -31,6 +31,12 @@ const HelpPage = () => (
   </div>
 )
 
+const NotFoundPage = () => (
+  <div>
+    404 Page
+  </div>
+)
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -47,17 +53,13 @@ const router = createBrowserRouter([
   {
     path: '/help',
     element: <HelpPage></HelpPage>
+  },
+  {
+    path: '/*',
+    element: <NotFoundPage></NotFoundPage>
   }
 ])
 
-const routes = (
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-)
-ReactDOM.render(routes, document.getElementById('app'))
-// ReactDOM.createRoot(document.getElementById('root')).render(
-//   <React.StrictMode>
-//     <RouterProvider router={router} />
-//   </React.StrictMode>
-// );
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <RouterProvider router={router} />
+);
