@@ -19,7 +19,7 @@ const AppRouter = () => (
       <Routes>
         <Route path="/" element={<DashboardPage />}></Route>
         <Route path="/create" element={<AddExpensePage />}></Route>
-        <Route path="/edit" element={<EditExpensePage />}></Route>
+        <Route path="/edit/:id" element={<EditExpensePage />}></Route>
         <Route path="/help" element={<HelpPage />}></Route>
         <Route path="*" element={<NotFoundPage />}></Route>
       </Routes>

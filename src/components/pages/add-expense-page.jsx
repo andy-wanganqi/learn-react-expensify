@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddExpensePage = () => (
+const AddExpensePage = (props) => (
   <div>
     Add Expense Page
   </div>
