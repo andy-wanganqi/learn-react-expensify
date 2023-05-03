@@ -1,11 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { 
-  createBrowserRouter,
-  RouterProvider,
+  BrowserRouter,
+  Routes, 
+  Route,
+  NavLink,
 } from 'react-router-dom'
 import 'normalize.css/normalize.css'
 import './styles/index.scss'
+
+const Header = () => (
+  <header>
+    <p>
+      <h1>Expensify</h1>
+    </p>
+    <div>
+        <NavLink to="/" className="">Go home</NavLink>
+        <NavLink to="/create" className="">Add Expense</NavLink>
+        <NavLink to="/edit" className="">Edit Expense</NavLink>
+        <NavLink to="/help" className="">Help</NavLink>
+      </div>
+  </header>
+)
 
 const DashboardPage = () => (
   <div>
@@ -33,33 +49,30 @@ const HelpPage = () => (
 
 const NotFoundPage = () => (
   <div>
-    404 Page
+    404
   </div>
 )
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <DashboardPage></DashboardPage>,
-  },
-  {
-    path: '/create',
-    element: <AddExpensePage></AddExpensePage>
-  },
-  {
-    path: '/edit',
-    element: <EditExpensePage></EditExpensePage>
-  },
-  {
-    path: '/help',
-    element: <HelpPage></HelpPage>
-  },
-  {
-    path: '/*',
-    element: <NotFoundPage></NotFoundPage>
-  }
-])
+const ErrorPage = () => (
+  <div>
+    Error
+  </div>
+)
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
-);
+const routes = (
+  <BrowserRouter>
+    <div>
+      <Header></Header>
+      <Routes>
+        <Route path="/" element={<DashboardPage />}></Route>
+        <Route path="/create" element={<AddExpensePage />}></Route>
+        <Route path="/edit" element={<EditExpensePage />}></Route>
+        <Route path="/help" element={<HelpPage />}></Route>
+        <Route path="*" element={<NotFoundPage />}></Route>
+      </Routes>
+    </div>
+  </BrowserRouter>
+)
+
+ReactDOM.createRoot(document.getElementById('root'))
+  .render(routes);
