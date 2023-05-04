@@ -13,5 +13,5 @@ const { city, postcode: zip } = location // rename variable
 
 //// Array Destructuring
 const names = ['Joe', 'Andy', 'Juniper', 'Eagle']
-const [, , third, fourth] = names
+const [, , third, fourth, fifth = 'Anonymous'] = names // default value
 console.log(`Peoples: ${third}, ${fourth}`)
