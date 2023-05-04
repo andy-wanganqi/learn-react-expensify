@@ -6,12 +6,14 @@ const store = createStore((state = {
   console.log('CALL createStore')
 
   if (action.type === 'INCREMENT_N') {
+    const n = typeof action.n === 'number' ? action.n : 1
     return {
-      count: state.count + 1
+      count: state.count + n
     }
   } else if (action.type === 'DECREMENT_N') {
+    const n = typeof action.n === 'number' ? action.n : 1
     return {
-      count: state.count - 1
+      count: state.count - n
     }
   } else if (action.type === 'RESET') {
     return {
@@ -22,16 +24,23 @@ const store = createStore((state = {
   }
 })
 
-console.log(store.getState())
+const toUnsubscribe = store.subscribe(() => {
+  console.log(store.getState())
+})
 
 // Increment
+store.dispatch({
+  type: 'INCREMENT_N',
+  n: 2
+})
 store.dispatch({
   type: 'INCREMENT_N'
 })
 
 // Decrement
 store.dispatch({
-  type: 'DECREMENT_N'
+  type: 'DECREMENT_N',
+  n: 1
 })
 
 // Reset
@@ -39,4 +48,8 @@ store.dispatch({
   type: 'RESET'
 })
 
-console.log(store.getState())
+toUnsubscribe();
+
+store.dispatch({
+  type: 'RESET'
+})
