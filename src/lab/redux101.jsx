@@ -1,19 +1,32 @@
 import { createStore } from 'redux'
 
+const increment = ({ n = 1 } = {}) => ({
+  type: 'INCREMENT_N',
+  n,
+})
+
+const decrement = ({ n = 1 } = {}) => ({
+  type: 'DECREMENT_N',
+  n,
+})
+
+const reset = () => ({
+  type: 'RESET',
+})
+
+
 const store = createStore((state = {
   count: 0
 }, action) => {
   console.log('CALL createStore')
 
   if (action.type === 'INCREMENT_N') {
-    const n = typeof action.n === 'number' ? action.n : 1
     return {
-      count: state.count + n
+      count: state.count + action.n
     }
   } else if (action.type === 'DECREMENT_N') {
-    const n = typeof action.n === 'number' ? action.n : 1
     return {
-      count: state.count - n
+      count: state.count - action.n
     }
   } else if (action.type === 'RESET') {
     return {
@@ -29,27 +42,15 @@ const toUnsubscribe = store.subscribe(() => {
 })
 
 // Increment
-store.dispatch({
-  type: 'INCREMENT_N',
-  n: 2
-})
-store.dispatch({
-  type: 'INCREMENT_N'
-})
+store.dispatch(increment({n: 2}))
+store.dispatch(increment())
 
 // Decrement
-store.dispatch({
-  type: 'DECREMENT_N',
-  n: 1
-})
+store.dispatch(decrement({n: 3}))
 
 // Reset
-store.dispatch({
-  type: 'RESET'
-})
+store.dispatch(reset())
 
 toUnsubscribe();
 
-store.dispatch({
-  type: 'RESET'
-})
+store.dispatch(reset())
