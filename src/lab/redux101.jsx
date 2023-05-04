@@ -1,4 +1,4 @@
-import { createStore } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
 
 const increment = ({ n = 1 } = {}) => ({
   type: 'INCREMENT_N',
@@ -14,8 +14,7 @@ const reset = () => ({
   type: 'RESET',
 })
 
-
-const store = createStore((state = {
+const reducer = (state = {
   count: 0
 }, action) => {
   console.log('CALL createStore')
@@ -35,7 +34,9 @@ const store = createStore((state = {
   } else {
     return state
   }
-})
+}
+
+const store = configureStore({ reducer })
 
 const toUnsubscribe = store.subscribe(() => {
   console.log(store.getState())
