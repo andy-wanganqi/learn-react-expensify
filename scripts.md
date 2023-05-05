@@ -3,7 +3,7 @@ npm install -D live-server
 live-server public
 
 # Install babel 7
-npm install -D @babel/cli @babel/core @babel/preset-env @babel/preset-react
+npm install -D @babel/cli @babel/core @babel/preset-env @babel/preset-react @babel/plugin-proposal-object-rest-spread
 babel src/app.jsx --out-file=public/scripts/app.js --watch
 
 # Install webpack

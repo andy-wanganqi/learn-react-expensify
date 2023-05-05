@@ -18,14 +18,13 @@ const addExpense = ({
   }
 })
 const editExpense = ({
-  id: undefined,
+  id,
   description = '', 
   note = '', 
   amount = 0, 
   createdAt = 0 
 } = {}) => ({
   type: 'EDIT_EXPENSE',
-  id,
   expense: {
     id,
     description,
@@ -40,23 +39,30 @@ const removeExpense = ({
   type: 'REMOVE_EXPENSE',
   id,
 })
-// Expenses View: Filter (text / start date / end date) / Sort (date / amount)
 
 const defaultExpenses = []
 const expensesReducer = (expenses = defaultExpenses, action) => {
   switch (action.type) {
     case 'ADD_EXPENSE':
-      //return expenses.concat(action.expense)
       return [...expenses, action.expense]
     case 'EDIT_EXPENSE':
-      const index = expenses.findIndex((a) => a.id === action.id)
-      return expenses
+      return expenses.map((a) => a.id === action.expense.id 
+        ? { ...a, ...action }
+        : a
+      )
     case 'REMOVE_EXPENSE':
       return expenses.filter((a) => a.id !== action.id)
     default:
       return expenses
   }
 }
+
+// Expenses View: Filter (text / start date / end date) / Sort (date / amount)
+const setFilterText = (text = '') => ({
+  type: 'SET_FILTER_TEXT',
+  text,
+})
+
 
 const defaultFilter = {
   text: '',
@@ -66,6 +72,11 @@ const defaultFilter = {
 }
 const filterReducer = (filter = defaultFilter, action) => {
   switch (action.type) {
+    case 'SET_FILTER_TEXT':
+      return {
+        ...defaultFilter,
+        text: action.text || ''
+      }
     default:
       return filter
   }
@@ -84,6 +95,13 @@ const expense1 = store.dispatch(addExpense({ description: 'rent', amount: 100 })
 const expense2 = store.dispatch(addExpense({ description: 'coffee', amount: 300 }))
 store.dispatch(removeExpense({ id: expense1.id }))
 store.dispatch(removeExpense({ id: uuid() }))
+store.dispatch(editExpense({
+  ...expense2,
+  description: 'long black'
+}))
+
+store.dispatch(setFilterText('rent'))
+store.dispatch(setFilterText())
 
 const demoState = {
   expenses: [{
