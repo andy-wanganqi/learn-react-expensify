@@ -117,15 +117,11 @@ const filterReducer = (filter = defaultFilter, action) => {
 }
 
 const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
-  const filtered = expenses.filter((a) => 
+  return expenses.filter((a) => 
     (typeof startDate !== 'number' || a.createdAt >= startDate)
     && (typeof endDate !== 'number' || a.createdAt <= endDate)
     && (typeof text !== 'string' || a.description.toLowerCase().includes(text.toLowerCase()))
-  )
-  // if(sortBy) {
-  //   filtered.sort((a, b) => a[sortBy] < b[sortBy] ? -1 : a[sortBy] > b[sortBy] ? 1 : 0)
-  // }
-  return filtered
+  ).sort((a, b) => a[sortBy] < b[sortBy] ? -1 : a[sortBy] > b[sortBy] ? 1 : 0)
 }
 
 const reducers = combineReducers({
