@@ -65,8 +65,8 @@ const setFilterText = (text = '') => ({
 const sortByAmount = () => ({
   type: 'SORT_BY_AMOUNT'
 })
-const sortByDate = () => ({
-  type: 'SORT_BY_DATE'
+const sortByCreatedAt = () => ({
+  type: 'SORT_BY_CREATEDAT'
 })
 const setStartDate = (date) => ({
   type: 'SET_START_DATE',
@@ -96,10 +96,10 @@ const filterReducer = (filter = defaultFilter, action) => {
         ...filter,
         sortBy: 'amount',
       }
-      case 'SORT_BY_DATE':
+      case 'SORT_BY_CREATEDAT':
         return {
           ...filter,
-          sortBy: 'date',
+          sortBy: 'createdAt',
       }
       case 'SET_START_DATE':
         return {
@@ -116,6 +116,18 @@ const filterReducer = (filter = defaultFilter, action) => {
   }
 }
 
+const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
+  const filtered = expenses.filter((a) => 
+    (typeof startDate !== 'number' || a.createdAt >= startDate)
+    && (typeof endDate !== 'number' || a.createdAt <= endDate)
+    && (typeof text !== 'string' || a.description.toLowerCase().includes(text.toLowerCase()))
+  )
+  // if(sortBy) {
+  //   filtered.sort((a, b) => a[sortBy] < b[sortBy] ? -1 : a[sortBy] > b[sortBy] ? 1 : 0)
+  // }
+  return filtered
+}
+
 const reducers = combineReducers({
   expenses: expensesReducer,
   filter: filterReducer,
@@ -125,8 +137,8 @@ store.subscribe(() => {
   console.log(store.getState())
 })
 
-const expense1 = store.dispatch(addExpense({ description: 'rent', amount: 100 }))
-const expense2 = store.dispatch(addExpense({ description: 'coffee', amount: 300 }))
+const expense1 = store.dispatch(addExpense({ description: 'rent', amount: 100, createdAt: 1000 }))
+const expense2 = store.dispatch(addExpense({ description: 'coffee', amount: 300, createdAt: 2000 }))
 store.dispatch(removeExpense({ id: expense1.id }))
 store.dispatch(removeExpense({ id: uuid() }))
 store.dispatch(editExpense({
@@ -137,9 +149,9 @@ store.dispatch(editExpense({
 store.dispatch(setFilterText('rent'))
 store.dispatch(setFilterText())
 store.dispatch(sortByAmount())
-store.dispatch(sortByDate())
-store.dispatch(setStartDate(125))
-store.dispatch(setEndDate(250))
+store.dispatch(sortByCreatedAt())
+store.dispatch(setStartDate(1250))
+store.dispatch(setEndDate(2500))
 store.dispatch(setStartDate())
 store.dispatch(setEndDate())
 
