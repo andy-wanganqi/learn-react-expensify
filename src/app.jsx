@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { Provider } from 'react-redux'
 import AppRouter from './routes/app-router.jsx'
 import configureStore from './store/configure-store.jsx'
 
@@ -16,8 +17,13 @@ store.dispatch(addExpense({ description: 'Gas bill' }))
 store.dispatch(setFilterText('gas'))
 
 const state = store.getState()
-const visibleExpenses = getVisibleExpenses(state.expenses, state.filter)
+const visibleExpenses = getVisibleExpenses(state.expenses, state.filters)
 console.log(visibleExpenses)
 
+const app = (
+  <Provider store={store}>
+    <AppRouter />
+  </Provider>
+)
 ReactDOM.createRoot(document.getElementById('root'))
-  .render(<AppRouter />);
+  .render(app);

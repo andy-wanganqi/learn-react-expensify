@@ -20,3 +20,7 @@ npm install sass-loader node-sass
 
 # Install normalize.css
 npm install normalize.css
+
+# Install Redux
+npm install redux 
+npm install react-redux
