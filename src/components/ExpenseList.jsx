@@ -1,23 +1,29 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import ExpenseListItem from './ExpenseListItem.jsx'
+import { getVisibleExpenses } from './../store/selectors/expenses-selector.jsx'
 
-const ExpenseList = (props) => (
+const ExpenseList = ({expenses, filters}) => (
   <div>
     <h1>Expense List</h1>
-    <p>Filter by: {props.filters.text}</p>
-    <p>Date range: from {props.filters.startDate} to {props.filters.endDate}</p>
-    <p>Sort by: {props.filters.sortBy}</p>
+    <p>Filter by: {filters.text}</p>
+    <p>Date range: from {filters.startDate} to {filters.endDate}</p>
+    <p>Sort by: {filters.sortBy}</p>
     <ul>
-      {props.expenses.map((a) => (
-        <li key={a.id}>{a.description}</li>
+      {expenses.map((expense) => (
+        <li key={expense.id}>
+          <ExpenseListItem {...expense} />
+        </li>
       ))}
     </ul>
   </div>
 )
 
-export default connect((state) => {
+const mapStateToProps = ({expenses, filters}) => {
   return {
-    expenses: state.expenses,
-    filters: state.filters,
+    expenses: getVisibleExpenses(expenses, filters),
+    filters: filters,
   }
-})(ExpenseList)
+}
+
+export default connect(mapStateToProps)(ExpenseList)
