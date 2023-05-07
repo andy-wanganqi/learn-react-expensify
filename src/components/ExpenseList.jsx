@@ -2,13 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import ExpenseListItem from './ExpenseListItem.jsx'
 import { getVisibleExpenses } from './../store/selectors/expenses-selector.jsx'
+import ExpenseListFilters from './ExpenseListFilters.jsx'
 
-const ExpenseList = ({expenses, filters}) => (
+const ExpenseList = ({expenses}) => (
   <div>
     <h1>Expense List</h1>
-    <p>Filter by: {filters.text}</p>
-    <p>Date range: from {filters.startDate} to {filters.endDate}</p>
-    <p>Sort by: {filters.sortBy}</p>
+    <ExpenseListFilters />
     <ul>
       {expenses.map((expense) => (
         <li key={expense.id}>
@@ -22,7 +21,6 @@ const ExpenseList = ({expenses, filters}) => (
 const mapStateToProps = ({expenses, filters}) => {
   return {
     expenses: getVisibleExpenses(expenses, filters),
-    filters: filters,
   }
 }
 
