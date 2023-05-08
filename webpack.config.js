@@ -1,6 +1,8 @@
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: {
     index: {
       import: './src/app.jsx',
@@ -12,6 +14,11 @@ module.exports = {
     path: path.join(__dirname, 'public'),
     filename: '[name].bundle.js'
   },
+  plugins: [new HtmlWebpackPlugin({
+    title: 'Expensify',
+    template: path.resolve(__dirname, './src/index.html'),
+    favicon: path.resolve(__dirname, './src/assets/favicon.png'),
+  })],
   module: {
     rules: [{
       loader: 'babel-loader',
