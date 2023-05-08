@@ -11,27 +11,22 @@ export const filtersReducer = (filterOfState = defaultFiltersOfState, action) =>
         ...filterOfState,
         text: action.text || ''
       }
-    case 'SORT_BY_AMOUNT':
+    case 'SET_SORTBY_KEYWORD':
       return {
         ...filterOfState,
-        sortBy: 'amount',
+        sortBy: action.keyword
       }
-      case 'SORT_BY_CREATEDAT':
-        return {
-          ...filterOfState,
-          sortBy: 'createdAt',
+    case 'SET_START_DATE':
+      return {
+        ...filterOfState,
+        startDate: action.date,
       }
-      case 'SET_START_DATE':
-        return {
-          ...filterOfState,
-          startDate: action.date,
-        }
-      case 'SET_END_DATE':
-        return {
-          ...filterOfState,
-          endDate: action.date,
-        }
-      default:
-        return filterOfState
+    case 'SET_END_DATE':
+      return {
+        ...filterOfState,
+        endDate: action.date,
+      }
+    default:
+      return filterOfState
   }
 }

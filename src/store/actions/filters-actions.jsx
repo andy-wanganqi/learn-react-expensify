@@ -2,11 +2,9 @@ export const setFilterText = (text = '') => ({
   type: 'SET_FILTER_TEXT',
   text,
 })
-export const sortByAmount = () => ({
-  type: 'SORT_BY_AMOUNT'
-})
-export const sortByCreatedAt = () => ({
-  type: 'SORT_BY_CREATEDAT'
+export const setSortByKeyword = (keyword = 'amount') => ({
+  type: 'SET_SORTBY_KEYWORD',
+  keyword,
 })
 export const setStartDate = (date) => ({
   type: 'SET_START_DATE',
