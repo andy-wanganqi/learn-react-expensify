@@ -1,10 +1,14 @@
-import React from 'react'
+import React from "react"
+import moment from 'moment'
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 
 class ExpenseForm extends React.Component {
   state = {
     description: '',
     amountText: '',
     note: '',
+    createdAt: moment().startOf('day').toDate(),
   }
   render() {
     return (
@@ -22,6 +26,7 @@ class ExpenseForm extends React.Component {
             value={this.state.note}
             onChange={this.handleNoteChange}
           ></textarea>
+          <DatePicker selected={this.state.createdAt} onChange={(date) => this.handleDateChange(date)} />
           <button>Save Expense</button>
         </form>
       </div>
@@ -45,6 +50,11 @@ class ExpenseForm extends React.Component {
     const note = e.target.value
     this.setState(() => ({
       note
+    }))
+  }
+  handleDateChange = (date) => {
+    this.setState(() => ({
+      createdAt: date
     }))
   }
 }
