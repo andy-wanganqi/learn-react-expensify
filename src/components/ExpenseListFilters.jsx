@@ -1,6 +1,6 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { setFilterText, setSortByKeyword } from './../store/actions/filters-actions.jsx'
+import React from 'react';
+import { connect } from 'react-redux';
+import { setFilterText, setSortByKeyword } from './../store/actions/filters-actions.jsx';
 
 const ExpenseListFilters = ({ dispatch, filters }) => (
   <div>
@@ -33,7 +33,7 @@ const ExpenseListFilters = ({ dispatch, filters }) => (
 const mapStateToProps = ({filters}) => {
   return {
     filters,
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(ExpenseListFilters)
+export default connect(mapStateToProps)(ExpenseListFilters);

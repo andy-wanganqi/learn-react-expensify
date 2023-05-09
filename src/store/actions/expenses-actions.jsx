@@ -14,7 +14,7 @@ export const addExpense = ({
     amount,
     createdAt,
   }
-})
+});
 export const editExpense = ({
   id,
   description = '', 
@@ -30,10 +30,10 @@ export const editExpense = ({
     amount,
     createdAt,
   }
-})
+});
 export const removeExpense = ({
   id,
 } = {}) => ({
   type: 'REMOVE_EXPENSE',
   id,
-})
+});

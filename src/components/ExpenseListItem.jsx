@@ -1,6 +1,6 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { removeExpense } from '../store/actions/expenses-actions.jsx'
+import React from 'react';
+import { connect } from 'react-redux';
+import { removeExpense } from '../store/actions/expenses-actions.jsx';
 
 const ExpenseListItem = ({dispatch, id, description, amount, createdAt, note}) => (
   <div>
@@ -15,4 +15,4 @@ const ExpenseListItem = ({dispatch, id, description, amount, createdAt, note}) =
   </div>
 )
 
-export default connect()(ExpenseListItem)
+export default connect()(ExpenseListItem);

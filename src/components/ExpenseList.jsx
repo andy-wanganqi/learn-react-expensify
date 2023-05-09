@@ -1,8 +1,8 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import ExpenseListItem from './ExpenseListItem.jsx'
-import { getVisibleExpenses } from './../store/selectors/expenses-selector.jsx'
-import ExpenseListFilters from './ExpenseListFilters.jsx'
+import React from 'react';
+import { connect } from 'react-redux';
+import ExpenseListItem from './ExpenseListItem.jsx';
+import { getVisibleExpenses } from './../store/selectors/expenses-selector.jsx';
+import ExpenseListFilters from './ExpenseListFilters.jsx';
 
 const ExpenseList = ({expenses}) => (
   <div>
@@ -16,12 +16,12 @@ const ExpenseList = ({expenses}) => (
       ))}
     </ul>
   </div>
-)
+);
 
 const mapStateToProps = ({expenses, filters}) => {
   return {
     expenses: getVisibleExpenses(expenses, filters),
   }
-}
+};
 
-export default connect(mapStateToProps)(ExpenseList)
+export default connect(mapStateToProps)(ExpenseList);

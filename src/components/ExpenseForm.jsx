@@ -1,7 +1,7 @@
-import React from "react"
-import moment from 'moment'
-import DatePicker from "react-datepicker"
-import "react-datepicker/dist/react-datepicker.css"
+import React from "react";
+import moment from "moment";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class ExpenseForm extends React.Component {
   state = {
@@ -30,33 +30,33 @@ class ExpenseForm extends React.Component {
           <button>Save Expense</button>
         </form>
       </div>
-    )
+    );
   }
   handleDescriptionChange = (e) => {
-    const description = e.target.value
+    const description = e.target.value;
     this.setState(() => ({
       description
-    }))
+    }));
   }
   handleAmountChange = (e) => {
-    const amountText = e.target.value
+    const amountText = e.target.value;
     if (amountText.match(/^\d+(\.\d{0,2})?$/)) {
       this.setState(() => ({
         amountText
-      }))
+      }));
     }
   }
   handleNoteChange = (e) => {
-    const note = e.target.value
+    const note = e.target.value;
     this.setState(() => ({
       note
-    }))
+    }));
   }
   handleDateChange = (date) => {
     this.setState(() => ({
       createdAt: date
-    }))
+    }));
   }
 }
 
-export default ExpenseForm
+export default ExpenseForm;
