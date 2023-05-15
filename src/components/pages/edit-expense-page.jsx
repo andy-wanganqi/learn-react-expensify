@@ -38,4 +38,4 @@ const mapStateToProps = (state) => {
   }
 };
 
-export default connect((state) => state)(EditExpensePage);
+export default connect(mapStateToProps)(EditExpensePage);
