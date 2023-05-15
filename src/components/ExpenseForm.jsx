@@ -8,12 +8,13 @@ class ExpenseForm extends React.Component {
     description: '',
     amountText: '',
     note: '',
-    createdAt: moment().startOf('day').toDate(),
+    createdAt: new Date(),
+    errorMessage: '',
   }
   render() {
     return (
       <div>
-        <form>
+        <form onSubmit={this.onSubmit}>
           <input type="text" placeholder="Description" autoFocus 
             value={this.state.description}
             onChange={this.handleDescriptionChange}
@@ -26,9 +27,12 @@ class ExpenseForm extends React.Component {
             value={this.state.note}
             onChange={this.handleNoteChange}
           ></textarea>
-          <DatePicker selected={this.state.createdAt} onChange={(date) => this.handleDateChange(date)} />
+          <DatePicker selected={this.state.createdAt} onChange={(date) => this.handleDateChange(date)} dateFormat="dd/MM/yyyy"/>
           <button>Save Expense</button>
         </form>
+        <div>
+          {this.state.errorMessage && <p>{this.state.errorMessage}</p>}
+        </div>
       </div>
     );
   }
@@ -40,7 +44,7 @@ class ExpenseForm extends React.Component {
   }
   handleAmountChange = (e) => {
     const amountText = e.target.value;
-    if (amountText.match(/^\d+(\.\d{0,2})?$/)) {
+    if (!amountText || amountText.match(/^\d{1,10}(\.\d{0,2})?$/)) {
       this.setState(() => ({
         amountText
       }));
@@ -53,9 +57,30 @@ class ExpenseForm extends React.Component {
     }));
   }
   handleDateChange = (date) => {
-    this.setState(() => ({
-      createdAt: date
-    }));
+    if(date) {
+      this.setState(() => ({
+        createdAt: date
+      }));
+    }
+  }
+  onSubmit = (e) => {
+    e.preventDefault();
+
+    if (!this.state.description || !this.state.amountText) {
+      this.setState(() => ({
+        errorMessage: 'Please provide description and amount.'
+      }));
+    } else {
+      this.setState(() => ({
+        errorMessage: ''
+      }));
+      this.props.onSubmit({
+        description: this.state.description,
+        amount: parseFloat(this.state.amountText) * 100,
+        note: this.state.note,
+        createdAt: moment(this.state.createdAt).valueOf(),
+      });
+    }
   }
 }
 

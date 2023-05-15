@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import moment from 'moment';
 import AppRouter from './routes/app-router.jsx';
 import configureStore from './store/configure-store.jsx';
-
 import { addExpense } from './store/actions/expenses-actions.jsx';
 import 'normalize.css/normalize.css';
 import './styles/index.scss';
