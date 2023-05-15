@@ -1,11 +1,12 @@
 const defaultExpensesOfState = [];
 export const expensesReducer = (expensesOfState = defaultExpensesOfState, action) => {
+  const newExpense = action.expense;
   switch (action.type) {
     case 'ADD_EXPENSE':
-      return [...expensesOfState, action.expense];
+      return [...expensesOfState, newExpense];
     case 'EDIT_EXPENSE':
-      return expensesOfState.map((a) => a.id === action.expense.id 
-        ? { ...a, ...action }
+      return expensesOfState.map((a) => a.id === newExpense.id 
+        ? { ...a, ...newExpense }
         : a
       );
     case 'REMOVE_EXPENSE':

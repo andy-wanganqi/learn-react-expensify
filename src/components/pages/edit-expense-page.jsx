@@ -1,27 +1,41 @@
 import React from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import ExpenseForm from '../ExpenseForm.jsx';
+import { editExpense, removeExpense } from '../../store/actions/expenses-actions.jsx';
 
-// http://localhost:8080/edit/99?query=value
 const EditExpensePage = (props) => {
-  let params = useParams();
-  console.log('params: ', params);
-
-  const [ searchParams ] = useSearchParams();
-  const entries = [];
-  for(let entry of searchParams.entries()) {
-    entries.push(entry);
-  }
-  console.log('entries: ', entries);
-
-  console.log('query2: ', searchParams.get('query2'));
+  let { id } = useParams();
+  const expense = props.expenses.find(expense => expense.id === id);
+  let navigate = useNavigate();
   return (
     <div>
       <h1>Edit Expense Page</h1>
-      <p>ID: {params.id}</p>
-      <p>Query: {searchParams.get('query')}</p>
-      <p>Query2: {searchParams.get('query2')}</p>
+      <ExpenseForm 
+        expense={expense}
+        handleSaveExpense={(expense) => {
+          props.dispatch(editExpense({
+            id,
+            ...expense
+          }));
+          navigate('/');
+        }}
+        handleRemoveExpense={() => {
+          props.dispatch(removeExpense({
+            id
+          }));
+          navigate('/');
+        }}
+      />
     </div>
   );
 }
 
-export default EditExpensePage;
+const mapStateToProps = (state) => {
+  return {
+    expenses: state.expenses
+  }
+};
+
+export default connect(mapStateToProps)(EditExpensePage);

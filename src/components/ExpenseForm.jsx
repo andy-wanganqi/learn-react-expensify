@@ -4,17 +4,22 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 class ExpenseForm extends React.Component {
-  state = {
-    description: '',
-    amountText: '',
-    note: '',
-    createdAt: new Date(),
-    errorMessage: '',
+  constructor(props){
+    super(props);
+    let expense = props.expense;
+    this.state = {
+      id: expense ? expense.id : '',
+      description: expense ? expense.description : '',
+      amountText: expense ? (parseFloat(expense.amount) / 100).toString() : '',
+      note: expense ? expense.note : '',
+      createdAt: expense ? moment(expense.createdAt).toDate() : new Date(),
+      errorMessage: '',
+    };
   }
   render() {
     return (
       <div>
-        <form onSubmit={this.onSubmit}>
+        <form>
           <input type="text" placeholder="Description" autoFocus 
             value={this.state.description}
             onChange={this.handleDescriptionChange}
@@ -28,7 +33,8 @@ class ExpenseForm extends React.Component {
             onChange={this.handleNoteChange}
           ></textarea>
           <DatePicker selected={this.state.createdAt} onChange={(date) => this.handleDateChange(date)} dateFormat="dd/MM/yyyy"/>
-          <button>Save Expense</button>
+          <button onClick={this.handleSaveExpense}>Save Expense</button>
+          {this.state.id && <button onClick={this.handleRemoveExpense}>Remove Expense</button>}
         </form>
         <div>
           {this.state.errorMessage && <p>{this.state.errorMessage}</p>}
@@ -63,24 +69,34 @@ class ExpenseForm extends React.Component {
       }));
     }
   }
-  onSubmit = (e) => {
-    e.preventDefault();
-
+  validateForm = () => {
     if (!this.state.description || !this.state.amountText) {
       this.setState(() => ({
         errorMessage: 'Please provide description and amount.'
       }));
+      return false;
     } else {
       this.setState(() => ({
         errorMessage: ''
       }));
-      this.props.onSubmit({
-        description: this.state.description,
-        amount: parseFloat(this.state.amountText) * 100,
-        note: this.state.note,
-        createdAt: moment(this.state.createdAt).valueOf(),
-      });
+      return true;
     }
+  }
+  handleSaveExpense = (e) => {
+    e.preventDefault();
+    if (!this.validateForm()){
+      return;
+    }
+    this.props.handleSaveExpense({
+      description: this.state.description,
+      amount: parseFloat(this.state.amountText) * 100,
+      note: this.state.note,
+      createdAt: moment(this.state.createdAt).valueOf(),
+    });
+  }
+  handleRemoveExpense = (e) => {
+    e.preventDefault();
+    this.props.handleRemoveExpense();
   }
 }
 
