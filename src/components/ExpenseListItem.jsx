@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { removeExpense } from '../store/actions/expenses-actions.jsx';
 
 const ExpenseListItem = ({dispatch, id, description, amount, createdAt, note}) => {
@@ -12,7 +13,7 @@ const ExpenseListItem = ({dispatch, id, description, amount, createdAt, note}) =
           e.preventDefault();
           navigate(`/edit/${id}`);
         }}>Edit</button>
-        Expense: <NavLink to={`/edit/${id}`}>{description}</NavLink> with {amount} created at: {createdAt} 
+        Expense: <NavLink to={`/edit/${id}`}>{description}</NavLink> with {amount} created at: {moment(createdAt).format()} 
         <button onClick={(e) => {
           e.preventDefault();
           dispatch(removeExpense({ id }));

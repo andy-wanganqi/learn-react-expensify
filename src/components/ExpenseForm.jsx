@@ -1,7 +1,6 @@
 import React from "react";
 import moment from "moment";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 class ExpenseForm extends React.Component {
   constructor(props){
@@ -12,7 +11,7 @@ class ExpenseForm extends React.Component {
       description: expense ? expense.description : '',
       amountText: expense ? (parseFloat(expense.amount) / 100).toString() : '',
       note: expense ? expense.note : '',
-      createdAt: expense ? moment(expense.createdAt).toDate() : new Date(),
+      createdAt: expense ? moment(expense.createdAt).valueOf() : new Date(),
       errorMessage: '',
     };
   }
@@ -32,7 +31,7 @@ class ExpenseForm extends React.Component {
             value={this.state.note}
             onChange={this.handleNoteChange}
           ></textarea>
-          <DatePicker selected={this.state.createdAt} onChange={(date) => this.handleDateChange(date)} dateFormat="dd/MM/yyyy"/>
+          <DatePicker showIcon selected={this.state.createdAt} onChange={(date) => this.handleDateChange(date)} dateFormat="dd/MM/yyyy"/>
           <button onClick={this.handleSaveExpense}>Save Expense</button>
           {this.state.id && <button onClick={this.handleRemoveExpense}>Remove Expense</button>}
         </form>

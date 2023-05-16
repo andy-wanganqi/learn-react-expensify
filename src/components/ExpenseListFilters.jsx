@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setFilterText, setSortByKeyword } from './../store/actions/filters-actions.jsx';
+import DatePicker from "react-datepicker";
+import { setFilterText, setSortByKeyword, setStartDate, setEndDate } from './../store/actions/filters-actions.jsx';
 
 const ExpenseListFilters = ({ dispatch, filters }) => (
   <div>
-    <p>
+    <div>
       Filter by: 
       <input 
         type="text" 
@@ -13,9 +14,19 @@ const ExpenseListFilters = ({ dispatch, filters }) => (
           dispatch(setFilterText(e.target.value))
         }}
       />
-    </p>
-    <p>Date range: from {filters.startDate} to {filters.endDate}</p>
-    <p>
+    </div>
+    <div>Date range: from 
+      <DatePicker showIcon selected={filters.startDate} onChange={(date) => {
+        dispatch(setStartDate(date))
+      }} 
+      dateFormat="dd/MM/yyyy"/>
+      to 
+      <DatePicker showIcon selected={filters.endDate} onChange={(date) => {
+        dispatch(setEndDate(date))
+      }} 
+      dateFormat="dd/MM/yyyy"/>
+    </div>
+    <div>
       Sort by: {filters.sortBy}
       <select 
         value={filters.sortBy} 
@@ -26,7 +37,7 @@ const ExpenseListFilters = ({ dispatch, filters }) => (
         <option value="date">Date</option>
         <option value="amount">Amount</option>
       </select>
-    </p>
+    </div>
   </div>
 )
 
