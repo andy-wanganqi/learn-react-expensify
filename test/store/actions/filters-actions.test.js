@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { setFilterText, setSortByKeyword, setStartDate, setEndDate } from '../../../src/store/actions/filters-actions';
+import { setFilterText, setSortByKeyword, setStartDate, setEndDate } from '../../../src/store/actions/filters-actions.jsx';
 
 test('Should setup set filter text action with default value', () => {
   const action = setFilterText();
