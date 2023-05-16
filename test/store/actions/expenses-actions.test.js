@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { addExpense, editExpense, removeExpense } from '../../../src/store/actions/expenses-actions.jsx';
 
-test('Should setup add expense action without provided values', () => {
+test('Should setup add expense action with default values', () => {
   const action = addExpense();
   expect(action).toEqual({
     type: 'ADD_EXPENSE',
