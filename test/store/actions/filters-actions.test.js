@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { setFilterText, setSortByKeyword, setStartDate, setEndDate } from '../../../src/store/actions/filters-actions';
 
-test('Should setup set filter text action without provided value', () => {
+test('Should setup set filter text action with default value', () => {
   const action = setFilterText();
   expect(action).toEqual({
     type: 'SET_FILTER_TEXT',
@@ -18,7 +18,7 @@ test('Should setup set filter text action with provided value', () => {
   });
 });
 
-test('Should setup set sort by keyword action without provided value', () => {
+test('Should setup set sort by keyword action with default value', () => {
   const action = setSortByKeyword();
   expect(action).toEqual({
     type: 'SET_SORTBY_KEYWORD',
