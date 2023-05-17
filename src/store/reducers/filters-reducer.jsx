@@ -1,8 +1,10 @@
+import moment from 'moment';
+
 const defaultFiltersOfState = {
   text: '',
   sortBy: 'amount',
-  startDate: undefined,
-  endDate: undefined,
+  startDate: moment().startOf('month').toDate(),
+  endDate: moment().endOf('month').toDate(),
 };
 export const filtersReducer = (filterOfState = defaultFiltersOfState, action) => {
   switch (action.type) {
@@ -11,10 +13,10 @@ export const filtersReducer = (filterOfState = defaultFiltersOfState, action) =>
         ...filterOfState,
         text: action.text || ''
       };
-    case 'SET_SORTBY_KEYWORD':
+    case 'SET_SORTBY':
       return {
         ...filterOfState,
-        sortBy: action.keyword
+        sortBy: action.sortBy
       };
     case 'SET_START_DATE':
       return {

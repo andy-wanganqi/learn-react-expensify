@@ -21,17 +21,17 @@ test('Should setup set filter text action with provided value', () => {
 test('Should setup set sort by keyword action with default value', () => {
   const action = setSortByKeyword();
   expect(action).toEqual({
-    type: 'SET_SORTBY_KEYWORD',
-    keyword: 'amount',
+    type: 'SET_SORTBY',
+    sortBy: 'amount',
   });
 });
 
 test('Should setup set sort by keyword action with provided value', () => {
-  const keyword = 'description';
-  const action = setSortByKeyword(keyword);
+  const sortBy = 'description';
+  const action = setSortByKeyword(sortBy);
   expect(action).toEqual({
-    type: 'SET_SORTBY_KEYWORD',
-    keyword,
+    type: 'SET_SORTBY',
+    sortBy,
   });
 });
 
