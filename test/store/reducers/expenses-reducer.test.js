@@ -27,7 +27,7 @@ test('Should add new expense to non-empty array', () => {
   expect(state).toEqual([...expenses, expense]);
 });
 
-test('Should edit expense', () => {
+test('Should edit expense which exists', () => {
   const expense = { ...expenses[2] };
   expense.description += " 2";
   expense.amount += 100;
@@ -42,6 +42,21 @@ test('Should edit expense', () => {
   expect(state).toEqual([ expenses[0], expenses[1], expense, expenses[3], expenses[4] ]);
 });
 
+test('Should not edit expense which does not exist', () => {
+  const expense = { ...expenses[2], id: uuid() };
+  expense.description += " 2";
+  expense.amount += 100;
+  expense.note += '123';
+  expense.createdAt += 10000;
+
+  const action = {
+    type: 'EDIT_EXPENSE',
+    expense,
+  }
+  const state = expensesReducer(expenses, action);
+  expect(state).toEqual(expenses);
+});
+
 test('Should remove expense which exists', () => {
   const { id } = expenses[2];
   const action = {
@@ -52,7 +67,7 @@ test('Should remove expense which exists', () => {
   expect(state).toEqual([ expenses[0], expenses[1], expenses[3], expenses[4] ]);
 });
 
-test('Should remove expense which does not exist', () => {
+test('Should not remove expense which does not exist', () => {
   const id = uuid();
   const action = {
     type: 'REMOVE_EXPENSE',
