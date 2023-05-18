@@ -130,8 +130,8 @@ describe('ExpenseForm component tests', () => {
     const user = userEvent.setup();
     await user.type(screen.getByPlaceholderText('Description', { name: /description/i }), 'Council Bill');
     await user.type(screen.getByPlaceholderText('Amount', { name: /amount/i }), '560.50');
-
     await user.click(screen.getByRole('button', {name: /Save/i}));
+    
     await waitFor(() =>
       expect(handleSaveExpense).toHaveBeenCalledWith({
         description: 'Council Bill',
