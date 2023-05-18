@@ -74,11 +74,11 @@ const ExpenseForm = (props) => {
   return (
     <div>
       <form>
-        <input type="text" placeholder="Description" autoFocus 
+        <input type="text" name="description" placeholder="Description" autoFocus 
           value={expenseInForm.description}
           onChange={handleDescriptionChange}
         />
-        <input type="text" placeholder="Amount" step="100" 
+        <input type="text" name="amount" placeholder="Amount" step="100" 
           value={expenseInForm.amountText}
           onChange={handleAmountChange}
         />
@@ -86,7 +86,10 @@ const ExpenseForm = (props) => {
           value={expenseInForm.note}
           onChange={handleNoteChange}
         ></textarea>
-        <DatePicker showIcon selected={moment(expenseInForm.createdAt).toDate()} onChange={(date) => handleDateChange(date)} dateFormat="dd/MM/yyyy"/>
+        <DatePicker showIcon placeholderText="Created At"
+          selected={moment(expenseInForm.createdAt).toDate()} 
+          onChange={(date) => handleDateChange(date)} dateFormat="dd/MM/yyyy"
+        />
         <button onClick={handleSaveExpense}>Save Expense</button>
         {expenseInForm.id && <button onClick={handleRemoveExpense}>Remove Expense</button>}
       </form>
