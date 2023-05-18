@@ -120,8 +120,7 @@ describe('ExpenseForm component tests', () => {
 
   it('Should save expense by clicking button', async () => {
     const handleSaveExpense = jest.fn();
-    const handleRemoveExpense = jest.fn();
-    renderWith(<ExpenseForm handleSaveExpense={handleSaveExpense} handleRemoveExpense={handleRemoveExpense} />, {
+    renderWith(<ExpenseForm handleSaveExpense={handleSaveExpense} />, {
       preloadedState: {
         filters: {},
         expenses
@@ -146,9 +145,7 @@ describe('ExpenseForm component tests', () => {
   it('Should render expense', async () => {
     const expense = expenses[2];
     const { description, note, amount, createdAt } = expense;
-    const handleSaveExpense = jest.fn();
-    const handleRemoveExpense = jest.fn();
-    renderWith(<ExpenseForm expense={expense} handleSaveExpense={handleSaveExpense} handleRemoveExpense={handleRemoveExpense}/>, {
+    renderWith(<ExpenseForm expense={expense} />, {
       preloadedState: {
         filters: {},
         expenses
@@ -157,7 +154,25 @@ describe('ExpenseForm component tests', () => {
     });
     expect(screen.getByPlaceholderText('Description')).toHaveValue(description);
     expect(screen.getByPlaceholderText('Note (optional)')).toHaveValue(note);
-    expect(screen.getByPlaceholderText('Amount')).toHaveValue((parseFloat(expense.amount) / 100).toString());
+    expect(screen.getByPlaceholderText('Amount')).toHaveValue((parseFloat(amount) / 100).toString());
     expect(screen.getByPlaceholderText('Created At')).toHaveValue(moment(createdAt).format('DD/MM/yyyy'));
   });
+
+  it('Should remove expense by clicking button', async () => {
+    const expense = expenses[2];
+    const handleRemoveExpense = jest.fn();
+    renderWith(<ExpenseForm expense={expense} handleRemoveExpense={handleRemoveExpense} />, {
+      preloadedState: {
+        filters: {},
+        expenses
+      },
+      withProvider: true,
+    });
+    await user.click(screen.getByRole('button', {name: /Remove/i}));
+    await waitFor(() =>
+      expect(handleRemoveExpense).toHaveBeenCalledWith(),
+    );
+  });
+
+  
 });
