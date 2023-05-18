@@ -1,11 +1,13 @@
-import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { connect } from 'react-redux';
 import moment from 'moment';
-import { removeExpense } from '../store/actions/expenses-actions.jsx';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { removeExpense } from '../store/slices/expensesSlice.jsx';
 
-const ExpenseListItem = ({dispatch, id, description, amount, createdAt, note}) => {
-  let navigate = useNavigate();
+const ExpenseListItem = ({ expense }) => {
+  const { id, description, amount, createdAt, note } = expense;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <div>
       <p>
@@ -24,4 +26,4 @@ const ExpenseListItem = ({dispatch, id, description, amount, createdAt, note}) =
   );
 };
 
-export default connect()(ExpenseListItem);
+export default ExpenseListItem;

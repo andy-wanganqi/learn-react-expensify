@@ -1,41 +1,40 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
-import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import ExpenseForm from '../ExpenseForm.jsx';
-import { editExpense, removeExpense } from '../../store/actions/expenses-actions.jsx';
+import { editExpense, removeExpense } from '../../store/slices/expensesSlice.jsx';
 
-const EditExpensePage = (props) => {
+const EditExpensePage = () => {
   let { id } = useParams();
-  const expense = props.expenses.find(expense => expense.id === id);
-  let navigate = useNavigate();
-  return (
-    <div>
-      <h1>Edit Expense Page</h1>
-      <ExpenseForm 
-        expense={expense}
-        handleSaveExpense={(expense) => {
-          props.dispatch(editExpense({
-            id,
-            ...expense
-          }));
-          navigate('/');
-        }}
-        handleRemoveExpense={() => {
-          props.dispatch(removeExpense({
-            id
-          }));
-          navigate('/');
-        }}
-      />
-    </div>
-  );
-}
-
-const mapStateToProps = (state) => {
-  return {
-    expenses: state.expenses
+  const expenses = useSelector((state) => state.expenses);
+  const expense = expenses.find(expense => expense.id === id);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  if (!expense) {
+    navigate('/');
+  } else {
+    return (
+      <div>
+        <h1>Edit Expense Page</h1>
+        <ExpenseForm 
+          expense={expense}
+          handleSaveExpense={(expense) => {
+            dispatch(editExpense({
+              ...expense,
+              id,
+            }));
+            navigate('/');
+          }}
+          handleRemoveExpense={() => {
+            dispatch(removeExpense({
+              id
+            }));
+            navigate('/');
+          }}
+        />
+      </div>
+    );
   }
 };
 
-export default connect(mapStateToProps)(EditExpensePage);
+export default EditExpensePage;

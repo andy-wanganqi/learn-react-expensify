@@ -1,9 +1,7 @@
-import moment from 'moment';
-
 export const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
   const filteredExpenses = expenses.filter((a) => 
-    (!startDate || a.createdAt >= moment(startDate).valueOf())
-    && (!endDate || a.createdAt <= moment(endDate).valueOf())
+    (!startDate || a.createdAt >= startDate)
+    && (!endDate || a.createdAt <= endDate)
     && (typeof text !== 'string' || a.description.toLowerCase().includes(text.toLowerCase()))
   );
   if (sortBy) {

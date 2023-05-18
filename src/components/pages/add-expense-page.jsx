@@ -1,17 +1,22 @@
+import { v4 as uuid } from 'uuid';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ExpenseForm from '../ExpenseForm.jsx';
-import { addExpense } from '../../store/actions/expenses-actions.jsx';
+import { addExpense } from '../../store/slices/expensesSlice.jsx';
 
-const AddExpensePage = (props) => {
-  let navigate = useNavigate();
+const AddExpensePage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <div>
       <h1>Add Expense Page</h1>
       <ExpenseForm 
         handleSaveExpense={(expense) => {
-          props.dispatch(addExpense(expense));
+          dispatch(addExpense({
+            ...expense,
+            id: uuid(),
+          }));
           navigate('/');
         }}
       />
@@ -19,4 +24,4 @@ const AddExpensePage = (props) => {
   );
 };
 
-export default connect()(AddExpensePage);
+export default AddExpensePage;

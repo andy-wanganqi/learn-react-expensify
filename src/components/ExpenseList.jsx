@@ -1,27 +1,38 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ExpenseListItem from './ExpenseListItem.jsx';
 import { getVisibleExpenses } from './../store/selectors/expenses-selector.jsx';
 import ExpenseListFilters from './ExpenseListFilters.jsx';
 
-const ExpenseList = ({expenses}) => (
-  <div>
-    <h1>Expense List</h1>
-    <ExpenseListFilters />
-    <ul>
-      {expenses.map((expense) => (
-        <li key={expense.id}>
-          <ExpenseListItem {...expense} />
-        </li>
-      ))}
-    </ul>
-  </div>
-);
-
-const mapStateToProps = ({expenses, filters}) => {
-  return {
-    expenses: getVisibleExpenses(expenses, filters),
-  }
+const ExpenseList = () => {
+  const filters = useSelector((state) => state.filters);
+  const rawExpenses = useSelector((state) => state.expenses);
+  const expenses = getVisibleExpenses(rawExpenses, filters);
+  return (
+    <div>
+      <h1>Expense List</h1>
+      {
+        (expenses && expenses.length > 0) ? (
+          <div>
+            <ExpenseListFilters />
+            <div>Filters</div>
+            <ul>
+              {expenses.map((expense) => (
+                <li key={expense.id}>
+                  <ExpenseListItem expense={expense} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div>
+            <ExpenseListFilters />
+            <p>There is no expenses.</p>
+          </div>
+        )
+      }
+    </div>
+  )
 };
 
-export default connect(mapStateToProps)(ExpenseList);
+export default ExpenseList;
