@@ -7,10 +7,15 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Header from '../../../src/components/layout/header.jsx';
 
-test('Should render Header', async () => {
-  render(<Header />, { wrapper: BrowserRouter });
-  expect(screen.getByText('Expensify')).toBeInTheDocument();
-  expect(screen.getByText('Go home')).toBeInTheDocument();
-  expect(screen.getByText('Add Expense')).toBeInTheDocument();
-  expect(screen.getByText('Help')).toBeInTheDocument();
+describe('Header component tests', () => {
+  beforeAll(() => {
+  })
+  
+  it('Should render Header', async () => {
+    render(<Header />, { wrapper: BrowserRouter });
+    expect(screen.getByText('Expensify')).toBeInTheDocument();
+    expect(screen.getByText('Go home')).toBeInTheDocument();
+    expect(screen.getByText('Add Expense')).toBeInTheDocument();
+    expect(screen.getByText('Help')).toBeInTheDocument();
+  });
 });
