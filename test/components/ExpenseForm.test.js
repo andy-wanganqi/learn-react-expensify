@@ -168,11 +168,13 @@ describe('ExpenseForm component tests', () => {
       },
       withProvider: true,
     });
+    const user = userEvent.setup();
     await user.click(screen.getByRole('button', {name: /Remove/i}));
     await waitFor(() =>
-      expect(handleRemoveExpense).toHaveBeenCalledWith(),
+      expect(handleRemoveExpense).toHaveBeenCalled(),
     );
+    expect(screen.queryByText('Please provide description and amount.')).not.toBeInTheDocument();
   });
 
-  
+
 });
