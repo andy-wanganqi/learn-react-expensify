@@ -12,7 +12,7 @@ const ExpenseListFilters = () => {
       <div>
         Filter by: 
         <input 
-          type="text" 
+          type="text"
           value={filters.text} 
           onChange={(e) => {
             dispatch(setFilterText(e.target.value))

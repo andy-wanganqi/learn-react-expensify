@@ -6,9 +6,9 @@ module.exports = {
   entry: {
     index: {
       import: './src/app.jsx',
-      dependOn: 'shared',
+      dependOn: 'react',
     },
-    shared: 'react'
+    react: 'react'
   },
   output: {
     path: path.join(__dirname, 'public'),

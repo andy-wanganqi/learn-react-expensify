@@ -1,13 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import ExpenseListItem from './ExpenseListItem.jsx';
-import { getVisibleExpenses } from './../store/selectors/expenses-selector.jsx';
+import { selectFilteredExpenses } from '../store/selectors/expensesSelector.jsx';
 import ExpenseListFilters from './ExpenseListFilters.jsx';
 
 const ExpenseList = () => {
-  const filters = useSelector((state) => state.filters);
-  const rawExpenses = useSelector((state) => state.expenses);
-  const expenses = getVisibleExpenses(rawExpenses, filters);
+  const state = useSelector((state) => state);
+  const expenses = selectFilteredExpenses(state);
   return (
     <div>
       <h1>Expense List</h1>

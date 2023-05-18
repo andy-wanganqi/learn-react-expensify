@@ -1,15 +1,12 @@
 import moment from 'moment';
-import { setFilterText, setSortBy, setStartDate, setEndDate } from '../../../src/store/slices/filtersSlice.jsx';
-import createStore from '../../../src/store/store.jsx';
+import reducer, { setFilterText, setSortBy, setStartDate, setEndDate } from '../../../src/store/slices/filtersSlice.jsx';
 
 describe('Filters redux state tests', () => {
   beforeAll(() => {
   })
   
   it('Should initialize filters', () => {
-    const store = createStore();
-    const state = store.getState();
-    expect(state.filters).toEqual({
+    expect(reducer(undefined, { type: undefined })).toEqual({
       text: '',
       sortBy: 'amount',
       startDate: moment().startOf('month').valueOf(),
@@ -18,34 +15,62 @@ describe('Filters redux state tests', () => {
   })
 
   it('Should set filter text', async () => {
-    const store = createStore();
-    const result = await store.dispatch(setFilterText('keyword'));
-    expect(result.payload).toBe('keyword');
-    const state = store.getState();
-    expect(state.filters.text).toBe('keyword');
+    const previousState = {
+      text: '',
+      sortBy: 'amount',
+      startDate: moment().startOf('month').valueOf(),
+      endDate: moment().endOf('month').valueOf(),
+    };
+    expect(reducer(previousState, setFilterText('keyword'))).toEqual({
+      text: 'keyword',
+      sortBy: 'amount',
+      startDate: moment().startOf('month').valueOf(),
+      endDate: moment().endOf('month').valueOf(),
+    });
   })
 
   it('Should set filter sort by', async () => {
-    const store = createStore();
-    const result = await store.dispatch(setSortBy('description'));
-    expect(result.payload).toBe('description');
-    const state = store.getState();
-    expect(state.filters.sortBy).toBe('description');
+    const previousState = {
+      text: '',
+      sortBy: 'amount',
+      startDate: moment().startOf('month').valueOf(),
+      endDate: moment().endOf('month').valueOf(),
+    };
+    expect(reducer(previousState, setSortBy('description'))).toEqual({
+      text: '',
+      sortBy: 'description',
+      startDate: moment().startOf('month').valueOf(),
+      endDate: moment().endOf('month').valueOf(),
+    });
   })
 
   it('Should set filter start date', async () => {
-    const store = createStore();
-    const result = await store.dispatch(setStartDate(1000));
-    expect(result.payload).toBe(1000);
-    const state = store.getState();
-    expect(state.filters.startDate).toBe(1000);
+    const previousState = {
+      text: '',
+      sortBy: 'amount',
+      startDate: moment().startOf('month').valueOf(),
+      endDate: moment().endOf('month').valueOf(),
+    };
+    expect(reducer(previousState, setStartDate(1000))).toEqual({
+      text: '',
+      sortBy: 'amount',
+      startDate: 1000,
+      endDate: moment().endOf('month').valueOf(),
+    });
   })
 
   it('Should set filter end date', async () => {
-    const store = createStore();
-    const result = await store.dispatch(setEndDate(2000));
-    expect(result.payload).toBe(2000);
-    const state = store.getState();
-    expect(state.filters.endDate).toBe(2000);
+    const previousState = {
+      text: '',
+      sortBy: 'amount',
+      startDate: moment().startOf('month').valueOf(),
+      endDate: moment().endOf('month').valueOf(),
+    };
+    expect(reducer(previousState, setEndDate(2000))).toEqual({
+      text: '',
+      sortBy: 'amount',
+      startDate: moment().startOf('month').valueOf(),
+      endDate: 2000,
+    });
   })
 })

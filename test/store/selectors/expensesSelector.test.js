@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { getVisibleExpenses } from '../../../src/store/selectors/expenses-selector.jsx';
+import { selectFilteredExpenses } from '../../../src/store/selectors/expensesSelector.jsx';
 import expenses from '../../fixtures/expenses.js';
 
 describe('Expenses selector tests', () => {
@@ -11,7 +11,7 @@ describe('Expenses selector tests', () => {
       text: 'Bill',
       sortBy: 'createdAt',
     };
-    const result = getVisibleExpenses(expenses, filters);
+    const result = selectFilteredExpenses({ expenses, filters });
     expect(result).toEqual([ expenses[4], expenses[3] ]);
   });
   
@@ -21,7 +21,7 @@ describe('Expenses selector tests', () => {
       startDate: moment(2000).toDate(),
       endDate: undefined,
     };
-    const result = getVisibleExpenses(expenses, filters);
+    const result = selectFilteredExpenses({ expenses, filters });
     expect(result).toEqual([ expenses[2], expenses[4], expenses[3] ]);
   });
   
@@ -31,7 +31,7 @@ describe('Expenses selector tests', () => {
       startDate: undefined,
       endDate: moment(2000).toDate(),
     };
-    const result = getVisibleExpenses(expenses, filters);
+    const result = selectFilteredExpenses({ expenses, filters });
     expect(result).toEqual([ expenses[0], expenses[1], expenses[2] ]);
   });
   
@@ -41,7 +41,7 @@ describe('Expenses selector tests', () => {
       startDate: moment(1000).toDate(),
       endDate: moment(3000).toDate(),
     };
-    const result = getVisibleExpenses(expenses, filters);
+    const result = selectFilteredExpenses({ expenses, filters });
     expect(result).toEqual([ expenses[1], expenses[2], expenses[4] ]);
   });
   
@@ -49,7 +49,7 @@ describe('Expenses selector tests', () => {
     const filters = {
       sortBy: 'createdAt',
     };
-    const result = getVisibleExpenses(expenses, filters);
+    const result = selectFilteredExpenses({ expenses, filters });
     expect(result).toEqual([ expenses[0], expenses[1], expenses[2], expenses[4], expenses[3] ]);
   });
   
@@ -57,7 +57,7 @@ describe('Expenses selector tests', () => {
     const filters = {
       sortBy: 'description',
     };
-    const result = getVisibleExpenses(expenses, filters);
+    const result = selectFilteredExpenses({ expenses, filters });
     expect(result).toEqual([ expenses[2], expenses[0], expenses[3], expenses[1], expenses[4] ]);
   });
   
@@ -65,7 +65,7 @@ describe('Expenses selector tests', () => {
     const filters = {
       sortBy: 'note',
     };
-    const result = getVisibleExpenses(expenses, filters);
+    const result = selectFilteredExpenses({ expenses, filters });
     expect(result).toEqual([ expenses[1], expenses[2], expenses[3], expenses[4], expenses[0] ]);
   });
   
@@ -73,7 +73,7 @@ describe('Expenses selector tests', () => {
     const filters = {
       sortBy: 'amount',
     };
-    const result = getVisibleExpenses(expenses, filters);
+    const result = selectFilteredExpenses({ expenses, filters });
     expect(result).toEqual([ expenses[0], expenses[2], expenses[4], expenses[3], expenses[1] ]);
   });
   
@@ -81,13 +81,13 @@ describe('Expenses selector tests', () => {
     const filters = {
       sortBy: 'createdAt',
     };
-    const result = getVisibleExpenses(expenses, filters);
+    const result = selectFilteredExpenses({ expenses, filters });
     expect(result).toEqual([ expenses[0], expenses[1], expenses[2], expenses[4], expenses[3] ]);
   });
   
   it('Should sort by nothing', () => {
     const filters = {};
-    const result = getVisibleExpenses(expenses, filters);
+    const result = selectFilteredExpenses({ expenses, filters });
     expect(result).toEqual(expenses);
   });
 });
