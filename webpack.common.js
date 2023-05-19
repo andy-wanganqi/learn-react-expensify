@@ -2,17 +2,17 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
   entry: {
     index: {
-      import: './src/app.jsx',
-      dependOn: 'react',
+      import: './src/app.jsx',  
+      dependOn: ['react'],
     },
-    react: 'react'
+    react: ['react', 'react-dom', 'react-router-dom', 'redux', 'react-redux', "@reduxjs/toolkit"],
   },
   output: {
-    path: path.join(__dirname, 'public'),
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
   plugins: [new HtmlWebpackPlugin({
     title: 'Expensify',
@@ -32,13 +32,5 @@ module.exports = {
       test: /\.scss$/
     }]
   },
-  devtool: 'source-map',
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'public')
-    },
-    historyApiFallback: true,
-    compress: true,
-    port: 8080
-  }
+
 }
