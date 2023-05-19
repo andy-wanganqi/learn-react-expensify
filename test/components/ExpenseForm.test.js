@@ -60,8 +60,9 @@ describe('ExpenseForm component tests', () => {
       withProvider: true,
     });
     const user = userEvent.setup();
-    await user.type(screen.getByPlaceholderText('Description', { name: /description/i }), 'Council Bill');
-    expect(screen.getByPlaceholderText('Description', { name: /description/i })).toHaveValue('Council Bill');
+    const descriptionField = screen.getByPlaceholderText('Description', { name: /description/i });
+    await user.type(descriptionField, 'Council Bill');
+    expect(descriptionField).toHaveValue('Council Bill');
   });
 
   it('Should update note value after user typing', async () => {
@@ -73,8 +74,9 @@ describe('ExpenseForm component tests', () => {
       withProvider: true,
     });
     const user = userEvent.setup();
-    await user.type(screen.getByPlaceholderText('Note (optional)'), 'Monthly');
-    expect(screen.getByPlaceholderText('Note (optional)')).toHaveValue('Monthly');
+    const noteField = screen.getByPlaceholderText('Note (optional)');
+    await user.type(noteField, 'Monthly');
+    expect(noteField).toHaveValue('Monthly');
   });
 
   it('Should update amount value after user typing correct number', async () => {
@@ -86,8 +88,9 @@ describe('ExpenseForm component tests', () => {
       withProvider: true,
     });
     const user = userEvent.setup();
-    await user.type(screen.getByPlaceholderText('Amount'), '560.');
-    expect(screen.getByPlaceholderText('Amount')).toHaveValue('560.');
+    const amountField = screen.getByPlaceholderText('Amount');
+    await user.type(amountField, '560.');
+    expect(amountField).toHaveValue('560.');
   });
 
   it('Should update amount value after user typing incorrect number', async () => {
@@ -131,7 +134,7 @@ describe('ExpenseForm component tests', () => {
     await user.type(screen.getByPlaceholderText('Description', { name: /description/i }), 'Council Bill');
     await user.type(screen.getByPlaceholderText('Amount', { name: /amount/i }), '560.50');
     await user.click(screen.getByRole('button', {name: /Save/i}));
-    
+
     await waitFor(() =>
       expect(handleSaveExpense).toHaveBeenCalledWith({
         description: 'Council Bill',

@@ -36,9 +36,9 @@ describe('Filters redux state tests', () => {
       startDate: moment().startOf('month').valueOf(),
       endDate: moment().endOf('month').valueOf(),
     };
-    expect(reducer(previousState, setSortBy('description'))).toEqual({
+    expect(reducer(previousState, setSortBy('createdAt'))).toEqual({
       text: '',
-      sortBy: 'description',
+      sortBy: 'createdAt',
       startDate: moment().startOf('month').valueOf(),
       endDate: moment().endOf('month').valueOf(),
     });
