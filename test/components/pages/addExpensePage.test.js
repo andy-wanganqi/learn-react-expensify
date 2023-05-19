@@ -3,19 +3,18 @@
  */
 import moment from 'moment';
 import React from 'react';
-import { screen, waitFor, fireEvent } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import AddExpensePage from '../../../src/components/pages/addExpensePage.jsx';
 import expenses from '../../fixtures/expenses.js';
 import { renderWith } from '../../utils.js';
 
-describe('addExpensePage tests', () => {
+describe('AddExpensePage tests', () => {
   beforeAll(() => {
   })
 
-  // Should render addExpensePage
-  it('Should render addExpensePage without expense', async () => {
+  it('Should render AddExpensePage without expense', async () => {
     renderWith(<AddExpensePage />, {
       preloadedState: {
         filters: {},
@@ -52,4 +51,3 @@ describe('addExpensePage tests', () => {
   });
 
 });
-
