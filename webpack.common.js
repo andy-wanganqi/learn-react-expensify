@@ -14,23 +14,30 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
-  plugins: [new HtmlWebpackPlugin({
-    title: 'Expensify',
-    template: path.resolve(__dirname, './src/index.html'),
-    favicon: path.resolve(__dirname, './src/assets/favicon.png'),
-  })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Expensify',
+      template: path.resolve(__dirname, './src/index.html'),
+      favicon: path.resolve(__dirname, './src/assets/favicon.png'),
+    }),
+  ],
   module: {
     rules: [{
       loader: 'babel-loader',
       test: /\.jsx$/,
       exclude: /node_modules/
     }, {
-      use: ['style-loader', 'css-loader'],
+      use: [
+        "style-loader",
+        'css-loader', 'postcss-loader'
+      ],
       test: /\.css$/
     }, {
-      use: ['style-loader', 'css-loader', 'sass-loader'],
+      use: [
+        "style-loader",
+        'css-loader', 'postcss-loader', 'sass-loader'
+      ],
       test: /\.scss$/
     }]
   },
-
-}
+};
