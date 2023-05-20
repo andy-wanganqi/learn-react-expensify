@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import ExpenseListItem from './ExpenseListItem.jsx';
-import { selectFilteredExpenses } from '../store/selectors/expensesSelector.jsx';
+import { selectFilteredExpenses } from '../store/selectors/expenses.jsx';
 import ExpenseListFilters from './ExpenseListFilters.jsx';
 
 const ExpenseList = () => {

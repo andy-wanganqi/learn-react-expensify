@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { selectFilteredExpenses } from '../../../src/store/selectors/expensesSelector.jsx';
+import { selectFilteredExpenses } from '../../../src/store/selectors/expenses.jsx';
 import expenses from '../../fixtures/expenses.js';
 
 describe('Expenses selector tests', () => {
@@ -90,4 +90,5 @@ describe('Expenses selector tests', () => {
     const result = selectFilteredExpenses({ expenses, filters });
     expect(result).toEqual(expenses);
   });
+
 });
