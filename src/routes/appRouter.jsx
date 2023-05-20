@@ -15,7 +15,7 @@ import Header from '../components/layout/header.jsx';
 const AppRouter = () => (
   <BrowserRouter>
     <div>
-      <Header></Header>
+      <Header />
       <Routes>
         <Route path="/" element={<DashboardPage />}></Route>
         <Route path="/create" element={<AddExpensePage />}></Route>
