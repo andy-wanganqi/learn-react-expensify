@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseForm from '../ExpenseForm.jsx';
-import { editExpense, removeExpense } from '../../store/slices/expensesSlice.jsx';
+import { editExpense, removeExpense } from '../../store/slices/expensesSlice.js';
 
 const EditExpensePage = () => {
   const dispatch = useDispatch();

@@ -21,6 +21,20 @@ describe('ExpensesList component tests', () => {
       withProvider: true,
       withRouter: true,
     });
-    expect(screen.getByText(/Viewing 5/i)).toBeInTheDocument();
+    expect(screen.getByText('Viewing 5 expense(s) totalling $1,641.95')).toBeInTheDocument();
+  });
+
+  it('Should render ExpenseSummary with filtered expenses', async () => {
+    renderWith(<ExpenseSummary />, {
+      preloadedState: {
+        filters: {
+          text: 'Bill'
+        },
+        expenses
+      },
+      withProvider: true,
+      withRouter: true,
+    });
+    expect(screen.getByText('Viewing 2 expense(s) totalling $500.00')).toBeInTheDocument();
   });
 });

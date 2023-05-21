@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import ExpenseForm from '../ExpenseForm.jsx';
-import { addExpense } from '../../store/slices/expensesSlice.jsx';
+import { addExpense } from '../../store/slices/expensesSlice.js';
 
 const AddExpensePage = () => {
   const dispatch = useDispatch();

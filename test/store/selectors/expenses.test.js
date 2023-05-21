@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { selectFilteredExpenses } from '../../../src/store/selectors/expenses.jsx';
+import { selectFilteredExpenses } from '../../../src/store/selectors/expenses.js';
 import expenses from '../../fixtures/expenses.js';
 
 describe('Expenses selector tests', () => {

@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import filtersReducer from './slices/filtersSlice.jsx';
-import expensesReducer from './slices/expensesSlice.jsx';
+import filtersReducer from './slices/filtersSlice.js';
+import expensesReducer from './slices/expensesSlice.js';
 
 const createStore = (preloadedState) => {
   const store = configureStore({

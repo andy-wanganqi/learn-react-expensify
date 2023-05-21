@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
-import createStore from '../src/store/store.jsx';
+import createStore from '../src/store/store.js';
 
 export const renderWith = (
   ui,

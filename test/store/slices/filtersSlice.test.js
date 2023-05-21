@@ -1,5 +1,5 @@
 import moment from 'moment';
-import reducer, { setFilterText, setSortBy, setStartDate, setEndDate } from '../../../src/store/slices/filtersSlice.jsx';
+import reducer, { setFilterText, setSortBy, setStartDate, setEndDate } from '../../../src/store/slices/filtersSlice.js';
 
 describe('Filters redux state tests', () => {
   beforeAll(() => {

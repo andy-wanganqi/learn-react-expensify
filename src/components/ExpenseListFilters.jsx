@@ -2,7 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import DatePicker from "react-datepicker";
-import { setFilterText, setStartDate, setEndDate, setSortBy } from '../store/slices/filtersSlice.jsx';
+import { setFilterText, setStartDate, setEndDate, setSortBy } from '../store/slices/filtersSlice.js';
 
 const ExpenseListFilters = () => {
   const filters = useSelector((state) => state.filters);

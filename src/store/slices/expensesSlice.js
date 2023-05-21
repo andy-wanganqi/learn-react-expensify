@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-import moment from 'moment';
 import { createSlice } from '@reduxjs/toolkit';
 
 export const expensesSlice = createSlice({

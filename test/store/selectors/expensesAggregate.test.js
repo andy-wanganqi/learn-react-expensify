@@ -1,4 +1,4 @@
-import { selectTotalAmount } from '../../../src/store/selectors/expensesAggregate.jsx';
+import { selectTotalAmount } from '../../../src/store/selectors/expensesAggregate.js';
 import expenses from '../../fixtures/expenses.js';
 
 describe('Expenses Aggregate selector tests', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectFilteredExpenses } from '../store/selectors/expenses.jsx';
+import { selectFilteredExpenses } from '../store/selectors/expenses.js';
 import ExpenseListItem from './ExpenseListItem.jsx';
 import ExpenseListFilters from './ExpenseListFilters.jsx';
 import ExpenseSummary from './ExpenseSummary.jsx';

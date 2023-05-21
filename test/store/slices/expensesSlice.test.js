@@ -1,5 +1,4 @@
-import reducer, { addExpense, editExpense, removeExpense } from '../../../src/store/slices/expensesSlice.jsx';
-import createStore from '../../../src/store/store.jsx';
+import reducer, { addExpense, editExpense, removeExpense } from '../../../src/store/slices/expensesSlice.js';
 import expenses from '../../fixtures/expenses.js';
 
 describe('Expenses redux state tests', () => {
