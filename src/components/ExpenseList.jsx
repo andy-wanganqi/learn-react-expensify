@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import ExpenseListItem from './ExpenseListItem.jsx';
 import { selectFilteredExpenses } from '../store/selectors/expenses.jsx';
+import ExpenseListItem from './ExpenseListItem.jsx';
 import ExpenseListFilters from './ExpenseListFilters.jsx';
+import ExpenseSummary from './ExpenseSummary.jsx';
 
 const ExpenseList = () => {
   const state = useSelector((state) => state);
@@ -22,6 +23,7 @@ const ExpenseList = () => {
                 </li>
               ))}
             </ul>
+            <ExpenseSummary />
           </div>
         ) : (
           <div>
