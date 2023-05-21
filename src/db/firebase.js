@@ -25,9 +25,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+import { v4 as uuid } from 'uuid';
 export const writeUser = (userId, name) => {
   const db = getDatabase();
   set(ref(db, 'users/' + userId), {
     name,
+    lastName: uuid(),
   });
 };
