@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: {
@@ -20,6 +21,7 @@ module.exports = {
       template: path.resolve(__dirname, './src/index.html'),
       favicon: path.resolve(__dirname, './src/assets/favicon.png'),
     }),
+    new Dotenv(),
   ],
   module: {
     rules: [{
