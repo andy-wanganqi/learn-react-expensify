@@ -23,7 +23,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 
 import { v4 as uuid } from 'uuid';
 export const writeUser = (userId, name) => {
@@ -32,4 +32,9 @@ export const writeUser = (userId, name) => {
     name,
     lastName: uuid(),
   });
+};
+
+export const createExpense = (expense) => {
+  const db = getDatabase();
+  return set(ref(db, 'expenses/' + expense.id), expense);
 };

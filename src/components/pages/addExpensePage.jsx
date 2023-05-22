@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import ExpenseForm from '../ExpenseForm.jsx';
-import { addExpense } from '../../store/slices/expensesSlice.js';
+import { createExpense } from '../../store/slices/expensesSlice.js';
 
 const AddExpensePage = () => {
   const dispatch = useDispatch();
@@ -13,11 +13,14 @@ const AddExpensePage = () => {
       <h1>Add Expense Page</h1>
       <ExpenseForm 
         handleSaveExpense={(expense) => {
-          dispatch(addExpense({
+          dispatch(createExpense({
             ...expense,
             id: uuid(),
-          }));
-          navigate('/');
+          })).then(()=>{
+            navigate('/');
+          }).catch((error) => {
+            console.log('handleSaveExpense', error);
+          });
         }}
       />
     </div>
