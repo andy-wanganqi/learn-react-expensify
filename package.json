@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "webpack serve --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js & ls",
+    "build": "webpack --config webpack.prod.js",
     "jest": "jest --config=jest.config.json",
     "prod": "node ./server/server.js"
   },
