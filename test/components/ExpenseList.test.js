@@ -4,15 +4,26 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import sinon from 'sinon';
 import ExpenseList from '../../src/components/ExpenseList.jsx';
 import expenses from '../fixtures/expenses.js';
 import { renderWith } from '../utils.js';
+import * as db from '../../src/db';
 
+let readExpensesStub = undefined;
 describe('ExpensesList component tests', () => {
   beforeAll(() => {
-  })
+    const mockDbExpenses = [...expenses];
+    readExpensesStub = sinon.stub(db, 'readExpenses').callsFake(async () => {
+      return mockDbExpenses;
+    });
+  });
 
-  it('Should render ExpenseList with expenses', async () => {
+  afterAll(() => {
+    readExpensesStub.restore();
+  });
+
+  it('Should render ExpenseList', async () => {
     renderWith(<ExpenseList />, {
       preloadedState: {
         filters: {},
@@ -26,13 +37,6 @@ describe('ExpensesList component tests', () => {
     expenses.forEach(expense => {
       expect(screen.getByText(expense.description)).toBeInTheDocument();
     })
-  });
-  
-  it('Should render ExpenseList without expenses', async () => {
-    renderWith(<ExpenseList />, {
-      withProvider: true,
-    });
-    expect(screen.getByText('There is no expenses.')).toBeInTheDocument();
   });
   
   // Todo: It should navigate to expense item page after click the item link

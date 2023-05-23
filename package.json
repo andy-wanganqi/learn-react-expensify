@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "jest": "jest --config=jest.config.json",
+    "jest": "jest --config=jest.config.js",
     "prod": "node ./server/server.js"
   },
   "author": "Andy Wang",
@@ -34,6 +34,8 @@
     "node-sass": "^8.0.0",
     "postcss": "^8.4.23",
     "postcss-loader": "^7.3.0",
+    "redux-mock-store": "^1.5.4",
+    "sinon": "^15.1.0",
     "sass-loader": "^13.2.2",
     "style-loader": "^3.3.2",
     "webpack": "^5.80.0",
@@ -55,6 +57,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.11.0",
     "redux": "^4.2.1",
+    "redux-thunk": "^2.4.2",
     "uuid": "^9.0.0",
     "validator": "^13.9.0"
   }

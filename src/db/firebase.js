@@ -3,7 +3,7 @@ import config from '../config.js';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, get, query, remove } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -23,13 +23,34 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 
-import { v4 as uuid } from 'uuid';
-export const writeUser = (userId, name) => {
+export const createExpense = async (expense) => {
   const db = getDatabase();
-  set(ref(db, 'users/' + userId), {
-    name,
-    lastName: uuid(),
+  return await set(ref(db, 'expenses/' + expense.id), expense);
+};
+
+export const readExpenses = async () => {
+  const db = getDatabase();
+  const dbRef = ref(db, 'expenses');
+  const dbQuery = query(dbRef);
+  const snapshot = await get(dbQuery);
+  
+  const expenses = [];
+  snapshot.forEach((childSnapshot) => {
+    var childData = childSnapshot.val();
+    expenses.push(childData);
   });
+  return expenses;
+};
+
+export const updateExpense = async (expense) => {
+  const db = getDatabase();
+  return await set(ref(db, 'expenses/' + expense.id), expense);
+};
+
+export const deleteExpense = async (id) => {
+  const db = getDatabase();
+  // return await remove(ref(db, 'expenses/' + id));
+  return await set(ref(db, 'expenses/' + id), null);
 };
