@@ -1,21 +1,22 @@
-import { createAsyncThunk, createSlice, createAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as db from '../../db';
 
 export const createExpense = createAsyncThunk(
   'expenses/createExpense',
   async (expense) => {
-    await db.createExpense(expense);
+    await db.createExpenseAsync(expense);
     return expense;
   }
 );
 
+const _addExpense = (state, action) => {
+  state.push(action.payload);
+};
 export const expensesSlice = createSlice({
   name: 'expenses',
   initialState: [],
   reducers: {
-    addExpense: (state, action) => {
-      state.push(action.payload);
-    },
+    addExpense: _addExpense,
     editExpense: (state, action) => {
       const index = state.findIndex(expense => expense.id === action.payload.id);
       if (index >= 0) {
@@ -33,7 +34,7 @@ export const expensesSlice = createSlice({
     builder.addCase(createExpense.pending, (state, action) => {
     });
     builder.addCase(createExpense.fulfilled, (state, action) => {
-      this.actions.addExpense(state, action);
+      _addExpense(state, action);
     });
     builder.addCase(createExpense.rejected, (state, action) => {
     });

@@ -24,8 +24,8 @@ const EditExpensePage = () => {
       <h1>Edit Expense Page</h1>
       <ExpenseForm 
         expense={expense}
-        handleSaveExpense={(expense) => {
-          dispatch(editExpense({
+        handleSaveExpense={async(expense) => {
+          await dispatch(editExpense({
             ...expense,
             id,
           }));

@@ -54,12 +54,12 @@ const ExpenseForm = (props) => {
       return true;
     }
   };
-  const handleSaveExpense = (e) => {
+  const handleSaveExpense = async (e) => {
     e.preventDefault();
     if (!validateForm()){
       return;
     }
-    props.handleSaveExpense({
+    await props.handleSaveExpense({
       description: expenseInForm.description,
       amount: parseFloat(expenseInForm.amountText) * 100,
       note: expenseInForm.note,

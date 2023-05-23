@@ -25,16 +25,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
-import { v4 as uuid } from 'uuid';
-export const writeUser = (userId, name) => {
+export const createExpenseAsync = async (expense) => {
   const db = getDatabase();
-  set(ref(db, 'users/' + userId), {
-    name,
-    lastName: uuid(),
-  });
-};
-
-export const createExpense = (expense) => {
-  const db = getDatabase();
-  return set(ref(db, 'expenses/' + expense.id), expense);
+  return await set(ref(db, 'expenses/' + expense.id), expense);
 };

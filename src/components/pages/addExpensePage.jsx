@@ -12,15 +12,12 @@ const AddExpensePage = () => {
     <div>
       <h1>Add Expense Page</h1>
       <ExpenseForm 
-        handleSaveExpense={(expense) => {
-          dispatch(createExpense({
+        handleSaveExpense={async (expense) => {
+          await dispatch(createExpense({
             ...expense,
             id: uuid(),
-          })).then(()=>{
-            navigate('/');
-          }).catch((error) => {
-            console.log('handleSaveExpense', error);
-          });
+          }));
+          navigate('/');
         }}
       />
     </div>
