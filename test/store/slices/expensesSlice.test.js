@@ -1,7 +1,9 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
-import reducer, { addExpense, editExpense, removeExpense, createExpense, readExpenses } from '../../../src/store/slices/expensesSlice.js';
+import reducer, { 
+  addExpense, editExpense, removeExpense, createExpense, readExpenses, updateExpense 
+} from '../../../src/store/slices/expensesSlice.js';
 import expenses from '../../fixtures/expenses.js';
 import * as db from '../../../src/db';
 
@@ -60,7 +62,7 @@ describe('Expenses redux state tests', () => {
     expect(actions[0].type).toEqual('expenses/createExpense/pending');
     expect(actions[1].type).toEqual('expenses/createExpense/fulfilled');
 
-    expect(mockDbExpenses).toEqual([expenses[2]]);
+    expect(mockDbExpenses).toEqual([payload]);
 
     createExpenseStub.restore();
   });
@@ -78,5 +80,26 @@ describe('Expenses redux state tests', () => {
     expect(actions[1].type).toEqual('expenses/readExpenses/fulfilled');
 
     readExpensesStub.restore();
+  });
+
+  it('Should update expense', async () => {
+    let mockDbExpense = undefined;
+    const updateExpenseStub = sinon.stub(db, 'updateExpense').callsFake(async (expense) => {
+      mockDbExpense = expense;
+    });
+
+    const store = mockStore({});
+    const payload = {
+      ...expenses[2],
+      description: 'Phone Bill'
+    };
+    await store.dispatch(updateExpense(payload));
+    const actions = store.getActions();
+    expect(actions[0].type).toEqual('expenses/updateExpense/pending');
+    expect(actions[1].type).toEqual('expenses/updateExpense/fulfilled');
+
+    expect(mockDbExpense).toEqual(payload);
+
+    updateExpenseStub.restore();
   });
 })

@@ -44,3 +44,8 @@ export const readExpenses = async () => {
   });
   return expenses;
 };
+
+export const updateExpense = async (expense) => {
+  const db = getDatabase();
+  return await set(ref(db, 'expenses/' + expense.id), expense);
+};

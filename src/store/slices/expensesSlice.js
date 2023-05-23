@@ -17,20 +17,31 @@ export const readExpenses = createAsyncThunk(
   }
 );
 
+export const updateExpense = createAsyncThunk(
+  'expenses/updateExpense',
+  async (expense) => {
+    await db.updateExpense(expense);
+    return expense;
+  }
+);
+
 const _addExpense = (state, action) => {
   state.push(action.payload);
 };
+
+const _editExpense = (state, action) => {
+  const index = state.findIndex(expense => expense.id === action.payload.id);
+  if (index >= 0) {
+    state[index] = action.payload;
+  }
+};
+
 export const expensesSlice = createSlice({
   name: 'expenses',
   initialState: [],
   reducers: {
     addExpense: _addExpense,
-    editExpense: (state, action) => {
-      const index = state.findIndex(expense => expense.id === action.payload.id);
-      if (index >= 0) {
-        state[index] = action.payload;
-      }
-    },
+    editExpense: _editExpense,
     removeExpense: (state, action) => {
       const index = state.findIndex(expense => expense.id === action.payload.id);
       if (index >= 0) {
@@ -52,6 +63,13 @@ export const expensesSlice = createSlice({
       state.splice(0, state.length, ...action.payload);
     });
     builder.addCase(readExpenses.rejected, (state, action) => {
+    });
+    builder.addCase(updateExpense.pending, (state, action) => {
+    });
+    builder.addCase(updateExpense.fulfilled, (state, action) => {
+      _editExpense(state, action);
+    });
+    builder.addCase(updateExpense.rejected, (state, action) => {
     });
   },
 });

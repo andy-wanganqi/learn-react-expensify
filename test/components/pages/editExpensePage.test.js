@@ -6,9 +6,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
+import sinon from 'sinon';
 import EditExpensePage from '../../../src/components/pages/editExpensePage.jsx';
 import expenses from '../../fixtures/expenses.js';
 import { renderWith } from '../../utils.js';
+import * as db from '../../../src/db';
 
 jest.mock('react-router-dom', () => {
   const mockNavigate = jest.fn();
@@ -42,6 +44,11 @@ describe('EditExpensePage tests', () => {
   });
 
   it('Should handle save existing expense', async () => {
+    let mockDbExpense = undefined;
+    const updateExpenseSub = sinon.stub(db, 'updateExpense').callsFake(async (expense) => {
+      mockDbExpense = expense;
+    });
+
     const index = 2;
     useParams.mockReturnValue({ id: expenses[index].id });
     const { store } = renderWith(<EditExpensePage />, {
@@ -57,11 +64,15 @@ describe('EditExpensePage tests', () => {
     await user.type(screen.getByPlaceholderText('Amount', { name: /amount/i }), '1');
     await user.click(screen.getByRole('button', {name: /Save/i}));
 
-    expect(store.getState().expenses[index]).toMatchObject({
+    const expectExpense = {
       ...expenses[index],
       description: expenses[index].description + 'CB',
       amount: 45100,
-    });
+    };
+    expect(store.getState().expenses[index]).toMatchObject(expectExpense);
+    expect(mockDbExpense).toMatchObject(expectExpense);
+
+    updateExpenseSub.restore();
   });
 
   it('Should navigate when expense does not exist', async () => {
@@ -79,7 +90,7 @@ describe('EditExpensePage tests', () => {
     expect(navigate).toHaveBeenCalledWith('/');
   });
 
-  it('Should handle save existing expense', async () => {
+  it('Should handle remove existing expense', async () => {
     const index = 2;
     useParams.mockReturnValue({ id: expenses[index].id });
     const { store } = renderWith(<EditExpensePage />, {
