@@ -2,7 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { removeExpense } from '../store/slices/expensesSlice.js';
+import { deleteExpense } from '../store/slices/expensesSlice.js';
 import { formatCurrency } from '../utils/amountConvert.js';
 
 const ExpenseListItem = ({ expense }) => {
@@ -17,9 +17,9 @@ const ExpenseListItem = ({ expense }) => {
           navigate(`/edit/${id}`);
         }}>Edit</button>
         Expense: <NavLink to={`/edit/${id}`}>{description}</NavLink> with {formatCurrency(amount)} created at: {moment(createdAt).format()} 
-        <button onClick={(e) => {
+        <button onClick={async (e) => {
           e.preventDefault();
-          dispatch(removeExpense({ id }));
+          await dispatch(deleteExpense({ id }));
         }}>Remove</button>
       </p>
       <p>Note: {note}</p>

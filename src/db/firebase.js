@@ -3,7 +3,7 @@ import config from '../config.js';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, set, get, query } from "firebase/database";
+import { getDatabase, ref, set, get, query, remove } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -39,7 +39,6 @@ export const readExpenses = async () => {
   const expenses = [];
   snapshot.forEach((childSnapshot) => {
     var childData = childSnapshot.val();
-    console.log(childData);
     expenses.push(childData);
   });
   return expenses;
@@ -48,4 +47,10 @@ export const readExpenses = async () => {
 export const updateExpense = async (expense) => {
   const db = getDatabase();
   return await set(ref(db, 'expenses/' + expense.id), expense);
+};
+
+export const deleteExpense = async (id) => {
+  const db = getDatabase();
+  // return await remove(ref(db, 'expenses/' + id));
+  return await set(ref(db, 'expenses/' + id), null);
 };

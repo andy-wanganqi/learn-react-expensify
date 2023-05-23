@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 import reducer, { 
-  addExpense, editExpense, removeExpense, createExpense, readExpenses, updateExpense 
+  addExpense, editExpense, removeExpense, createExpense, readExpenses, updateExpense, deleteExpense
 } from '../../../src/store/slices/expensesSlice.js';
 import expenses from '../../fixtures/expenses.js';
 import * as db from '../../../src/db';
@@ -101,5 +101,25 @@ describe('Expenses redux state tests', () => {
     expect(mockDbExpense).toEqual(payload);
 
     updateExpenseStub.restore();
+  });
+
+  it('Should delete expense', async () => {
+    let mockDeletedId = undefined;
+    const deleteExpenseStub = sinon.stub(db, 'deleteExpense').callsFake(async (id) => {
+      mockDeletedId = id;
+    });
+
+    const store = mockStore({});
+    const payload = {
+      id: expenses[2].id
+    };
+    await store.dispatch(deleteExpense(payload));
+    const actions = store.getActions();
+    expect(actions[0].type).toEqual('expenses/deleteExpense/pending');
+    expect(actions[1].type).toEqual('expenses/deleteExpense/fulfilled');
+
+    expect(mockDeletedId).toEqual(payload.id);
+
+    deleteExpenseStub.restore();
   });
 })

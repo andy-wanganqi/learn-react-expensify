@@ -45,7 +45,7 @@ describe('EditExpensePage tests', () => {
 
   it('Should handle save existing expense', async () => {
     let mockDbExpense = undefined;
-    const updateExpenseSub = sinon.stub(db, 'updateExpense').callsFake(async (expense) => {
+    const updateExpenseStub = sinon.stub(db, 'updateExpense').callsFake(async (expense) => {
       mockDbExpense = expense;
     });
 
@@ -72,7 +72,7 @@ describe('EditExpensePage tests', () => {
     expect(store.getState().expenses[index]).toMatchObject(expectExpense);
     expect(mockDbExpense).toMatchObject(expectExpense);
 
-    updateExpenseSub.restore();
+    updateExpenseStub.restore();
   });
 
   it('Should navigate when expense does not exist', async () => {
@@ -91,6 +91,11 @@ describe('EditExpensePage tests', () => {
   });
 
   it('Should handle remove existing expense', async () => {
+    let mockDeletedId = undefined;
+    const deleteExpenseStub = sinon.stub(db, 'deleteExpense').callsFake(async (id) => {
+      mockDeletedId = id;
+    });
+
     const index = 2;
     useParams.mockReturnValue({ id: expenses[index].id });
     const { store } = renderWith(<EditExpensePage />, {
@@ -110,6 +115,9 @@ describe('EditExpensePage tests', () => {
     const expectExpenses = [...expenses];
     expectExpenses.splice(2, 1)
     expect(store.getState().expenses).toEqual(expectExpenses);
+    expect(mockDeletedId).toEqual(expenses[index].id);
+
+    deleteExpenseStub.restore();
   });
 
 });

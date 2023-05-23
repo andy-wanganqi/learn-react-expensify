@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseForm from '../ExpenseForm.jsx';
-import { updateExpense, removeExpense } from '../../store/slices/expensesSlice.js';
+import { updateExpense, deleteExpense } from '../../store/slices/expensesSlice.js';
 
 const EditExpensePage = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const EditExpensePage = () => {
       <h1>Edit Expense Page</h1>
       <ExpenseForm 
         expense={expense}
-        handleSaveExpense={async(expense) => {
+        handleSaveExpense={async (expense) => {
           const payload = {
             ...expense,
             id,
@@ -32,10 +32,11 @@ const EditExpensePage = () => {
           await dispatch(updateExpense(payload));
           navigate('/');
         }}
-        handleRemoveExpense={() => {
-          dispatch(removeExpense({
+        handleRemoveExpense={async () => {
+          const payload = {
             id
-          }));
+          };
+          await dispatch(deleteExpense(payload));
           navigate('/');
         }}
       />

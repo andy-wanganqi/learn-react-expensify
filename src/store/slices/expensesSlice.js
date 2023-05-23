@@ -11,8 +11,8 @@ export const createExpense = createAsyncThunk(
 
 export const readExpenses = createAsyncThunk(
   'expenses/readExpenses',
-  () => {
-    const expenses = db.readExpenses();
+  async () => {
+    const expenses = await db.readExpenses();
     return expenses;
   }
 );
@@ -22,6 +22,16 @@ export const updateExpense = createAsyncThunk(
   async (expense) => {
     await db.updateExpense(expense);
     return expense;
+  }
+);
+
+export const deleteExpense = createAsyncThunk(
+  'expenses/deleteExpense',
+  async ({ id }) => {
+    await db.deleteExpense(id);
+    return {
+      id
+    };
   }
 );
 
@@ -36,18 +46,20 @@ const _editExpense = (state, action) => {
   }
 };
 
+const _removeExpense = (state, action) => {
+  const index = state.findIndex(expense => expense.id === action.payload.id);
+  if (index >= 0) {
+    state.splice(index, 1);
+  }
+};
+
 export const expensesSlice = createSlice({
   name: 'expenses',
   initialState: [],
   reducers: {
     addExpense: _addExpense,
     editExpense: _editExpense,
-    removeExpense: (state, action) => {
-      const index = state.findIndex(expense => expense.id === action.payload.id);
-      if (index >= 0) {
-        state.splice(index, 1);
-      }
-    },
+    removeExpense: _removeExpense,
   },
   extraReducers: (builder) => {
     builder.addCase(createExpense.pending, (state, action) => {
@@ -70,6 +82,13 @@ export const expensesSlice = createSlice({
       _editExpense(state, action);
     });
     builder.addCase(updateExpense.rejected, (state, action) => {
+    });
+    builder.addCase(deleteExpense.pending, (state, action) => {
+    });
+    builder.addCase(deleteExpense.fulfilled, (state, action) => {
+      _removeExpense(state, action);
+    });
+    builder.addCase(deleteExpense.rejected, (state, action) => {
     });
   },
 });
