@@ -14,7 +14,10 @@ import * as db from '../../../src/db';
 
 describe('AddExpensePage tests', () => {
   beforeAll(() => {
-  })
+  });
+
+  afterAll(() => {
+  });
 
   it('Should render AddExpensePage without expense', async () => {
     renderWith(<AddExpensePage />, {
@@ -30,7 +33,7 @@ describe('AddExpensePage tests', () => {
 
   it('Should handle save new expense', async () => {
     const mockDbExpenses = [];
-    const createExpenseAsyncStub = sinon.stub(db, 'createExpenseAsync').callsFake(async (expense) => {
+    const createExpenseStub = sinon.stub(db, 'createExpense').callsFake(async (expense) => {
       mockDbExpenses.push(expense);
     });
 
@@ -58,7 +61,7 @@ describe('AddExpensePage tests', () => {
         createdAt: moment().startOf('day').valueOf(),
       });
       expect(mockDbExpenses.length).toBe(1);
-      createExpenseAsyncStub.restore();
+      createExpenseStub.restore();
     });
   });
 });

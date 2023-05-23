@@ -1,3 +1,4 @@
 import * as firebase from './firebase.js';
 
-export const createExpenseAsync = firebase.createExpenseAsync;
+export const createExpense = firebase.createExpense;
+export const readExpenses = firebase.readExpenses;

@@ -1,13 +1,23 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectFilteredExpenses } from '../store/selectors/expenses.js';
 import ExpenseListItem from './ExpenseListItem.jsx';
 import ExpenseListFilters from './ExpenseListFilters.jsx';
 import ExpenseSummary from './ExpenseSummary.jsx';
+import { readExpenses } from '../store/slices/expensesSlice.js';
 
 const ExpenseList = () => {
+  const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const expenses = selectFilteredExpenses(state);
+
+  useEffect(() => {
+    async function dispatchReadExpenses() {
+      await dispatch(readExpenses());
+    };
+    dispatchReadExpenses();
+  }, [dispatch]);
+
   return (
     <div>
       <h1>Expense List</h1>

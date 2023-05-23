@@ -4,8 +4,16 @@ import * as db from '../../db';
 export const createExpense = createAsyncThunk(
   'expenses/createExpense',
   async (expense) => {
-    await db.createExpenseAsync(expense);
+    await db.createExpense(expense);
     return expense;
+  }
+);
+
+export const readExpenses = createAsyncThunk(
+  'expenses/readExpenses',
+  () => {
+    const expenses = db.readExpenses();
+    return expenses;
   }
 );
 
@@ -37,6 +45,13 @@ export const expensesSlice = createSlice({
       _addExpense(state, action);
     });
     builder.addCase(createExpense.rejected, (state, action) => {
+    });
+    builder.addCase(readExpenses.pending, (state, action) => {
+    });
+    builder.addCase(readExpenses.fulfilled, (state, action) => {
+      state.splice(0, state.length, ...action.payload);
+    });
+    builder.addCase(readExpenses.rejected, (state, action) => {
     });
   },
 });

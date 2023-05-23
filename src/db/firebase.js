@@ -3,7 +3,7 @@ import config from '../config.js';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, get, query } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -25,7 +25,22 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
-export const createExpenseAsync = async (expense) => {
+export const createExpense = async (expense) => {
   const db = getDatabase();
   return await set(ref(db, 'expenses/' + expense.id), expense);
+};
+
+export const readExpenses = async () => {
+  const db = getDatabase();
+  const dbRef = ref(db, 'expenses');
+  const dbQuery = query(dbRef);
+  const snapshot = await get(dbQuery);
+  
+  const expenses = [];
+  snapshot.forEach((childSnapshot) => {
+    var childData = childSnapshot.val();
+    console.log(childData);
+    expenses.push(childData);
+  });
+  return expenses;
 };

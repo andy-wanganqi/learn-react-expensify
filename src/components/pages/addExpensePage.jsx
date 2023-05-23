@@ -6,17 +6,18 @@ import ExpenseForm from '../ExpenseForm.jsx';
 import { createExpense } from '../../store/slices/expensesSlice.js';
 
 const AddExpensePage = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <div>
       <h1>Add Expense Page</h1>
       <ExpenseForm 
         handleSaveExpense={async (expense) => {
-          await dispatch(createExpense({
+          const payload = {
             ...expense,
             id: uuid(),
-          }));
+          };
+          await dispatch(createExpense(payload));
           navigate('/');
         }}
       />
