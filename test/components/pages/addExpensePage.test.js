@@ -13,6 +13,16 @@ import { renderWith } from '../../utils.js';
 import db from '../../../src/db';
 
 describe('AddExpensePage tests', () => {
+  let createExpenseStub;
+  
+  beforeEach(() => {
+    createExpenseStub = sinon.stub(db, 'createExpense');
+  });
+  
+  afterEach(() => {
+    createExpenseStub.restore();
+  });
+
   it('Should render AddExpensePage without expense', async () => {
     renderWith(<AddExpensePage />, {
       preloadedState: {
@@ -27,7 +37,7 @@ describe('AddExpensePage tests', () => {
 
   it('Should handle save new expense', async () => {
     const mockDbExpenses = [];
-    const createExpenseStub = sinon.stub(db, 'createExpense').callsFake(async (expense) => {
+    createExpenseStub.callsFake(async (expense) => {
       mockDbExpenses.push(expense);
     });
 
@@ -55,7 +65,6 @@ describe('AddExpensePage tests', () => {
         createdAt: moment().startOf('day').valueOf(),
       });
       expect(mockDbExpenses.length).toBe(1);
-      createExpenseStub.restore();
     });
   });
 });

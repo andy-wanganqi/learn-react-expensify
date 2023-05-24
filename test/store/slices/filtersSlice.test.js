@@ -2,9 +2,6 @@ import moment from 'moment';
 import reducer, { setFilterText, setSortBy, setStartDate, setEndDate } from '../../../src/store/slices/filtersSlice.js';
 
 describe('Filters redux state tests', () => {
-  beforeAll(() => {
-  })
-  
   it('Should initialize filters', () => {
     expect(reducer(undefined, { type: undefined })).toEqual({
       text: '',
@@ -12,7 +9,7 @@ describe('Filters redux state tests', () => {
       startDate: moment().startOf('month').valueOf(),
       endDate: moment().endOf('month').valueOf(),
     });
-  })
+  });
 
   it('Should set filter text', async () => {
     const previousState = {
@@ -27,7 +24,7 @@ describe('Filters redux state tests', () => {
       startDate: moment().startOf('month').valueOf(),
       endDate: moment().endOf('month').valueOf(),
     });
-  })
+  });
 
   it('Should set filter sort by', async () => {
     const previousState = {
@@ -42,7 +39,7 @@ describe('Filters redux state tests', () => {
       startDate: moment().startOf('month').valueOf(),
       endDate: moment().endOf('month').valueOf(),
     });
-  })
+  });
 
   it('Should set filter start date', async () => {
     const previousState = {
@@ -57,7 +54,7 @@ describe('Filters redux state tests', () => {
       startDate: 1000,
       endDate: moment().endOf('month').valueOf(),
     });
-  })
+  });
 
   it('Should set filter end date', async () => {
     const previousState = {
@@ -72,5 +69,5 @@ describe('Filters redux state tests', () => {
       startDate: moment().startOf('month').valueOf(),
       endDate: 2000,
     });
-  })
-})
+  });
+});

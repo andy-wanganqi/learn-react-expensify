@@ -11,20 +11,23 @@ import filters from '../../fixtures/filters.js';
 import { renderWith } from '../../utils.js';
 import db from '../../../src/db';
 
-let readExpensesStub = undefined;
 describe('DashboardPage tests', () => {
-  beforeAll(() => {
-    const mockDbExpenses = [...expenses];
-    readExpensesStub = sinon.stub(db, 'readExpenses').callsFake(async () => {
-      return mockDbExpenses;
-    });
+  let readExpensesStub;
+  
+  beforeEach(() => {
+    readExpensesStub = sinon.stub(db, 'readExpenses');
   });
 
-  afterAll(() => {
+  afterEach(() => {
     readExpensesStub.restore();
   });
 
   it('Should render DashboardPage', async () => {
+    const mockDbExpenses = [...expenses];
+    readExpensesStub.callsFake(async () => {
+      return mockDbExpenses;
+    });
+    
     renderWith(<DashboardPage />, {
       preloadedState: {
         filters,
