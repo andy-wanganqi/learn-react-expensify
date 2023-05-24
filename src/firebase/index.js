@@ -95,9 +95,15 @@ export const userSignOut = () => {
 
 export const getAuthObservable = () => _authObservable;
 
-export const getToken = () => _token;
+export const extractUser = (user) => {
+  const { uid, accessToken, email, displayName, photoUrl } = user;
+  return { uid, accessToken, email, displayName, photoUrl };
+};
 
-export const getUser = () => _user;
+export const isAuthUser = (user) => {
+  return (user && user.uid);
+};
+
 
 export const createExpense = async (expense) => {
   const db = getDatabase();

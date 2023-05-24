@@ -16,6 +16,9 @@ describe('User redux state tests', () => {
     const signInUser = {
       uid: 'uid1',
       accessToken: 'accessToken1',
+      email: 'email1',
+      displayName: 'displayName1',
+      photoUrl: 'photoUrl1',
     };
     expect(reducer(previousState, setUser(signInUser))).toEqual(signInUser);
   });
@@ -28,6 +31,9 @@ describe('User redux state tests', () => {
     expect(reducer(previousState, clearUser())).toEqual({
       uid: '',
       accessToken: '',
+      email: '',
+      displayName: '',
+      photoUrl: '',
     });
   });
 });

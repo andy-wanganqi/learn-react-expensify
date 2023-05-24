@@ -8,13 +8,19 @@ export const userSlice = createSlice({
   },
   reducers: {
     setUser: (state, action) => {
-      Object.assign(state, action.payload);
+      const { uid, accessToken, email, displayName, photoUrl } = action.payload;
+      state.uid = uid;
+      state.accessToken = accessToken;
+      state.email = email;
+      state.displayName = displayName;
+      state.photoUrl = photoUrl;
     },
     clearUser: (state, action) => {
-      Object.assign(state, {
-        uid: '',
-        accessToken: '',
-      });
+      state.uid = '';
+      state.accessToken = '';
+      state.email = '';
+      state.displayName = '';
+      state.photoUrl = '';
     },
   },
 });

@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import sinon from 'sinon';
@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import LoginPage from '../../../src/components/pages/loginPage.jsx';
 import { renderWith } from '../../utils.js';
 import auth from '../../../src/auth';
+import { signedInGoogleUser, signedOutGoogleUser } from '../../fixtures/googleUsers.js';
 
 jest.mock('react-router-dom', () => {
   const mockNavigate = jest.fn();
@@ -22,25 +23,24 @@ jest.mock('react-router-dom', () => {
 
 describe('LoginPage tests', () => { 
   let userSignInStub;
-  let getUserStub;
+  let userSignOutStub;
   let getAuthObservableStub;
 
   beforeEach(() => {
     userSignInStub = sinon.stub(auth, 'userSignIn');
-    getUserStub = sinon.stub(auth, 'getUser');
+    userSignOutStub = sinon.stub(auth, 'userSignOut');
     getAuthObservableStub = sinon.stub(auth, 'getAuthObservable');
   });
 
   afterEach(() => {
     userSignInStub.restore();
-    getUserStub.restore();
+    userSignOutStub.restore();
     getAuthObservableStub.restore();
   })
 
   it('Should render LoginPage when user has not signed in', async () => {
     const mockUser = undefined;
     userSignInStub.callsFake(() => { });
-    getUserStub.returns(mockUser);
     getAuthObservableStub.returns(new Observable((subscriber) => {
       subscriber.next(mockUser);
     }));
@@ -52,16 +52,14 @@ describe('LoginPage tests', () => {
       withRouter: true,
     });
     expect(screen.queryByText(/Login Page/i)).toBeInTheDocument();
-
-    expect(navigate).toHaveBeenLastCalledWith('/');
+    expect(screen.queryByText(/Login with google/i)).toBeInTheDocument();
   });
 
   it('Should render LoginPage when user has signed in', async () => {
-    const mockUser = {};
     userSignInStub.callsFake(() => { });
-    getUserStub.returns(mockUser);
     getAuthObservableStub.returns(new Observable((subscriber) => {
-      subscriber.next(mockUser);
+      console.log('signedInGoogleUser', signedInGoogleUser);
+      subscriber.next(signedInGoogleUser);
     }));
 
     renderWith(<LoginPage />, {
@@ -69,12 +67,10 @@ describe('LoginPage tests', () => {
       withRouter: true,
     });
     expect(screen.queryByText(/Login Page/i)).toBeInTheDocument();
-
-    const navigate = useNavigate();
-    expect(navigate).toHaveBeenLastCalledWith('/dashboard');
+    expect(screen.queryByText(/Go to dashboard/i)).toBeInTheDocument();
   });
 
-  it('Should click login to sign in with google auth', async () => {
+  it('Should show signed in content after signed in', async () => {
     let mockUser = undefined;
     let subscriberRef;
     let observable = new Observable((subscriber) => {
@@ -82,10 +78,8 @@ describe('LoginPage tests', () => {
       subscriber.next(mockUser);
     });
     userSignInStub.callsFake(() => { 
-      mockUser = {};
-      subscriberRef.next(mockUser);
+      subscriberRef.next(signedInGoogleUser);
     });
-    getUserStub.returns(mockUser);
     getAuthObservableStub.returns(observable);
 
     renderWith(<LoginPage />, {
@@ -97,6 +91,34 @@ describe('LoginPage tests', () => {
     navigate.mockClear();
     const user = userEvent.setup();
     await user.click(screen.getByRole('button', {name: /Login with google/i}));
-    expect(navigate).toHaveBeenLastCalledWith('/dashboard');
+    await waitFor(() => {
+      expect(screen.queryByText(/Go to dashboard/i)).toBeInTheDocument();
+    });
+  });
+
+  it('Should show signed out content after signed out', async () => {
+    let mockUser = signedInGoogleUser;
+    let subscriberRef;
+    let observable = new Observable((subscriber) => {
+      subscriberRef = subscriber;
+      subscriber.next(mockUser);
+    });
+    userSignOutStub.callsFake(() => { 
+      subscriberRef.next(signedOutGoogleUser);
+    });
+    getAuthObservableStub.returns(observable);
+
+    renderWith(<LoginPage />, {
+      withProvider: true,
+      withRouter: true,
+    });
+
+    const navigate = useNavigate();
+    navigate.mockClear();
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', {name: /Not Me/i}));
+    await waitFor(() => {
+      expect(screen.queryByText(/Login with google/i)).toBeInTheDocument();
+    });
   });
 });
