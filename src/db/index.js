@@ -1,4 +1,4 @@
-import * as firebase from './firebase.js';
+import * as firebase from '../firebase';
 
 export const createExpense = firebase.createExpense;
 export const readExpenses = firebase.readExpenses;
