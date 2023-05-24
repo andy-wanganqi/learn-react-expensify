@@ -124,4 +124,4 @@ describe('Expenses redux state tests', () => {
 
     expect(mockDeletedId).toEqual(payload.id);
   });
-})
+});
