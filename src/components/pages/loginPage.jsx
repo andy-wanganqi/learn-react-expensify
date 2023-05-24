@@ -1,11 +1,27 @@
-import React from 'react';
-import * as firebase from '../../firebase'
+import React, { useEffect } from 'react';
+import { useNavigate, use } from "react-router-dom";
+import auth from '../../auth';
 
-const LoginPage = () => (
-  <div>
-    <h1>Login Page</h1>
-    <button>Login with google</button>
-  </div>
-);
+const LoginPage = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    auth.userAuth(() => navigate('/dashboard'), () => navigate('/'));
+  }, []);
+
+  return (
+    <div>
+      <h1>Login Page</h1>
+      <button onClick={(e) => {
+        const user = auth.getUser();
+        if(user) {
+          navigate('/dashboard');
+          return;
+        }
+        auth.userSignIn();
+      }}>Login with google</button>
+    </div>
+  );
+};
 
 export default LoginPage;
