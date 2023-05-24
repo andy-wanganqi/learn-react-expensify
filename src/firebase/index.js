@@ -51,7 +51,7 @@ export const initialize = () => {
   // const analytics = getAnalytics(app);
   auth = getAuth(app);
 
-  _authObservable = new Observable(subscriber => {
+  _authObservable = new Observable((subscriber) => {
     onAuthStateChanged(auth, (user) => handleAuthStateChanged(user, subscriber));
   });
 };

@@ -1,6 +1,15 @@
 import * as firebase from '../firebase';
 
-export const createExpense = firebase.createExpense;
-export const readExpenses = firebase.readExpenses;
-export const updateExpense = firebase.updateExpense;
-export const deleteExpense = firebase.deleteExpense;
+const createExpense = firebase.createExpense;
+const readExpenses = firebase.readExpenses;
+const updateExpense = firebase.updateExpense;
+const deleteExpense = firebase.deleteExpense;
+
+const wrap = {
+  createExpense,
+  readExpenses,
+  updateExpense,
+  deleteExpense,
+};
+
+export default wrap;

@@ -10,15 +10,9 @@ import sinon from 'sinon';
 import AddExpensePage from '../../../src/components/pages/addExpensePage.jsx';
 import expenses from '../../fixtures/expenses.js';
 import { renderWith } from '../../utils.js';
-import * as db from '../../../src/db';
+import db from '../../../src/db';
 
 describe('AddExpensePage tests', () => {
-  beforeAll(() => {
-  });
-
-  afterAll(() => {
-  });
-
   it('Should render AddExpensePage without expense', async () => {
     renderWith(<AddExpensePage />, {
       preloadedState: {

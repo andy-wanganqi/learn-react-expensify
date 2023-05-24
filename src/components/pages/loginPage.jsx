@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
-import { useNavigate, use } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import auth from '../../auth';
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    auth.userAuth(() => navigate('/dashboard'), () => navigate('/'));
+    auth.userAuth(
+      () => { navigate('/dashboard'); }, 
+      () => { navigate('/'); }
+    );
   }, []);
 
   return (

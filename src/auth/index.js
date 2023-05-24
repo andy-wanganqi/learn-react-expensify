@@ -5,21 +5,23 @@ const userSignOut = firebase.userSignOut;
 const getAuthObservable = firebase.getAuthObservable;
 const getUser = firebase.getUser;
 
-export default {
+const wrap = {
   userSignIn,
   userSignOut,
   getAuthObservable,
   getUser,
-
-  userAuth: (handleAuthenticated, handleUnauthenticated) => {
-    const observable = getAuthObservable();
-    const subscription = observable.subscribe(user => {
-      if (user) {
-        handleAuthenticated();
-      } else {
-        handleUnauthenticated();
-      }
-      // subscription.unsubscribe();
-    });
-  }
 };
+
+wrap.userAuth = (authenticated, unauthenticated) => {
+  const observable = wrap.getAuthObservable();
+  const subscription = observable.subscribe(user => {
+    if (user) {
+      authenticated();
+    } else {
+      unauthenticated();
+    }
+    // subscription.unsubscribe();
+  });
+}
+
+export default wrap;
