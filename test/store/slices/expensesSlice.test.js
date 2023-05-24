@@ -5,7 +5,7 @@ import reducer, {
   addExpense, editExpense, removeExpense, createExpense, readExpenses, updateExpense, deleteExpense
 } from '../../../src/store/slices/expensesSlice.js';
 import expenses from '../../fixtures/expenses.js';
-import * as db from '../../../src/db';
+import db from '../../../src/db';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

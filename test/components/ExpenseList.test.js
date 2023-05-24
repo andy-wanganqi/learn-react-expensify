@@ -8,7 +8,7 @@ import sinon from 'sinon';
 import ExpenseList from '../../src/components/ExpenseList.jsx';
 import expenses from '../fixtures/expenses.js';
 import { renderWith } from '../utils.js';
-import * as db from '../../src/db';
+import db from '../../src/db';
 
 let readExpensesStub = undefined;
 describe('ExpensesList component tests', () => {

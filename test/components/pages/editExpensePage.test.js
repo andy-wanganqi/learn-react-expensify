@@ -10,7 +10,7 @@ import sinon from 'sinon';
 import EditExpensePage from '../../../src/components/pages/editExpensePage.jsx';
 import expenses from '../../fixtures/expenses.js';
 import { renderWith } from '../../utils.js';
-import * as db from '../../../src/db';
+import db from '../../../src/db';
 
 jest.mock('react-router-dom', () => {
   const mockNavigate = jest.fn();
@@ -22,13 +22,6 @@ jest.mock('react-router-dom', () => {
 });
 
 describe('EditExpensePage tests', () => {
-  beforeAll(() => {
-    
-  })
-
-  beforeEach(() => {
-  })
-
   it('Should render EditExpensePage', async () => {
     useParams.mockReturnValue({ id: expenses[2].id });
 
@@ -87,7 +80,7 @@ describe('EditExpensePage tests', () => {
     });
 
     const navigate = useNavigate();
-    expect(navigate).toHaveBeenCalledWith('/');
+    expect(navigate).toHaveBeenLastCalledWith('/');
   });
 
   it('Should handle remove existing expense', async () => {
@@ -110,7 +103,7 @@ describe('EditExpensePage tests', () => {
     await user.click(screen.getByRole('button', {name: /Remove/i}));
 
     const navigate = useNavigate();
-    expect(navigate).toHaveBeenCalledWith('/');
+    expect(navigate).toHaveBeenLastCalledWith('/');
 
     const expectExpenses = [...expenses];
     expectExpenses.splice(2, 1)

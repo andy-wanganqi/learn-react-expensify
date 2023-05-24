@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import * as db from '../../db';
+import db from '../../db';
 
 export const createExpense = createAsyncThunk(
   'expenses/createExpense',
