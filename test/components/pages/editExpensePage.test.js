@@ -22,6 +22,19 @@ jest.mock('react-router-dom', () => {
 });
 
 describe('EditExpensePage tests', () => {
+  let updateExpenseStub;
+  let deleteExpenseStub;
+
+  beforeEach(() => {
+    updateExpenseStub = sinon.stub(db, 'updateExpense');
+    deleteExpenseStub = sinon.stub(db, 'deleteExpense');
+  });
+
+  afterEach(() => {
+    updateExpenseStub.restore();
+    deleteExpenseStub.restore();
+  });
+
   it('Should render EditExpensePage', async () => {
     useParams.mockReturnValue({ id: expenses[2].id });
 
@@ -38,7 +51,7 @@ describe('EditExpensePage tests', () => {
 
   it('Should handle save existing expense', async () => {
     let mockDbExpense = undefined;
-    const updateExpenseStub = sinon.stub(db, 'updateExpense').callsFake(async (expense) => {
+    updateExpenseStub.callsFake(async (expense) => {
       mockDbExpense = expense;
     });
 
@@ -64,8 +77,6 @@ describe('EditExpensePage tests', () => {
     };
     expect(store.getState().expenses[index]).toMatchObject(expectExpense);
     expect(mockDbExpense).toMatchObject(expectExpense);
-
-    updateExpenseStub.restore();
   });
 
   it('Should navigate when expense does not exist', async () => {
@@ -85,7 +96,7 @@ describe('EditExpensePage tests', () => {
 
   it('Should handle remove existing expense', async () => {
     let mockDeletedId = undefined;
-    const deleteExpenseStub = sinon.stub(db, 'deleteExpense').callsFake(async (id) => {
+    deleteExpenseStub.callsFake(async (id) => {
       mockDeletedId = id;
     });
 
@@ -109,8 +120,6 @@ describe('EditExpensePage tests', () => {
     expectExpenses.splice(2, 1)
     expect(store.getState().expenses).toEqual(expectExpenses);
     expect(mockDeletedId).toEqual(expenses[index].id);
-
-    deleteExpenseStub.restore();
   });
 
 });

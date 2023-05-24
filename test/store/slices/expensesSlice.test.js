@@ -11,13 +11,23 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 describe('Expenses redux state tests', () => {
-  beforeAll(() => {
-  });
+  let createExpenseStub;
+  let readExpensesStub;
+  let updateExpenseStub;
+  let deleteExpenseStub;
 
   beforeEach(() => {
+    createExpenseStub = sinon.stub(db, 'createExpense');
+    readExpensesStub = sinon.stub(db, 'readExpenses');
+    updateExpenseStub = sinon.stub(db, 'updateExpense');
+    deleteExpenseStub = sinon.stub(db, 'deleteExpense');
   });
 
   afterEach(() => {
+    createExpenseStub.restore();
+    readExpensesStub.restore();
+    updateExpenseStub.restore();
+    deleteExpenseStub.restore();
   });  
   
   it('Should initialize expenses', () => {
@@ -51,7 +61,7 @@ describe('Expenses redux state tests', () => {
 
   it('Should create expense', async () => {
     const mockDbExpenses = [];
-    const createExpenseStub = sinon.stub(db, 'createExpense').callsFake(async (expense) => {
+    createExpenseStub.callsFake(async (expense) => {
       mockDbExpenses.push(expense);
     });
 
@@ -63,13 +73,11 @@ describe('Expenses redux state tests', () => {
     expect(actions[1].type).toEqual('expenses/createExpense/fulfilled');
 
     expect(mockDbExpenses).toEqual([payload]);
-
-    createExpenseStub.restore();
   });
 
   it('Should read expenses', async () => {
     const mockDbExpenses = [...expenses];
-    const readExpensesStub = sinon.stub(db, 'readExpenses').callsFake(async () => {
+    readExpensesStub.callsFake(async () => {
       return mockDbExpenses;
     });
 
@@ -78,13 +86,11 @@ describe('Expenses redux state tests', () => {
     const actions = store.getActions();
     expect(actions[0].type).toEqual('expenses/readExpenses/pending');
     expect(actions[1].type).toEqual('expenses/readExpenses/fulfilled');
-
-    readExpensesStub.restore();
   });
 
   it('Should update expense', async () => {
     let mockDbExpense = undefined;
-    const updateExpenseStub = sinon.stub(db, 'updateExpense').callsFake(async (expense) => {
+    updateExpenseStub.callsFake(async (expense) => {
       mockDbExpense = expense;
     });
 
@@ -99,13 +105,11 @@ describe('Expenses redux state tests', () => {
     expect(actions[1].type).toEqual('expenses/updateExpense/fulfilled');
 
     expect(mockDbExpense).toEqual(payload);
-
-    updateExpenseStub.restore();
   });
 
   it('Should delete expense', async () => {
     let mockDeletedId = undefined;
-    const deleteExpenseStub = sinon.stub(db, 'deleteExpense').callsFake(async (id) => {
+    deleteExpenseStub.callsFake(async (id) => {
       mockDeletedId = id;
     });
 
@@ -119,7 +123,5 @@ describe('Expenses redux state tests', () => {
     expect(actions[1].type).toEqual('expenses/deleteExpense/fulfilled');
 
     expect(mockDeletedId).toEqual(payload.id);
-
-    deleteExpenseStub.restore();
   });
 })
