@@ -9,9 +9,6 @@ import expenses from '../fixtures/expenses.js';
 import { renderWith } from '../utils.js';
 
 describe('ExpenseListItem component tests', () => {
-  beforeAll(() => {
-  })
-
   it('Should render ExpenseListItem', async () => {
     renderWith(<ExpenseListItem expense={expenses[2]}/>, {
       preloadedState: {

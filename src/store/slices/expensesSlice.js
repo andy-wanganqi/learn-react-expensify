@@ -3,35 +3,37 @@ import db from '../../db';
 
 export const createExpense = createAsyncThunk(
   'expenses/createExpense',
-  async (expense) => {
-    await db.createExpense(expense);
+  async (payload) => {
+    const { uid, expense } = payload;
+    await db.createExpense(uid, expense);
     return expense;
   }
 );
 
 export const readExpenses = createAsyncThunk(
   'expenses/readExpenses',
-  async () => {
-    const expenses = await db.readExpenses();
+  async (payload) => {
+    const { uid } = payload;
+    const expenses = await db.readExpenses(uid);
     return expenses;
   }
 );
 
 export const updateExpense = createAsyncThunk(
   'expenses/updateExpense',
-  async (expense) => {
-    await db.updateExpense(expense);
+  async (payload) => {
+    const { uid, expense } = payload;
+    await db.updateExpense(uid, expense);
     return expense;
   }
 );
 
 export const deleteExpense = createAsyncThunk(
   'expenses/deleteExpense',
-  async ({ id }) => {
-    await db.deleteExpense(id);
-    return {
-      id
-    };
+  async (payload) => {
+    const { uid, expenseId } = payload
+    await db.deleteExpense(uid, expenseId);
+    return { expenseId };
   }
 );
 
@@ -47,7 +49,7 @@ const _editExpense = (state, action) => {
 };
 
 const _removeExpense = (state, action) => {
-  const index = state.findIndex(expense => expense.id === action.payload.id);
+  const index = state.findIndex(expense => expense.id === action.payload.expenseId);
   if (index >= 0) {
     state.splice(index, 1);
   }
@@ -72,6 +74,7 @@ export const expensesSlice = createSlice({
     builder.addCase(readExpenses.pending, (state, action) => {
     });
     builder.addCase(readExpenses.fulfilled, (state, action) => {
+      console.log('action.payload', action.payload);
       state.splice(0, state.length, ...action.payload);
     });
     builder.addCase(readExpenses.rejected, (state, action) => {

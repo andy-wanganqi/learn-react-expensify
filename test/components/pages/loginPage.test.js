@@ -60,7 +60,6 @@ describe('LoginPage tests', () => {
       withRouter: true,
     });
     userSignInStub.callsFake(() => {
-      console.log('userSignInStub', store);
       act(() => store.dispatch(setUser(signedInGoogleUser)));
     });
 

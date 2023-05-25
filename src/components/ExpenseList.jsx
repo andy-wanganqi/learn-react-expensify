@@ -8,12 +8,16 @@ import { readExpenses } from '../store/slices/expensesSlice.js';
 
 const ExpenseList = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
-  const expenses = selectFilteredExpenses(state);
+  const user = useSelector((state) => state.user);
+  const expenses = useSelector((state) => state.expenses);
+  const filters = useSelector((state) => state.filters);
+  const selectedExpenses = selectFilteredExpenses({ expenses, filters });
 
   useEffect(() => {
     async function dispatchReadExpenses() {
-      await dispatch(readExpenses());
+      await dispatch(readExpenses({
+        uid: user.uid,
+      }));
     };
     dispatchReadExpenses();
   }, [dispatch]);
@@ -24,11 +28,11 @@ const ExpenseList = () => {
       <div>
         <ExpenseListFilters />
         {
-          (expenses && expenses.length > 0) ? (
+          (selectedExpenses && selectedExpenses.length > 0) ? (
             <div>
               <div>Filters</div>
               <ul>
-                {expenses.map((expense) => (
+                {selectedExpenses.map((expense) => (
                   <li key={expense.id}>
                     <ExpenseListItem expense={expense} />
                   </li>

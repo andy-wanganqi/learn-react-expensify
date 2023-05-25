@@ -53,7 +53,8 @@ describe('Expenses redux state tests', () => {
 
   it('Should remove expense', async () => {
     const payload = {
-      id: expenses[1].id
+      uid: 'uid',
+      expenseId: expenses[1].id
     };
     const previousState = [expenses[0], expenses[1], expenses[2]];
     expect(reducer(previousState, removeExpense(payload))).toEqual([expenses[0], expenses[2]]);
@@ -61,28 +62,37 @@ describe('Expenses redux state tests', () => {
 
   it('Should create expense', async () => {
     const mockDbExpenses = [];
-    createExpenseStub.callsFake(async (expense) => {
+    createExpenseStub.callsFake(async (uid, expense) => {
       mockDbExpenses.push(expense);
     });
 
     const store = mockStore({});
-    const payload = expenses[2];
-    await store.dispatch(createExpense(payload));
+    const uid = 'uid';
+    const expense = expenses[2];
+    const action = createExpense({
+      uid, 
+      expense: expenses[2]
+    });
+    await store.dispatch(action);
     const actions = store.getActions();
     expect(actions[0].type).toEqual('expenses/createExpense/pending');
     expect(actions[1].type).toEqual('expenses/createExpense/fulfilled');
 
-    expect(mockDbExpenses).toEqual([payload]);
+    expect(mockDbExpenses).toEqual([expense]);
   });
 
   it('Should read expenses', async () => {
     const mockDbExpenses = [...expenses];
-    readExpensesStub.callsFake(async () => {
+    readExpensesStub.callsFake(async (uid) => {
       return mockDbExpenses;
     });
 
     const store = mockStore({});
-    await store.dispatch(readExpenses());
+    const uid = 'uid';
+    const action = readExpenses({
+      uid
+    });
+    await store.dispatch(action);
     const actions = store.getActions();
     expect(actions[0].type).toEqual('expenses/readExpenses/pending');
     expect(actions[1].type).toEqual('expenses/readExpenses/fulfilled');
@@ -90,38 +100,46 @@ describe('Expenses redux state tests', () => {
 
   it('Should update expense', async () => {
     let mockDbExpense = undefined;
-    updateExpenseStub.callsFake(async (expense) => {
+    updateExpenseStub.callsFake(async (uid, expense) => {
       mockDbExpense = expense;
     });
 
     const store = mockStore({});
-    const payload = {
+    const uid = 'uid';
+    const updatedExpense = {
       ...expenses[2],
       description: 'Phone Bill'
     };
-    await store.dispatch(updateExpense(payload));
+    const action = updateExpense({
+      uid, 
+      expense: updatedExpense,
+    });
+    await store.dispatch(action);
     const actions = store.getActions();
     expect(actions[0].type).toEqual('expenses/updateExpense/pending');
     expect(actions[1].type).toEqual('expenses/updateExpense/fulfilled');
 
-    expect(mockDbExpense).toEqual(payload);
+    expect(mockDbExpense).toEqual(updatedExpense);
   });
 
   it('Should delete expense', async () => {
     let mockDeletedId = undefined;
-    deleteExpenseStub.callsFake(async (id) => {
-      mockDeletedId = id;
+    deleteExpenseStub.callsFake(async (uid, expenseId) => {
+      mockDeletedId = expenseId;
     });
 
     const store = mockStore({});
-    const payload = {
-      id: expenses[2].id
-    };
-    await store.dispatch(deleteExpense(payload));
+    const uid = 'uid';
+    const expense = expenses[2];
+    const action = deleteExpense({
+      uid,
+      expenseId: expense.id,
+    });
+    await store.dispatch(action);
     const actions = store.getActions();
     expect(actions[0].type).toEqual('expenses/deleteExpense/pending');
     expect(actions[1].type).toEqual('expenses/deleteExpense/fulfilled');
 
-    expect(mockDeletedId).toEqual(payload.id);
+    expect(mockDeletedId).toEqual(expense.id);
   });
 });
