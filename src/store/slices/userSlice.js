@@ -5,6 +5,9 @@ export const userSlice = createSlice({
   initialState: {
     uid: '',
     accessToken: '',
+    email: '',
+    displayName: '',
+    photoUrl: '',
   },
   reducers: {
     setUser: (state, action) => {

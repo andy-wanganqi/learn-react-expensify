@@ -100,7 +100,7 @@ export const extractUser = (user) => {
   return { uid, accessToken, email, displayName, photoUrl };
 };
 
-export const isAuthUser = (user) => {
+export const isAuthenticatedUser = (user) => {
   return (user && user.uid);
 };
 

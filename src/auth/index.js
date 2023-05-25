@@ -4,17 +4,16 @@ const userSignIn = firebase.userSignIn;
 const userSignOut = firebase.userSignOut;
 const getAuthObservable = firebase.getAuthObservable;
 const extractUser = firebase.extractUser;
-const isAuthUser = firebase.isAuthUser;
+const isAuthenticatedUser = firebase.isAuthenticatedUser;
 
 const wrap = {
   userSignIn,
   userSignOut,
-  getAuthObservable,
-  isAuthUser,
+  isAuthenticatedUser,
 };
 
 wrap.userAuth = (authenticated, unauthenticated) => {
-  const observable = wrap.getAuthObservable();
+  const observable = getAuthObservable();
   const subscription = observable.subscribe(user => {
     if (user) {
       authenticated(extractUser(user));
