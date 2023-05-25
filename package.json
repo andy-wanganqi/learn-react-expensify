@@ -7,6 +7,7 @@
     "start": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "jest": "jest --config=jest.config.js",
+    "jest1": "jest ./test/components/ExpenseList.test.js",
     "prod": "node ./server/server.js"
   },
   "author": "Andy Wang",

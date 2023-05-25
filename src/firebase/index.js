@@ -100,22 +100,21 @@ export const extractUser = (user) => {
   return { uid, accessToken, email, displayName, photoUrl };
 };
 
-export const isAuthUser = (user) => {
+export const isAuthenticatedUser = (user) => {
   return (user && user.uid);
 };
 
 
-export const createExpense = async (expense) => {
-  const db = getDatabase();
-  return await set(ref(db, 'expenses/' + expense.id), expense);
+export const createExpense = async (uid, expense) => {
+  return await set(ref(getDatabase(), `users/${uid}/expenses/${expense.id}`), expense);
 };
 
-export const readExpenses = async () => {
+export const readExpenses = async (uid) => {
   const db = getDatabase();
-  const dbRef = ref(db, 'expenses');
+  const dbRef = ref(db, `users/${uid}/expenses`);
   const dbQuery = query(dbRef);
   const snapshot = await get(dbQuery);
-  
+
   const expenses = [];
   snapshot.forEach((childSnapshot) => {
     var childData = childSnapshot.val();
@@ -124,12 +123,10 @@ export const readExpenses = async () => {
   return expenses;
 };
 
-export const updateExpense = async (expense) => {
-  const db = getDatabase();
-  return await set(ref(db, 'expenses/' + expense.id), expense);
+export const updateExpense = async (uid, expense) => {
+  return await set(ref(getDatabase(), `users/${uid}/expenses/${expense.id}`), expense);
 };
 
-export const deleteExpense = async (id) => {
-  const db = getDatabase();
-  return await set(ref(db, 'expenses/' + id), null);
+export const deleteExpense = async (uid, expenseId) => {
+  return await set(ref(getDatabase(), `users/${uid}/expenses/${expenseId}`), null);
 };

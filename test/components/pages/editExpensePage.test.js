@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-import { screen } from '@testing-library/react';
+import { screen, act, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import sinon from 'sinon';
@@ -11,6 +11,8 @@ import EditExpensePage from '../../../src/components/pages/editExpensePage.jsx';
 import expenses from '../../fixtures/expenses.js';
 import { renderWith } from '../../utils.js';
 import db from '../../../src/db';
+import { setUser } from '../../../src/store/slices/userSlice.js';
+import { signedInGoogleUser } from '../../fixtures/googleUsers.js';
 
 jest.mock('react-router-dom', () => {
   const mockNavigate = jest.fn();
@@ -51,7 +53,7 @@ describe('EditExpensePage tests', () => {
 
   it('Should handle save existing expense', async () => {
     let mockDbExpense = undefined;
-    updateExpenseStub.callsFake(async (expense) => {
+    updateExpenseStub.callsFake(async (uid, expense) => {
       mockDbExpense = expense;
     });
 
@@ -70,13 +72,15 @@ describe('EditExpensePage tests', () => {
     await user.type(screen.getByPlaceholderText('Amount', { name: /amount/i }), '1');
     await user.click(screen.getByRole('button', {name: /Save/i}));
 
-    const expectExpense = {
-      ...expenses[index],
-      description: expenses[index].description + 'CB',
-      amount: 45100,
-    };
-    expect(store.getState().expenses[index]).toMatchObject(expectExpense);
-    expect(mockDbExpense).toMatchObject(expectExpense);
+    await waitFor(() => {
+      const expectExpense = {
+        ...expenses[index],
+        description: expenses[index].description + 'CB',
+        amount: 45100,
+      };
+      expect(store.getState().expenses[index]).toMatchObject(expectExpense);
+      expect(mockDbExpense).toMatchObject(expectExpense);
+    });
   });
 
   it('Should navigate when expense does not exist', async () => {
@@ -96,8 +100,8 @@ describe('EditExpensePage tests', () => {
 
   it('Should handle remove existing expense', async () => {
     let mockDeletedId = undefined;
-    deleteExpenseStub.callsFake(async (id) => {
-      mockDeletedId = id;
+    deleteExpenseStub.callsFake(async (uid, expenseId) => {
+      mockDeletedId = expenseId;
     });
 
     const index = 2;
@@ -110,16 +114,19 @@ describe('EditExpensePage tests', () => {
       withProvider: true,
       withRouter: true,
     });
+    await act(() => store.dispatch(setUser(signedInGoogleUser)));
+
     const user = userEvent.setup();
     await user.click(screen.getByRole('button', {name: /Remove/i}));
 
-    const navigate = useNavigate();
-    expect(navigate).toHaveBeenLastCalledWith('/');
-
-    const expectExpenses = [...expenses];
-    expectExpenses.splice(2, 1)
-    expect(store.getState().expenses).toEqual(expectExpenses);
-    expect(mockDeletedId).toEqual(expenses[index].id);
+    await waitFor(() => {
+      const navigate = useNavigate();
+      expect(navigate).toHaveBeenLastCalledWith('/');
+  
+      const expectExpenses = [...expenses];
+      expectExpenses.splice(2, 1)
+      expect(store.getState().expenses).toEqual(expectExpenses);
+      expect(mockDeletedId).toEqual(expenses[index].id);
+    });
   });
-
 });

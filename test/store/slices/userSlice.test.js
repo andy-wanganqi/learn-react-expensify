@@ -5,6 +5,9 @@ describe('User redux state tests', () => {
     expect(reducer(undefined, { type: undefined })).toEqual({
       uid: '',
       accessToken: '',
+      email: '',
+      displayName: '',
+      photoUrl: '',
     });
   });
 
