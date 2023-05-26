@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { deleteExpense } from '../store/slices/expensesSlice.js';
-import { formatCurrency } from '../utils/amountConvert.js';
+import { formatAmount } from '../utils/amountConvert.js';
 
 const ExpenseListItem = ({ expense }) => {
   const { id, description, amount, createdAt, note } = expense;
@@ -18,7 +18,7 @@ const ExpenseListItem = ({ expense }) => {
           e.preventDefault();
           navigate(`/edit/${id}`);
         }}>Edit</button>
-        Expense: <NavLink to={`/edit/${id}`}>{description}</NavLink> with {formatCurrency(amount)} created at: {moment(createdAt).format()} 
+        Expense: <NavLink to={`/edit/${id}`}>{description}</NavLink> with {formatAmount(amount)} created at: {moment(createdAt).format()} 
         <button onClick={async (e) => {
           e.preventDefault();
           const action = deleteExpense({

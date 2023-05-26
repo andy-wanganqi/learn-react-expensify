@@ -1,5 +1,5 @@
 import numeral from "numeral";
 
-export const formatCurrency = (value) => {
-  return numeral(value).format('$0,0.00');
+export const formatAmount = (amount) => {
+  return numeral(parseFloat(amount)/100).format('$0,0.00');
 };
