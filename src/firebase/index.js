@@ -14,21 +14,23 @@ const googleAuthProvider = new GoogleAuthProvider();
 let _authObservable = undefined;
 let _user = undefined;
 
+const reduceUser = (user) => {
+  const { uid, accessToken, email, displayName, photoUrl } = user;
+  return { uid, accessToken, email, displayName, photoUrl };
+};
+
 const handleAuthStateChanged = async (user, subscriber) => {
   if (user) {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/auth.user
-    const uid = user.uid;
-    // console.log('onAuthStateChanged user', user);
     // ...
     _user = user;
-    subscriber.next(_user);
+    subscriber.next(reduceUser(user));
   } else {
     // User is signed out
     // ...
-    // console.log('onAuthStateChanged signed out', user);
+    subscriber.next(user);
     _user = undefined;
-    subscriber.next(_user);
   }
 };
 
@@ -64,7 +66,6 @@ export const userSignIn = () => {
       // _token = credential.accessToken;
       // The signed-in user info.
       _user = result.user;
-      console.log('userSignIn', _user);
       // IdP data available using getAdditionalUserInfo(result)
       // ...
     }).catch((error) => {
@@ -95,15 +96,11 @@ export const userSignOut = () => {
 
 export const getAuthObservable = () => _authObservable;
 
-export const extractUser = (user) => {
-  const { uid, accessToken, email, displayName, photoUrl } = user;
-  return { uid, accessToken, email, displayName, photoUrl };
-};
+export const getUser = () => _user;
 
 export const isAuthenticatedUser = (user) => {
-  return (user && user.uid);
+  return (user && user.uid) ? true : false;
 };
-
 
 export const createExpense = async (uid, expense) => {
   return await set(ref(getDatabase(), `users/${uid}/expenses/${expense.id}`), expense);
