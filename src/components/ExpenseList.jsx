@@ -20,7 +20,7 @@ const ExpenseList = () => {
       }));
     };
     dispatchReadExpenses();
-  }, [dispatch]);
+  }, [user]);
 
   return (
     <div>
