@@ -14,7 +14,7 @@ const AddExpensePage = () => {
     <div>
       <h1>Add Expense Page</h1>
       <ExpenseForm 
-        handleSaveExpense={async (expense) => {
+        handleSaveExpense={(expense) => {
           const action = createExpense({
             uid: user.uid,
             expense: {
@@ -22,8 +22,8 @@ const AddExpensePage = () => {
               id: uuid(),
             },
           });
-          await dispatch(action);
-          navigate('/');
+          dispatch(action);
+          navigate('/dashboard');
         }}
       />
     </div>

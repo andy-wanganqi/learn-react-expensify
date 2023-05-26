@@ -16,7 +16,7 @@ const EditExpensePage = () => {
 
   useEffect(() => {
     if (!expense) {
-      navigate('/');
+      navigate('/dashboard');
     }
   }, [navigate]);
 
@@ -25,7 +25,7 @@ const EditExpensePage = () => {
       <h1>Edit Expense Page</h1>
       <ExpenseForm 
         expense={expense}
-        handleSaveExpense={async (updatedExpense) => {
+        handleSaveExpense={(updatedExpense) => {
           const action = updateExpense({
             uid: user.uid,
             expense: {
@@ -33,16 +33,16 @@ const EditExpensePage = () => {
               id: expense.id,
             },
           });
-          await dispatch(action);
-          navigate('/');
+          dispatch(action);
+          navigate('/dashboard');
         }}
-        handleRemoveExpense={async () => {
+        handleRemoveExpense={() => {
           const action = deleteExpense({
             uid: user.uid,
             expenseId: expense.id,
           });
-          await dispatch(action);
-          navigate('/');
+          dispatch(action);
+          navigate('/dashboard');
         }}
       />
     </div>
