@@ -74,7 +74,6 @@ export const expensesSlice = createSlice({
     builder.addCase(readExpenses.pending, (state, action) => {
     });
     builder.addCase(readExpenses.fulfilled, (state, action) => {
-      console.log('action.payload', action.payload);
       state.splice(0, state.length, ...action.payload);
     });
     builder.addCase(readExpenses.rejected, (state, action) => {

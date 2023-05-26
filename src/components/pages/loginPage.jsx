@@ -23,10 +23,6 @@ const LoginPage = () => {
           </div>
         ) : (
           <button onClick={(e) => {
-            if(auth.isAuthenticatedUser(user)) {
-              navigate('/dashboard');
-              return;
-            }
             auth.userSignIn();
           }}>Login with google</button>
         )

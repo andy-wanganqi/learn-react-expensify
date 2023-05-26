@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from 'react-redux';
 import { selectFilteredExpenses } from '../store/selectors/expenses.js';
 import { selectTotalAmount } from '../store/selectors/expensesAggregate.js';
-import { formatCurrency } from '../utils/amountConvert.js';
+import { formatAmount } from '../utils/amountConvert.js';
 
 const ExpenseSummary = () => {
   const expenses = useSelector((state) => state.expenses);
@@ -12,7 +12,7 @@ const ExpenseSummary = () => {
   const total = selectTotalAmount({ expenses: filteredExpenses });
   return (
     <div>
-      <p>Viewing {count} expense(s) totalling {formatCurrency(total/100)}</p>
+      <p>Viewing {count} expense(s) totalling {formatAmount(total)}</p>
     </div>
   );
 };

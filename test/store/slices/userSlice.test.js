@@ -8,6 +8,7 @@ describe('User redux state tests', () => {
       email: '',
       displayName: '',
       photoUrl: '',
+      __authentication: undefined,
     });
   });
 
@@ -23,7 +24,10 @@ describe('User redux state tests', () => {
       displayName: 'displayName1',
       photoUrl: 'photoUrl1',
     };
-    expect(reducer(previousState, setUser(signInUser))).toEqual(signInUser);
+    expect(reducer(previousState, setUser(signInUser))).toEqual({
+      ...signInUser,
+      __authentication: true,
+    });
   });
 
   it('Should clear user', async () => {
@@ -37,6 +41,7 @@ describe('User redux state tests', () => {
       email: '',
       displayName: '',
       photoUrl: '',
+      __authentication: false,
     });
   });
 });

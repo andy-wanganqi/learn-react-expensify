@@ -8,6 +8,7 @@ export const userSlice = createSlice({
     email: '',
     displayName: '',
     photoUrl: '',
+    __authentication: undefined, 
   },
   reducers: {
     setUser: (state, action) => {
@@ -17,6 +18,7 @@ export const userSlice = createSlice({
       state.email = email;
       state.displayName = displayName;
       state.photoUrl = photoUrl;
+      state.__authentication = true;
     },
     clearUser: (state, action) => {
       state.uid = '';
@@ -24,6 +26,7 @@ export const userSlice = createSlice({
       state.email = '';
       state.displayName = '';
       state.photoUrl = '';
+      state.__authentication = false;
     },
   },
 });

@@ -8,25 +8,12 @@ import EditExpensePage from '../components/pages/editExpensePage.jsx';
 import HelpPage from '../components/pages/helpPage.jsx';
 import NotFoundPage from '../components/pages/notFoundPage.jsx';
 import PrivateRoute from './privateRoute.jsx';
-import { setUser, clearUser } from '../store/slices/userSlice.js';
 import auth from '../auth';
 import Frame from '../components/layout/frame.jsx';
 
 const AppRouter = () => {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
-  useEffect(() => {
-    auth.userAuth(
-      (user) => {
-        const payload = user;
-        dispatch(setUser(payload));
-      }, 
-      () => { 
-        dispatch(clearUser());
-      }
-    );
-  }, []);
+  const isAllowed = user.__authentication === undefined || auth.isAuthenticatedUser(user);
 
   return (
     <BrowserRouter>
@@ -35,7 +22,7 @@ const AppRouter = () => {
         <Route path="/dashboard" element={
             <PrivateRoute 
               redirectPath='/' 
-              isAllowed={auth.isAuthenticatedUser(user)}
+              isAllowed={isAllowed}
             >
               <DashboardPage />
             </PrivateRoute>
@@ -44,7 +31,7 @@ const AppRouter = () => {
         <Route path="/create" element={
             <PrivateRoute 
               redirectPath='/' 
-              isAllowed={auth.isAuthenticatedUser(user)}
+              isAllowed={isAllowed}
             >
               <AddExpensePage />
             </PrivateRoute>
@@ -53,7 +40,7 @@ const AppRouter = () => {
         <Route path="/edit/:id" element={
             <PrivateRoute 
               redirectPath='/' 
-              isAllowed={auth.isAuthenticatedUser(user)}
+              isAllowed={isAllowed}
             >
               <EditExpensePage />
             </PrivateRoute>
