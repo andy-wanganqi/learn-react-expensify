@@ -103,7 +103,13 @@ export const isAuthenticatedUser = (user) => {
 };
 
 export const createExpense = async (uid, expense) => {
-  return await set(ref(getDatabase(), `users/${uid}/expenses/${expense.id}`), expense);
+  const { description, amount, createdAt, note } = expense;
+  return await set(ref(getDatabase(), `users/${uid}/expenses/${expense.id}`), {
+    description, 
+    amount,
+    createdAt,
+    note,
+  });
 };
 
 export const readExpenses = async (uid) => {
@@ -115,13 +121,22 @@ export const readExpenses = async (uid) => {
   const expenses = [];
   snapshot.forEach((childSnapshot) => {
     var childData = childSnapshot.val();
-    expenses.push(childData);
+    expenses.push({
+      ...childData,
+      id: childSnapshot.key,
+    });
   });
   return expenses;
 };
 
 export const updateExpense = async (uid, expense) => {
-  return await set(ref(getDatabase(), `users/${uid}/expenses/${expense.id}`), expense);
+  const { description, amount, createdAt, note } = expense;
+  return await set(ref(getDatabase(), `users/${uid}/expenses/${expense.id}`), {
+    description, 
+    amount,
+    createdAt,
+    note,
+  });
 };
 
 export const deleteExpense = async (uid, expenseId) => {
