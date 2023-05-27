@@ -1,0 +1,18 @@
+.button {
+  font-weight: 300;
+  border: none;
+  background: $sky-blue;
+  color: white;
+  margin: $sm-size;
+  padding: $sm-size;
+}
+
+.button-lg {
+  font-size: $font-size-lg;
+}
+
+.button_group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

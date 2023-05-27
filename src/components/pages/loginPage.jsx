@@ -10,23 +10,27 @@ const LoginPage = () => {
   return (
     <div className="box-layout">
       <div className="box-layout__box">
-        <h1 className='box-layout__title'>Expensify App</h1>
+        <h1 className='box-layout__title'>Expensify</h1>
         <p>It is time to get your expenses under control!</p>
         {
           (auth.isAuthenticatedUser(user)) ? (
             <div>
-              <h1>You have signed in: {user.displayName}</h1>
-              <button onClick={(e) => {
-                navigate('/dashboard');
-              }}>Go to dashboard</button>
-              <button onClick={(e) => {
-                auth.userSignOut();
-              }}>Not Me</button>
+              <p>You have signed in with google account: {user.displayName}</p>
+              <div className='button_group'>
+                <button className='button button-lg' onClick={(e) => {
+                  navigate('/dashboard');
+                }}>Go to dashboard</button>
+                <button className='button button-lg' onClick={(e) => {
+                  auth.userSignOut();
+                }}>Not Me</button>
+              </div>
             </div>
           ) : (
-            <button onClick={(e) => {
-              auth.userSignIn();
-            }}>Login with google</button>
+            <div className='button_group'>
+              <button className='button button-lg' onClick={(e) => {
+                auth.userSignIn();
+              }}>Login with google</button>
+            </div>
           )
         }
       </div>
