@@ -13,6 +13,6 @@ describe('Frame component tests', () => {
     renderWith(Frame(<DashboardPage />), {
       withRouter: true,
     });
-    expect(screen.queryByText(/Dashboard Page/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Add Expense/i)).toBeInTheDocument();
   });
 });

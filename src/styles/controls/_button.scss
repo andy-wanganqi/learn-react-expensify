@@ -5,8 +5,18 @@
   color: white;
   margin: $sm-size;
   padding: $sm-size;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.button-md {
+  font-size: $font-size-md;
 }
 
 .button-lg {
   font-size: $font-size-lg;
+}
+
+.button-pull-left {
+  margin-left: 0;
 }
