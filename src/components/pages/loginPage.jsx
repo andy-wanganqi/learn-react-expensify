@@ -10,13 +10,13 @@ const LoginPage = () => {
   return (
     <div className="box-layout">
       <div className="box-layout__box">
-        <h1 className='box-layout__title'>Expensify</h1>
-        <p>It is time to get your expenses under control!</p>
+        <h1>Expensify</h1>
+        <h2>It is time to get your expenses under control!</h2>
         {
           (auth.isAuthenticatedUser(user)) ? (
             <div>
               <p>You have signed in with google account: {user.displayName}</p>
-              <div className='button_group'>
+              <div className='box-layout__buttons'>
                 <button className='button button-lg' onClick={(e) => {
                   navigate('/dashboard');
                 }}>Go to dashboard</button>
@@ -26,7 +26,7 @@ const LoginPage = () => {
               </div>
             </div>
           ) : (
-            <div className='button_group'>
+            <div className='box-layout__buttons'>
               <button className='button button-lg' onClick={(e) => {
                 auth.userSignIn();
               }}>Login with google</button>

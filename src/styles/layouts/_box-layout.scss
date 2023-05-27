@@ -17,11 +17,29 @@
   background: fade-out(white, .50); 
   border-radius: 3px; /* Round box corner */
   text-align: center;
-  width: 40rem;
+  width: 48rem;
   padding: $lg-size $md-size;
+
+  h1 {
+    margin: 0 0 $lg-size 0;
+    line-height: 1;
+    font-weight: 600;
+  }
+
+  h2 {
+    margin: 0 0 $md-size 0;
+    line-height: 1;
+    font-weight: 300;
+  }
+
+  p {
+    margin: 0 0 $sm-size 0;
+    line-height: 1;
+  }
 }
 
-.box-layout__title {
-  margin: 0 0 $md-size 0;
-  line-height: 1;
+.box-layout__buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

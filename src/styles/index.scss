@@ -1,6 +1,9 @@
 @import './base/settings';
 @import './base/base';
+
 @import './controls/button';
+
 @import './layouts/container';
-@import './layouts/header';
-@import './components/box-layout';
+@import './layouts/box-layout';
+
+@import './components/header';
