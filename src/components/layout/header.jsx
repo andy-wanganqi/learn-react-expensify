@@ -1,9 +1,11 @@
 import React from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import auth from '../../auth';
 
 const Header = () => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
   return (
     <header className='header'>
       <div className='content-container'>
@@ -11,10 +13,13 @@ const Header = () => {
           <Link to="/dashboard" className="header__title">
             <h1>Expensify</h1>
           </Link>
-          <button onClick={(e) => {
-            auth.userSignOut();
-            navigate('/');
-          }}>Logout</button>
+          <div className='header__actions'>
+            <p>Hello, {user.displayName}</p>
+            <button className='header--button button-lg' onClick={(e) => {
+              auth.userSignOut();
+              navigate('/');
+            }}>Logout</button>
+          </div>
         </div>
       </div>
     </header>

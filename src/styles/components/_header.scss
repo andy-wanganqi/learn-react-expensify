@@ -11,9 +11,29 @@
   }
 }
 
+.header--button {
+  font-weight: 300;
+  border: none;
+  color: white;
+  background: $dark-blue;
+  margin: $sm-size;
+  padding: $sm-size;
+  line-height: 1;
+  text-decoration: none; /* Remove default A tag decoration */
+}
+
 .header__content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: $sm-size 0;
+  // padding: $sm-size 0;
+}
+
+.header__actions {
+  color: white;
+  margin: 0;
+ 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

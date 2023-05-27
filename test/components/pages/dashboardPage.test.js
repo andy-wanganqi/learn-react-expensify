@@ -34,8 +34,9 @@ describe('DashboardPage tests', () => {
         expenses
       },
       withProvider: true,
+      withRouter: true,
     });
-    expect(screen.queryByText(/Dashboard Page/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Add Expense/i)).toBeInTheDocument();
   });
 
 });

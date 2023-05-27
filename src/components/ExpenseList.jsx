@@ -26,26 +26,26 @@ const ExpenseList = () => {
     <div>
       <h1>Expense List</h1>
       <div>
-        <ExpenseListFilters />
-        {
-          (selectedExpenses && selectedExpenses.length > 0) ? (
-            <div>
-              <div>Filters</div>
-              <ul>
-                {selectedExpenses.map((expense) => (
-                  <li key={expense.id}>
-                    <ExpenseListItem expense={expense} />
-                  </li>
-                ))}
-              </ul>
-              <ExpenseSummary />
-            </div>
-          ) : (
-            <div>
-              <p>There is no expenses.</p>
-            </div>
-          )
-        }
+      {
+        (selectedExpenses && selectedExpenses.length > 0) ? (
+          <div>
+            <div>Filters</div>
+            <ExpenseListFilters />
+            <ul>
+              {selectedExpenses.map((expense) => (
+                <li key={expense.id}>
+                  <ExpenseListItem expense={expense} />
+                </li>
+              ))}
+            </ul>
+            <ExpenseSummary />
+          </div>
+        ) : (
+          <div>
+            <p>There is no expenses.</p>
+          </div>
+        )
+      }
       </div>
     </div>
   )
