@@ -18,7 +18,7 @@ const EditExpensePage = () => {
     if (!expense) {
       navigate('/dashboard');
     }
-  }, [navigate]);
+  }, [expense]);
 
   return (
     <div>

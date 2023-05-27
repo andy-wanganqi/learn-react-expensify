@@ -95,7 +95,7 @@ describe('EditExpensePage tests', () => {
     });
 
     const navigate = useNavigate();
-    expect(navigate).toHaveBeenLastCalledWith('/');
+    expect(navigate).toHaveBeenLastCalledWith('/dashboard');
   });
 
   it('Should handle remove existing expense', async () => {
@@ -121,7 +121,7 @@ describe('EditExpensePage tests', () => {
 
     await waitFor(() => {
       const navigate = useNavigate();
-      expect(navigate).toHaveBeenLastCalledWith('/');
+      expect(navigate).toHaveBeenLastCalledWith('/dashboard');
   
       const expectExpenses = [...expenses];
       expectExpenses.splice(2, 1)

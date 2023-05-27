@@ -39,7 +39,7 @@ describe('LoginPage tests', () => {
       withProvider: true,
       withRouter: true,
     });
-    expect(screen.queryByText(/Login Page/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Expensify/i)).toBeInTheDocument();
     expect(screen.queryByText(/Login with google/i)).toBeInTheDocument();
   });
 
@@ -50,7 +50,7 @@ describe('LoginPage tests', () => {
     });
 
     await act(() => store.dispatch(setUser(signedInGoogleUser)));
-    expect(screen.queryByText(/Login Page/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Expensify/i)).toBeInTheDocument();
     expect(screen.queryByText(/Go to dashboard/i)).toBeInTheDocument();
   });
 
