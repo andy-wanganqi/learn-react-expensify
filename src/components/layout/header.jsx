@@ -1,21 +1,22 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import auth from '../../auth';
 
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <header>
-      <h1>Expensify</h1>
-      <div>
-          <NavLink to="/dashboard" className="">Home</NavLink>
-          <NavLink to="/create" className="">Add Expense</NavLink>
-          <NavLink to="/help" className="">Help</NavLink>
+    <header className='header'>
+      <div className='content-container'>
+        <div className='header__content'>
+          <Link to="/dashboard" className="header__title">
+            <h1>Expensify</h1>
+          </Link>
+          <button onClick={(e) => {
+            auth.userSignOut();
+            navigate('/');
+          }}>Logout</button>
         </div>
-        <button onClick={(e) => {
-          auth.userSignOut();
-          navigate('/');
-        }}>Logout</button>
+      </div>
     </header>
   );
 };

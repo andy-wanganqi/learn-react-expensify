@@ -36,8 +36,7 @@ describe('Header component tests', () => {
     });
 
     expect(screen.getByText('Expensify')).toBeInTheDocument();
-    expect(screen.getByText('Add Expense')).toBeInTheDocument();
-    expect(screen.getByText('Help')).toBeInTheDocument();
+    expect(screen.getByText('Logout')).toBeInTheDocument();
   });
 
   it('Should sign out and redirect to login page', async () => {

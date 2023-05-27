@@ -8,25 +8,32 @@ const LoginPage = () => {
   const user = useSelector((state) => state.user);
 
   return (
-    <div>
-      <h1>Login Page</h1>
-      {
-        (auth.isAuthenticatedUser(user)) ? (
-          <div>
-            <h1>You have signed in: {user.displayName}</h1>
-            <button onClick={(e) => {
-              navigate('/dashboard');
-            }}>Go to dashboard</button>
-            <button onClick={(e) => {
-              auth.userSignOut();
-            }}>Not Me</button>
-          </div>
-        ) : (
-          <button onClick={(e) => {
-            auth.userSignIn();
-          }}>Login with google</button>
-        )
-      }
+    <div className="box-layout">
+      <div className="box-layout__box">
+        <h1>Expensify</h1>
+        <h2>It is time to get your expenses under control!</h2>
+        {
+          (auth.isAuthenticatedUser(user)) ? (
+            <div>
+              <p>You have signed in with google account: {user.displayName}</p>
+              <div className='box-layout__buttons'>
+                <button className='button button-lg' onClick={(e) => {
+                  navigate('/dashboard');
+                }}>Go to dashboard</button>
+                <button className='button button-lg' onClick={(e) => {
+                  auth.userSignOut();
+                }}>Not Me</button>
+              </div>
+            </div>
+          ) : (
+            <div className='box-layout__buttons'>
+              <button className='button button-lg' onClick={(e) => {
+                auth.userSignIn();
+              }}>Login with google</button>
+            </div>
+          )
+        }
+      </div>
     </div>
   );
 };
