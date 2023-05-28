@@ -1,0 +1,31 @@
+.page_header {
+  background: $light-grey;
+  padding: $md-size 0;
+  margin-bottom: $lg-size;
+
+  h1 {
+    margin: 0;
+    font-weight: 300;
+  }
+}
+
+.page_content {
+  padding: $md-size 0;
+  margin-bottom: $lg-size;
+}
+
+.page_footer {
+  background: $light-grey;
+  padding: $md-size 0;
+  margin-bottom: $lg-size;
+
+  h1 {
+    margin: 0;
+    font-weight: 300;
+
+    span {
+      font-weight: 600;
+    }
+  }
+
+}

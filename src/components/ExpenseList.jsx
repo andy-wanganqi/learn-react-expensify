@@ -25,12 +25,11 @@ const ExpenseList = () => {
   return (
     <div>
       <h1>Expense List</h1>
+      <ExpenseListFilters />
       <div>
       {
         (selectedExpenses && selectedExpenses.length > 0) ? (
           <div>
-            <div>Filters</div>
-            <ExpenseListFilters />
             <ul>
               {selectedExpenses.map((expense) => (
                 <li key={expense.id}>
