@@ -11,9 +11,6 @@ import filters from '../fixtures/filters.js';
 import { renderWith } from '../utils.js';
 
 describe('ExpenseListFilters component tests', () => {
-  beforeAll(() => {
-  })
-  
   it('Should render ExpenseListFilters with filters', async () => {
     renderWith(<ExpenseListFilters />, {
       preloadedState: {

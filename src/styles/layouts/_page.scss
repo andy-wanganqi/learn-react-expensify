@@ -1,7 +1,7 @@
 .page_header {
   background: $light-grey;
-  padding: $md-size 0;
-  margin-bottom: $lg-size;
+  padding: $lg-size 0;
+  margin-bottom: $sm-size;
 
   h1 {
     margin: 0;
@@ -11,13 +11,13 @@
 
 .page_content {
   padding: $md-size 0;
-  margin-bottom: $lg-size;
+  margin-bottom: $md-size;
 }
 
 .page_footer {
   background: $light-grey;
   padding: $md-size 0;
-  margin-bottom: $lg-size;
+  margin-bottom: $sm-size;
 
   h1 {
     margin: 0;

@@ -1,5 +1,11 @@
 .textfield {
-  // height: $md-size;
   padding: $xs-size;
-  margin: 0 $sm-size $sm-size 0
+
+  @media (max-width: $desktop-breakpoint) {
+    width: 90%;
+  }
+}
+
+.date-picker-wrapper-patch {
+  width: 23rem;
 }

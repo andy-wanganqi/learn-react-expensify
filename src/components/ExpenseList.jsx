@@ -23,10 +23,8 @@ const ExpenseList = () => {
   }, [user]);
 
   return (
-    <div>
-      <h1>Expense List</h1>
+    <>
       <ExpenseListFilters />
-      <div>
       {
         (selectedExpenses && selectedExpenses.length > 0) ? (
           <div>
@@ -45,8 +43,7 @@ const ExpenseList = () => {
           </div>
         )
       }
-      </div>
-    </div>
+    </>
   )
 };
 
