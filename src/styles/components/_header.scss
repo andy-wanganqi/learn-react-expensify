@@ -11,6 +11,12 @@
   }
 }
 
+.header__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .header--button {
   font-weight: 300;
   border: none;
@@ -22,13 +28,6 @@
   text-decoration: none; /* Remove default A tag decoration */
 }
 
-.header__content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  // padding: $sm-size 0;
-}
-
 .header__actions {
   color: white;
   margin: 0;
@@ -36,4 +35,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: $desktop-breakpoint) {
+    flex-direction: column;
+    margin: 0 0 $sm-size 0;
+  }
+}
+
+.header__action {
+  @media (max-width: $desktop-breakpoint) {
+    margin: $sm-size 0 0 0;
+    padding: 0;
+  }
 }
