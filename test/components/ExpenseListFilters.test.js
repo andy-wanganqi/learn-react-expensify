@@ -33,10 +33,10 @@ describe('ExpenseListFilters component tests', () => {
       withProvider: true,
     });
     const user = userEvent.setup();
-    const textField = screen.getByPlaceholderText(/Search expenses/i);
-    await user.type(textField, '123');
+    const textInput = screen.getByPlaceholderText(/Search expenses/i);
+    await user.type(textInput, '123');
     const expectText = filters.text + '123';
-    expect(textField).toHaveValue(expectText);
+    expect(textInput).toHaveValue(expectText);
     expect(store.getState().filters.text).toBe(expectText);
   });
 

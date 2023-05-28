@@ -1,0 +1,24 @@
+.common-input {
+  padding: $xs-size;
+  border: 1px solid #cacccd;
+  font-size: $font-size-lg;
+  font-weight: 300;
+  height: $xl-size;
+
+  @media (max-width: $desktop-breakpoint) {
+    width: 100%;
+  }
+}
+
+.text-input {
+  @extend .common-input;
+}
+
+.select {
+  @extend .common-input;
+}
+
+.textarea {
+  @extend .common-input;
+  height: $xl-size * 3;
+}

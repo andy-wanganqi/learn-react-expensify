@@ -25,19 +25,22 @@ jest.mock('react-router-dom', () => {
 
 describe('EditExpensePage tests', () => {
   let updateExpenseStub;
+  let readExpenseStub;
   let deleteExpenseStub;
 
   beforeEach(() => {
     updateExpenseStub = sinon.stub(db, 'updateExpense');
+    readExpenseStub = sinon.stub(db, 'readExpense');
     deleteExpenseStub = sinon.stub(db, 'deleteExpense');
   });
 
   afterEach(() => {
     updateExpenseStub.restore();
+    readExpenseStub.restore();
     deleteExpenseStub.restore();
   });
 
-  it('Should render EditExpensePage', async () => {
+  it('Should render EditExpensePage (with expense array)', async () => {
     useParams.mockReturnValue({ id: expenses[2].id });
 
     renderWith(<EditExpensePage />, {
@@ -48,17 +51,57 @@ describe('EditExpensePage tests', () => {
       withProvider: true,
       withRouter: true,
     });
-    expect(screen.queryByText(/Edit Expense Page/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Edit Expense/i)).toBeInTheDocument();
   });
 
-  it('Should handle save existing expense', async () => {
+  it('Should render EditExpensePage when expense exists (without expense array)', async () => {
+    useParams.mockReturnValue({ id: expenses[2].id });
+    readExpenseStub.callsFake(async (uid, expenseId) => {
+      return expenses[2];
+    });
+
+    renderWith(<EditExpensePage />, {
+      preloadedState: {
+        filters: {},
+        expenses: [],
+      },
+      withProvider: true,
+      withRouter: true,
+    });
+    waitFor(() => {
+      expect(screen.queryByText(/Edit Expense/i)).toBeInTheDocument();
+    });
+  });
+
+  it('Should navigate when expense does not exist (without expense array)', async () => {
+    useParams.mockReturnValue({ id: '123' });
+    readExpenseStub.callsFake(async (uid, expenseId) => {
+      console.log('return null');
+      return null;
+    });
+    renderWith(<EditExpensePage />, {
+      preloadedState: {
+        filters: {},
+        expenses: [],
+      },
+      withProvider: true,
+      withRouter: true,
+    });
+
+    waitFor(() => {
+      const navigate = useNavigate();
+      expect(navigate).toHaveBeenLastCalledWith('/dashboard');
+    });
+  });
+
+  it('Should handle save existing expense (with expense array)', async () => {
+    const index = 2;
+    useParams.mockReturnValue({ id: expenses[index].id });
     let mockDbExpense = undefined;
     updateExpenseStub.callsFake(async (uid, expense) => {
       mockDbExpense = expense;
     });
 
-    const index = 2;
-    useParams.mockReturnValue({ id: expenses[index].id });
     const { store } = renderWith(<EditExpensePage />, {
       preloadedState: {
         filters: {},
@@ -83,7 +126,7 @@ describe('EditExpensePage tests', () => {
     });
   });
 
-  it('Should navigate when expense does not exist', async () => {
+  it('Should navigate when expense does not exist (with expense array)', async () => {
     useParams.mockReturnValue({ id: '123' });
     renderWith(<EditExpensePage />, {
       preloadedState: {
@@ -98,14 +141,14 @@ describe('EditExpensePage tests', () => {
     expect(navigate).toHaveBeenLastCalledWith('/dashboard');
   });
 
-  it('Should handle remove existing expense', async () => {
+  it('Should handle remove existing expense (with expense array)', async () => {
+    const index = 2;
+    useParams.mockReturnValue({ id: expenses[index].id });
     let mockDeletedId = undefined;
     deleteExpenseStub.callsFake(async (uid, expenseId) => {
       mockDeletedId = expenseId;
     });
 
-    const index = 2;
-    useParams.mockReturnValue({ id: expenses[index].id });
     const { store } = renderWith(<EditExpensePage />, {
       preloadedState: {
         filters: {},

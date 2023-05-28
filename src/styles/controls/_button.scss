@@ -3,10 +3,14 @@
   border: none;
   background: $sky-blue;
   color: white;
-  margin: $sm-size;
   padding: $sm-size;
   line-height: 1;
   text-decoration: none;
+
+  @media (max-width: $desktop-breakpoint) {
+    width: 100%;
+    margin: 0;
+  }
 }
 
 .button-md {
@@ -19,4 +23,9 @@
 
 .button-pull-left {
   margin-left: 0;
+}
+
+.button-warning {
+  background-color: $warn-yellow;
+  color: $dark-blue;
 }
