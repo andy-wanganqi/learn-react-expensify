@@ -1,19 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import DatePicker from "react-datepicker";
-import { formatAmount } from '../utils/amountConvert';
+
+const initExpense = {
+  id: '',
+  description: '',
+  amountText: '',
+  note: '',
+  createdAt: moment().startOf('day').valueOf(),
+};
 
 const ExpenseForm = (props) => {
   const { expense } = props;
-  const initExpense = {
-    id: expense ? expense.id : undefined,
-    description: expense ? expense.description : '',
-    amountText: expense ? (parseFloat(expense.amount) / 100).toString() : '',
-    note: expense ? expense.note : '',
-    createdAt: expense ? expense.createdAt : moment().startOf('day').valueOf(),
-  };
   const [expenseInForm, setExpense] = useState(initExpense);
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    const parsedExpense = {
+      id: expense ? expense.id : '',
+      description: expense ? expense.description : '',
+      amountText: expense ? (parseFloat(expense.amount) / 100).toString() : '',
+      note: expense ? expense.note : '',
+      createdAt: expense ? expense.createdAt : moment().startOf('day').valueOf(),
+    };
+    setExpense(parsedExpense);
+  }, [expense]);
 
   const handleDescriptionChange = (e) => {
     const description = e.target.value;
@@ -118,7 +129,7 @@ const ExpenseForm = (props) => {
               ></textarea>
             </div>
           </div>
-          {errorMessage && <p>{errorMessage}</p>}
+          {errorMessage && <p className="form__error">{errorMessage}</p>}
           <div className="form__row">
             <div className="button-group">
               <div className="button-group__item">

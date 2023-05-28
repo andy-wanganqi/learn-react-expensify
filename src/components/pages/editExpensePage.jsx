@@ -1,24 +1,39 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseForm from '../ExpenseForm.jsx';
 import { updateExpense, deleteExpense } from '../../store/slices/expensesSlice.js';
+import db from '../../db';
 
 const EditExpensePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const expenses = useSelector((state) => state.expenses);
+  const [expense, setExpense] = useState();
+
   const params = useParams();
   const { id } = params;
 
-  const expenses = useSelector((state) => state.expenses);
-  const expense = expenses.find(expense => expense.id === id); // TODO: to read expense from db, rather than read expense from store
-
   useEffect(() => {
-    if (!expense) {
-      navigate('/dashboard');
+    async function loadExpense() {
+      const _expense = await db.readExpense(user.uid, id);
+      if (_expense) {
+        setExpense(_expense);
+      } else {
+        navigate('/dashboard');
+      }
+    };
+
+    let foundExpense = expenses.find(expense => expense.id === id);
+    if(foundExpense) {
+      setExpense(foundExpense);
+    } else if (user.uid) {
+      loadExpense();
+    } else {
+      // TODO: Show auth
     }
-  }, [expense]);
+  }, [user]);
 
   return (
     <>

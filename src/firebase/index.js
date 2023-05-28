@@ -129,6 +129,24 @@ export const readExpenses = async (uid) => {
   return expenses;
 };
 
+export const readExpense = async (uid, expenseId) => {
+  const db = getDatabase();
+  const dbRef = ref(db, `users/${uid}/expenses/${expenseId}`);
+  const dbQuery = query(dbRef);
+  const snapshot = await get(dbQuery);
+
+  const data = snapshot.val();
+  if (data) {
+    const expense = {
+      ...data,
+      id: snapshot.key,
+    }
+    return expense;
+  } else {
+    return data;
+  }
+};
+
 export const updateExpense = async (uid, expense) => {
   const { description, amount, createdAt, note } = expense;
   return await set(ref(getDatabase(), `users/${uid}/expenses/${expense.id}`), {

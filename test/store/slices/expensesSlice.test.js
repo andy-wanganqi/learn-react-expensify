@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 import reducer, { 
-  addExpense, editExpense, removeExpense, createExpense, readExpenses, updateExpense, deleteExpense
+  addExpense, editExpense, removeExpense, createExpense, readExpenses, readExpense, updateExpense, deleteExpense
 } from '../../../src/store/slices/expensesSlice.js';
 import expenses from '../../fixtures/expenses.js';
 import db from '../../../src/db';
@@ -13,12 +13,14 @@ const mockStore = configureMockStore(middlewares);
 describe('Expenses redux state tests', () => {
   let createExpenseStub;
   let readExpensesStub;
+  let readExpenseStub;
   let updateExpenseStub;
   let deleteExpenseStub;
 
   beforeEach(() => {
     createExpenseStub = sinon.stub(db, 'createExpense');
     readExpensesStub = sinon.stub(db, 'readExpenses');
+    readExpenseStub = sinon.stub(db, 'readExpense');
     updateExpenseStub = sinon.stub(db, 'updateExpense');
     deleteExpenseStub = sinon.stub(db, 'deleteExpense');
   });
@@ -26,6 +28,7 @@ describe('Expenses redux state tests', () => {
   afterEach(() => {
     createExpenseStub.restore();
     readExpensesStub.restore();
+    readExpenseStub.restore();
     updateExpenseStub.restore();
     deleteExpenseStub.restore();
   });  
