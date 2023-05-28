@@ -5,27 +5,26 @@ export const filtersSlice = createSlice({
   name: 'filters',
   initialState: {
     text: '',
+    startDate: null,
+    endDate: null,
     sortBy: 'amount',
-    startDate: moment().startOf('month').valueOf(),
-    endDate: moment().endOf('month').valueOf(),
   },
   reducers: {
     setFilterText: (state, action) => {
       state.text = action.payload;
     },
+    setDateRange: (state, action) => {
+      const { startDate, endDate } = action.payload;
+      state.startDate = startDate;
+      state.endDate = endDate;
+    },
     setSortBy: (state, action) => {
       state.sortBy = action.payload;
-    },
-    setStartDate: (state, action) => {
-      state.startDate = action.payload;
-    },
-    setEndDate: (state, action) => {
-      state.endDate = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setFilterText, setSortBy, setStartDate, setEndDate } = filtersSlice.actions;
+export const { setFilterText, setDateRange, setSortBy } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

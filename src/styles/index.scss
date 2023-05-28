@@ -2,10 +2,11 @@
 @import './base/base';
 
 @import './controls/button';
+@import './controls/textfield';
 
 @import './layouts/container';
 @import './layouts/box-layout';
-@import './layouts/page_header';
-@import './layouts/page_footer';
+@import './layouts/page';
 
 @import './components/header';
+@import './components/expenses-list-filters';

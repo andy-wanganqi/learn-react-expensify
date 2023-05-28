@@ -1,5 +1,5 @@
 export const selectFilteredExpenses = ({ expenses, filters }) => {
-  const { text, sortBy, startDate, endDate } = filters;
+  const { text, startDate, endDate, sortBy } = filters;
   const filteredExpenses = expenses.filter((a) => 
     (!startDate || a.createdAt >= startDate)
     && (!endDate || a.createdAt <= endDate)

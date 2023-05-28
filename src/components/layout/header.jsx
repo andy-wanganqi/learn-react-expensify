@@ -14,8 +14,8 @@ const Header = () => {
             <h1>Expensify</h1>
           </Link>
           <div className='header__actions'>
-            <p>Hello, {user.displayName}</p>
-            <button className='header--button button-lg' onClick={(e) => {
+            <p className='header__action'>Hello, {user.displayName}</p>
+            <button className='header--button button-lg header__action' onClick={(e) => {
               auth.userSignOut();
               navigate('/');
             }}>Logout</button>

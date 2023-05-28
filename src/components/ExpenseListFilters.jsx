@@ -2,53 +2,62 @@ import moment from 'moment';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import DatePicker from "react-datepicker";
-import { setFilterText, setStartDate, setEndDate, setSortBy } from '../store/slices/filtersSlice.js';
+import { setFilterText, setDateRange, setSortBy } from '../store/slices/filtersSlice.js';
 
 const ExpenseListFilters = () => {
-  const filters = useSelector((state) => state.filters);
   const dispatch = useDispatch();
+  const filters = useSelector((state) => state.filters);
+  const { startDate, endDate } = filters;
+  const start = startDate === null ? null : moment(startDate).toDate();
+  const end = endDate === null ? null : moment(endDate).toDate();
+
   return (
-    <div>
-      <div>
-        Filter by: 
-        <input 
-          type="text"
-          placeholder="Text"
-          value={filters.text} 
-          onChange={(e) => {
-            dispatch(setFilterText(e.target.value))
-          }}
-        />
-      </div>
-      <div>Date range: from 
-        <DatePicker showIcon placeholderText='StartDate'
-          selected={moment(filters.startDate).toDate()} 
-          onChange={(date) => {
-            dispatch(setStartDate(moment(date).startOf('day').valueOf()))
-          }} 
-          dateFormat="dd/MM/yyyy"
-        />
-        to 
-        <DatePicker showIcon placeholderText='EndDate' 
-          selected={moment(filters.endDate).toDate()} 
-          onChange={(date) => {
-            dispatch(setEndDate(moment(date).startOf('day').valueOf()))
-          }} 
-          dateFormat="dd/MM/yyyy"
-        />
-      </div>
-      <div>
-        Sort by: {filters.sortBy}
-        <select 
-          value={filters.sortBy} 
-          name='SortBy' placeholder='SortBy'
-          onChange={(e) => {
-            dispatch(setSortBy(e.target.value))
-          }} 
-        >
-          <option value="createdAt">Date</option>
-          <option value="amount">Amount</option>
-        </select>
+    <div className='page_content'>
+      <div className='content-container'>
+        <div className='filter-group'>
+          <div className='filter-group__item'>
+            <input className='textfield' 
+              type="text"
+              placeholder="Search expenses"
+              value={filters.text} 
+              onChange={(e) => {
+                dispatch(setFilterText(e.target.value))
+              }}
+            />
+          </div>
+          <div className='filter-group__item date-picker-wrapper-patch'>
+            <DatePicker 
+              className='textfield'
+              placeholderText='Select date range' 
+              isClearable
+              dateFormat="dd/MM/yyyy" 
+              selectsRange={true}
+              startDate={start}
+              endDate={end}
+              onChange={(update) => {
+                const [ start, end ] = update;
+                const startDate = start === null ? null : moment(start).valueOf();
+                const endDate = end === null ? null : moment(end).valueOf();
+                dispatch(setDateRange({
+                  startDate,
+                  endDate,
+                }))
+              }}
+            />  
+          </div>
+          <div className='filter-group__item'>
+            <select className='textfield'
+              value={filters.sortBy} 
+              name='SortBy' placeholder='SortBy'
+              onChange={(e) => {
+                dispatch(setSortBy(e.target.value))
+              }} 
+            >
+              <option value="createdAt">Date</option>
+              <option value="amount">Amount</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   );
