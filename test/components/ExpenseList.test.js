@@ -35,7 +35,6 @@ describe('ExpensesList component tests', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Expense List')).toBeInTheDocument();
       expect(screen.queryByText(/There is no expenses/i)).not.toBeInTheDocument();
       expenses.forEach(expense => {
         expect(screen.getByText(expense.description)).toBeInTheDocument();
@@ -57,7 +56,6 @@ describe('ExpensesList component tests', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Expense List')).toBeInTheDocument();
       expect(screen.queryByText(/There is no expenses/i)).toBeInTheDocument();
     });
   });

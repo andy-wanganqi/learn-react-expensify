@@ -7,6 +7,11 @@
   padding: $sm-size;
   line-height: 1;
   text-decoration: none;
+
+  @media (max-width: $desktop-breakpoint) {
+    width: 100%;
+    margin: 0;
+  }
 }
 
 .button-md {

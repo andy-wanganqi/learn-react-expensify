@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import moment from "moment";
 import DatePicker from "react-datepicker";
+import { formatAmount } from '../utils/amountConvert';
 
 const ExpenseForm = (props) => {
   const { expense } = props;
@@ -73,25 +74,61 @@ const ExpenseForm = (props) => {
 
   return (
     <div>
-      <form>
-        <input type="text" name="description" placeholder="Description" autoFocus 
-          value={expenseInForm.description}
-          onChange={handleDescriptionChange}
-        />
-        <input type="text" name="amount" placeholder="Amount" step="100" 
-          value={expenseInForm.amountText}
-          onChange={handleAmountChange}
-        />
-        <textarea placeholder="Note (optional)"
-          value={expenseInForm.note}
-          onChange={handleNoteChange}
-        ></textarea>
-        <DatePicker showIcon placeholderText="Created At"
-          selected={moment(expenseInForm.createdAt).toDate()} 
-          onChange={(date) => handleDateChange(date)} dateFormat="dd/MM/yyyy"
-        />
-        <button onClick={handleSaveExpense}>Save Expense</button>
-        {expenseInForm.id && <button onClick={handleRemoveExpense}>Remove Expense</button>}
+      <form className="field-group">
+        <div className="field-group__item">
+          <input 
+            type="text" 
+            name="description" 
+            placeholder="Description" 
+            autoFocus 
+            className="text-input"
+            value={expenseInForm.description}
+            onChange={handleDescriptionChange}
+          />
+        </div>
+        <div className="field-group__item">
+          <input 
+            type="text" name="amount" 
+            placeholder="Amount" 
+            step="100" 
+            className="text-input"
+            value={expenseInForm.amountText}
+            onChange={handleAmountChange}
+          />
+        </div>
+        <div className="field-group__item">
+          <DatePicker placeholderText="Created At"
+            className="text-input"
+            selected={moment(expenseInForm.createdAt).toDate()} 
+            onChange={(date) => handleDateChange(date)} dateFormat="dd/MM/yyyy"
+          />
+        </div>
+        <div className="field-group__item">
+          <textarea 
+            className="textarea"
+            placeholder="Note (optional)"
+            value={expenseInForm.note}
+            onChange={handleNoteChange}
+          ></textarea>
+        </div>
+        <div className="field-group__item ">
+          <div className="button-group">
+            <div className="button-group__item">
+              <button 
+                className="button"
+                onClick={handleSaveExpense}
+              >Save Expense</button>
+            </div>
+            {expenseInForm.id && (
+              <div className="button-group__item">
+                <button 
+                  className="button"
+                  onClick={handleRemoveExpense}
+                >Remove Expense</button>
+              </div>
+            )}
+          </div>
+        </div>
       </form>
       <div>
         {errorMessage && <p>{errorMessage}</p>}

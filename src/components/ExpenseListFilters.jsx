@@ -14,9 +14,9 @@ const ExpenseListFilters = () => {
   return (
     <div className='page_content'>
       <div className='content-container'>
-        <div className='filter-group'>
-          <div className='filter-group__item'>
-            <input className='textfield' 
+        <div className='field-group'>
+          <div className='field-group__item'>
+            <input className='text-input' 
               type="text"
               placeholder="Search expenses"
               value={filters.text} 
@@ -25,9 +25,9 @@ const ExpenseListFilters = () => {
               }}
             />
           </div>
-          <div className='filter-group__item date-picker-wrapper-patch'>
+          <div className='field-group__item date-picker-wrapper-patch'>
             <DatePicker 
-              className='textfield'
+              className='text-input'
               placeholderText='Select date range' 
               isClearable
               dateFormat="dd/MM/yyyy" 
@@ -45,8 +45,8 @@ const ExpenseListFilters = () => {
               }}
             />  
           </div>
-          <div className='filter-group__item'>
-            <select className='textfield'
+          <div className='field-group__item'>
+            <select className='select'
               value={filters.sortBy} 
               name='SortBy' placeholder='SortBy'
               onChange={(e) => {
