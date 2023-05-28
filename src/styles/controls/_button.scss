@@ -3,7 +3,6 @@
   border: none;
   background: $sky-blue;
   color: white;
-  margin: $sm-size;
   padding: $sm-size;
   line-height: 1;
   text-decoration: none;
@@ -24,4 +23,9 @@
 
 .button-pull-left {
   margin-left: 0;
+}
+
+.button-warning {
+  background-color: $warn-yellow;
+  color: $dark-blue;
 }

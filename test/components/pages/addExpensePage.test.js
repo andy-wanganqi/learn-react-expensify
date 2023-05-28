@@ -34,7 +34,7 @@ describe('AddExpensePage tests', () => {
       withProvider: true,
       withRouter: true,
     });
-    expect(screen.queryByText(/Add Expense Page/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Add Expense/i)).toBeInTheDocument();
   });
 
   it('Should handle save new expense', async () => {

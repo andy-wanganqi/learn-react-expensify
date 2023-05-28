@@ -73,65 +73,71 @@ const ExpenseForm = (props) => {
   };
 
   return (
-    <div>
-      <form className="field-group">
-        <div className="field-group__item">
-          <input 
-            type="text" 
-            name="description" 
-            placeholder="Description" 
-            autoFocus 
-            className="text-input"
-            value={expenseInForm.description}
-            onChange={handleDescriptionChange}
-          />
-        </div>
-        <div className="field-group__item">
-          <input 
-            type="text" name="amount" 
-            placeholder="Amount" 
-            step="100" 
-            className="text-input"
-            value={expenseInForm.amountText}
-            onChange={handleAmountChange}
-          />
-        </div>
-        <div className="field-group__item">
-          <DatePicker placeholderText="Created At"
-            className="text-input"
-            selected={moment(expenseInForm.createdAt).toDate()} 
-            onChange={(date) => handleDateChange(date)} dateFormat="dd/MM/yyyy"
-          />
-        </div>
-        <div className="field-group__item">
-          <textarea 
-            className="textarea"
-            placeholder="Note (optional)"
-            value={expenseInForm.note}
-            onChange={handleNoteChange}
-          ></textarea>
-        </div>
-        <div className="field-group__item ">
-          <div className="button-group">
-            <div className="button-group__item">
-              <button 
-                className="button"
-                onClick={handleSaveExpense}
-              >Save Expense</button>
+    <div className='page_content'>
+      <div className='content-container'>
+        <form className="form">
+          <div className="form__row">
+            <div className="form__field">
+              <input 
+                type="text" 
+                name="description" 
+                placeholder="Description" 
+                autoFocus 
+                className="text-input fill"
+                value={expenseInForm.description}
+                onChange={handleDescriptionChange}
+              />
             </div>
-            {expenseInForm.id && (
+          </div>
+          <div className="form__row">
+            <div className="form__field">
+              <input 
+                type="text" name="amount" 
+                placeholder="Amount" 
+                step="100" 
+                className="text-input fill"
+                value={expenseInForm.amountText}
+                onChange={handleAmountChange}
+              />
+            </div>
+            <div className="form__field">
+              <DatePicker placeholderText="Created At"
+                className="text-input fill"
+                selected={moment(expenseInForm.createdAt).toDate()} 
+                onChange={(date) => handleDateChange(date)} dateFormat="dd/MM/yyyy"
+              />
+            </div>
+          </div>
+          <div className="form__row">
+            <div className="form__field">
+              <textarea 
+                className="textarea fill"
+                placeholder="Note (optional)"
+                value={expenseInForm.note}
+                onChange={handleNoteChange}
+              ></textarea>
+            </div>
+          </div>
+          {errorMessage && <p>{errorMessage}</p>}
+          <div className="form__row">
+            <div className="button-group">
               <div className="button-group__item">
                 <button 
                   className="button"
-                  onClick={handleRemoveExpense}
-                >Remove Expense</button>
+                  onClick={handleSaveExpense}
+                >Save Expense</button>
               </div>
-            )}
+              {expenseInForm.id && (
+                <div className="button-group__item">
+                  <button 
+                    className="button button-warning"
+                    onClick={handleRemoveExpense}
+                  >Remove Expense</button>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </form>
-      <div>
-        {errorMessage && <p>{errorMessage}</p>}
+        </form>
       </div>
     </div>
   );

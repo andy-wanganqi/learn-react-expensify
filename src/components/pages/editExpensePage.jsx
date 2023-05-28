@@ -21,8 +21,12 @@ const EditExpensePage = () => {
   }, [expense]);
 
   return (
-    <div>
-      <h1>Edit Expense Page</h1>
+    <>
+      <div className="page_header">
+        <div className="content-container">
+          <h1>Edit Expense</h1>
+        </div>
+      </div>
       <ExpenseForm 
         expense={expense}
         handleSaveExpense={(updatedExpense) => {
@@ -45,7 +49,7 @@ const EditExpensePage = () => {
           navigate('/dashboard');
         }}
       />
-    </div>
+    </>
   );
 };
 

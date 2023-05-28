@@ -1,0 +1,32 @@
+.form {
+
+}
+
+.form__row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: $md-size;
+
+  @media (max-width: $desktop-breakpoint) {
+    margin-bottom: $sm-size;
+    width: 100%;
+  }
+}
+
+.form__field {
+  margin-right: $sm-size;
+  width: 100%;
+
+  .fill {
+    width: 100%;
+  }
+
+  @media (max-width: $desktop-breakpoint) {
+  }
+}
+
+.form__error {
+  margin: 0 0 $md-size 0;
+  font-style: italic;
+  color: red;
+}

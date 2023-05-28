@@ -1,6 +1,6 @@
 .field-group {
   display: flex;
-  justify-content: left;
+  flex-direction: row;
   margin-bottom: $md-size;
 
   @media (max-width: $desktop-breakpoint) {
@@ -23,7 +23,6 @@
   display: flex;
   justify-content: left;
   margin-bottom: $md-size;
-  padding-left: $sm-size;
 
   @media (max-width: $desktop-breakpoint) {
     flex-direction: row;

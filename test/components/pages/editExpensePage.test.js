@@ -48,7 +48,7 @@ describe('EditExpensePage tests', () => {
       withProvider: true,
       withRouter: true,
     });
-    expect(screen.queryByText(/Edit Expense Page/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Edit Expense/i)).toBeInTheDocument();
   });
 
   it('Should handle save existing expense', async () => {

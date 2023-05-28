@@ -27,7 +27,7 @@ const ExpenseList = () => {
       <ExpenseListFilters />
       {
         (selectedExpenses && selectedExpenses.length > 0) ? (
-          <div>
+          <>
             <ul>
               {selectedExpenses.map((expense) => (
                 <li key={expense.id}>
@@ -36,11 +36,11 @@ const ExpenseList = () => {
               ))}
             </ul>
             <ExpenseSummary />
-          </div>
+          </>
         ) : (
-          <div>
+          <>
             <p>There is no expenses.</p>
-          </div>
+          </>
         )
       }
     </>

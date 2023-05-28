@@ -11,8 +11,12 @@ const AddExpensePage = () => {
   const user = useSelector((state) => state.user);
 
   return (
-    <div>
-      <h1>Add Expense Page</h1>
+    <>
+      <div className="page_header">
+        <div className="content-container">
+          <h1>Add Expense</h1>
+        </div>
+      </div>
       <ExpenseForm 
         handleSaveExpense={(expense) => {
           const action = createExpense({
@@ -26,7 +30,7 @@ const AddExpensePage = () => {
           navigate('/dashboard');
         }}
       />
-    </div>
+    </>
   );
 };
 
