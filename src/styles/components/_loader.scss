@@ -10,4 +10,8 @@
 .loader__image {
   height: 6rem;
   width: 6rem;
+
+  background: url('/src/assets/loader.gif');
+  background-size: cover;
+  overflow: hidden;
 }

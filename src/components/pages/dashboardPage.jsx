@@ -4,12 +4,20 @@ import { selectFilteredExpenses } from '../../store/selectors/expenses.js';
 import { Link } from 'react-router-dom';
 import ExpenseList from '../ExpenseList.jsx';
 import ExpenseSummary from '../ExpenseSummary.jsx';
+import LoadingPage from './LoadingPage.jsx';
 
 // TODO: This page should be renamed as ExpenseManager
 const DashboardPage = () => {
+  const user = useSelector((state) => state.user);
   const expenses = useSelector((state) => state.expenses);
   const filters = useSelector((state) => state.filters);
   const selectedExpenses = selectFilteredExpenses({ expenses, filters });
+  
+  if (user.__authentication === undefined) {
+    return (
+      <LoadingPage />
+    )
+  } 
   
   return (
     <>

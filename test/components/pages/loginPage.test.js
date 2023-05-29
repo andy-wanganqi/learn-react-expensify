@@ -39,8 +39,11 @@ describe('LoginPage tests', () => {
       withProvider: true,
       withRouter: true,
     });
-    expect(screen.queryByText(/Expensify/i)).toBeInTheDocument();
-    expect(screen.queryByText(/Login with google/i)).toBeInTheDocument();
+
+    waitFor(() => {
+      expect(screen.queryByText(/Expensify/i)).toBeInTheDocument();
+      expect(screen.queryByText(/Login with google/i)).toBeInTheDocument();
+    });
   });
 
   it('Should render LoginPage when user has signed in', async () => {
@@ -50,8 +53,11 @@ describe('LoginPage tests', () => {
     });
 
     await act(() => store.dispatch(setUser(signedInGoogleUser)));
-    expect(screen.queryByText(/Expensify/i)).toBeInTheDocument();
-    expect(screen.queryByText(/Go to dashboard/i)).toBeInTheDocument();
+
+    waitFor(() => {
+      expect(screen.queryByText(/Expensify/i)).toBeInTheDocument();
+      expect(screen.queryByText(/Go to dashboard/i)).toBeInTheDocument();
+    });
   });
 
   it('Should show signed in content after signed in', async () => {
@@ -62,9 +68,11 @@ describe('LoginPage tests', () => {
     userSignInStub.callsFake(() => {
       act(() => store.dispatch(setUser(signedInGoogleUser)));
     });
+    await act(() => store.dispatch(clearUser()));
 
     const user = userEvent.setup();
     await user.click(screen.getByRole('button', {name: /Login with google/i}));
+
     await waitFor(() => {
       expect(screen.queryByText(/Go to dashboard/i)).toBeInTheDocument();
     });
@@ -82,6 +90,7 @@ describe('LoginPage tests', () => {
 
     const user = userEvent.setup();
     await user.click(screen.getByRole('button', {name: /Not Me/i}));
+
     await waitFor(() => {
       expect(screen.queryByText(/Login with google/i)).toBeInTheDocument();
     });

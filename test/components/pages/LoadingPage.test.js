@@ -13,6 +13,6 @@ describe('LoadingPage tests', () => {
       withProvider: false,
       withRouter: false,
     });
-    expect(screen.queryByRole(/image/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Loading Page/i)).toBeInTheDocument();
   });
 });
