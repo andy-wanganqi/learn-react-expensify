@@ -1,0 +1,17 @@
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.loader__image {
+  height: 6rem;
+  width: 6rem;
+
+  background: url('/src/assets/loader.gif');
+  background-size: cover;
+  overflow: hidden;
+}

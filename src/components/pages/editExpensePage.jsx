@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseForm from '../ExpenseForm.jsx';
+import LoadingPage from './LoadingPage.jsx';
 import { updateExpense, deleteExpense } from '../../store/slices/expensesSlice.js';
-import db from '../../db';
+import db from '../../db/index.js';
 
 const EditExpensePage = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,12 @@ const EditExpensePage = () => {
     }
   }, [user]);
 
+  if (user.__authentication === undefined || expense === undefined) {
+    return (
+      <LoadingPage />
+    )
+  }
+
   return (
     <>
       <div className="page_header">
@@ -42,28 +49,32 @@ const EditExpensePage = () => {
           <h1>Edit Expense</h1>
         </div>
       </div>
-      <ExpenseForm 
-        expense={expense}
-        handleSaveExpense={(updatedExpense) => {
-          const action = updateExpense({
-            uid: user.uid,
-            expense: {
-              ...updatedExpense,
-              id: expense.id,
-            },
-          });
-          dispatch(action);
-          navigate('/dashboard');
-        }}
-        handleRemoveExpense={() => {
-          const action = deleteExpense({
-            uid: user.uid,
-            expenseId: expense.id,
-          });
-          dispatch(action);
-          navigate('/dashboard');
-        }}
-      />
+      <div className='page_content'>
+        <div className='content-container'>
+          <ExpenseForm 
+            expense={expense}
+            handleSaveExpense={(updatedExpense) => {
+              const action = updateExpense({
+                uid: user.uid,
+                expense: {
+                  ...updatedExpense,
+                  id: expense.id,
+                },
+              });
+              dispatch(action);
+              navigate('/dashboard');
+            }}
+            handleRemoveExpense={() => {
+              const action = deleteExpense({
+                uid: user.uid,
+                expenseId: expense.id,
+              });
+              dispatch(action);
+              navigate('/dashboard');
+            }}
+          />
+        </div>
+      </div>
     </>
   );
 };

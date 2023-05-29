@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectFilteredExpenses } from '../store/selectors/expenses.js';
 import ExpenseListItem from './ExpenseListItem.jsx';
 import ExpenseListFilters from './ExpenseListFilters.jsx';
-import ExpenseSummary from './ExpenseSummary.jsx';
 import { readExpenses } from '../store/slices/expensesSlice.js';
 
 const ExpenseList = () => {
@@ -25,24 +24,43 @@ const ExpenseList = () => {
   return (
     <>
       <ExpenseListFilters />
-      {
-        (selectedExpenses && selectedExpenses.length > 0) ? (
-          <>
-            <ul>
-              {selectedExpenses.map((expense) => (
-                <li key={expense.id}>
-                  <ExpenseListItem expense={expense} />
-                </li>
-              ))}
-            </ul>
-            <ExpenseSummary />
-          </>
-        ) : (
-          <>
-            <p>There is no expenses.</p>
-          </>
-        )
-      }
+      <>
+        <div className='desktop-hide'>
+          <div className='list-header'>
+            <div>Expenses</div>
+          </div>
+          <div className='list-body'>
+            {(selectedExpenses && selectedExpenses.length > 0) ? (
+              selectedExpenses.map((expense) => (
+                <ExpenseListItem key={expense.id} expense={expense} />
+              ))
+            ) : (
+              <div className='list-no-items-row'>
+                  There is no expenses.
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className='desktop-show'>
+          <div className='list-header'>
+            <div>Expense</div>
+            <div>Amount</div>
+          </div>
+          <div className='list-body'>
+            {(selectedExpenses && selectedExpenses.length > 0) ? (
+              selectedExpenses.map((expense) => (
+                <ExpenseListItem key={expense.id} expense={expense} />
+              ))
+            ) : (
+              <div className='list-no-items-row'>
+                  There is no expenses.
+              </div>
+            )}
+          </div>
+        </div>
+      </>
+      
     </>
   )
 };

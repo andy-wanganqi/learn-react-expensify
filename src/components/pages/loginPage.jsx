@@ -1,11 +1,18 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import LoadingPage from './LoadingPage.jsx';
 import auth from '../../auth';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+
+  if (user.__authentication === undefined) {
+    return (
+      <LoadingPage />
+    )
+  }
 
   return (
     <div className="box-layout">
@@ -41,7 +48,7 @@ const LoginPage = () => {
         }
       </div>
     </div>
-  );
+  )
 };
 
 export default LoginPage;

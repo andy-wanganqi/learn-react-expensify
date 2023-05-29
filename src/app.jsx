@@ -10,18 +10,23 @@ import { setUser, clearUser } from './store/slices/userSlice.js';
 import 'normalize.css/normalize.css';
 import "react-datepicker/dist/react-datepicker.css";
 import './styles/index.scss';
-
 moment.locale('en-nz');
-firebase.initialize();
-const store = createStore();
-auth.userAuth(
-  (user) => {
-    store.dispatch(setUser(user));
-  }, 
-  () => {
-    store.dispatch(clearUser());
-  }
-);
+
+const initialize = () => {
+  firebase.initialize();
+  const store = createStore();
+  auth.userAuth(
+    (user) => {
+      store.dispatch(setUser(user));
+    }, 
+    () => {
+      store.dispatch(clearUser());
+    }
+  );
+  return { store };
+}
+
+const { store } = initialize();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

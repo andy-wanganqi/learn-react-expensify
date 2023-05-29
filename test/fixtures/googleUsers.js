@@ -4,6 +4,7 @@ export const signedInGoogleUser = {
   email: 'email1',
   displayName: 'displayName1',
   photoUrl: 'photoUrl1',
+  __authentication: true,
 };
 
 export const signedOutGoogleUser = {
@@ -12,4 +13,5 @@ export const signedOutGoogleUser = {
   email: '',
   displayName: '',
   photoUrl: '',
+  __authentication: false,
 };

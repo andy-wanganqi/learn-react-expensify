@@ -2,14 +2,16 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, waitFor, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import sinon from 'sinon';
-import DashboardPage from '../../../src/components/pages/dashboardPage.jsx';
+import DashboardPage from '../../../src/components/pages/DashboardPage.jsx';
 import expenses from '../../fixtures/expenses.js';
 import filters from '../../fixtures/filters.js';
 import { renderWith } from '../../utils.js';
-import db from '../../../src/db';
+import db from '../../../src/db/index.js';
+import { signedInGoogleUser } from '../../fixtures/googleUsers.js';
+import { setUser } from '../../../src/store/slices/userSlice.js';
 
 describe('DashboardPage tests', () => {
   let readExpensesStub;
@@ -28,7 +30,7 @@ describe('DashboardPage tests', () => {
       return mockDbExpenses;
     });
     
-    renderWith(<DashboardPage />, {
+    const { store } = renderWith(<DashboardPage />, {
       preloadedState: {
         filters,
         expenses
@@ -36,7 +38,11 @@ describe('DashboardPage tests', () => {
       withProvider: true,
       withRouter: true,
     });
-    expect(screen.queryByText(/Add Expense/i)).toBeInTheDocument();
+    await act(() => store.dispatch(setUser(signedInGoogleUser)));
+
+    waitFor(() => {
+      expect(screen.queryByText(/Add Expense/i)).toBeInTheDocument();
+    });
   });
 
 });

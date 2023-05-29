@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import LoginPage from '../components/pages/loginPage.jsx';
-import DashboardPage from '../components/pages/dashboardPage.jsx';
-import AddExpensePage from '../components/pages/addExpensePage.jsx';
-import EditExpensePage from '../components/pages/editExpensePage.jsx';
-import HelpPage from '../components/pages/helpPage.jsx';
-import NotFoundPage from '../components/pages/notFoundPage.jsx';
+import { useSelector } from 'react-redux';
+import LoginPage from '../components/pages/LoginPage.jsx';
+import DashboardPage from '../components/pages/DashboardPage.jsx';
+import AddExpensePage from '../components/pages/AddExpensePage.jsx';
+import EditExpensePage from '../components/pages/EditExpensePage.jsx';
+import NotFoundPage from '../components/pages/NotFoundPage.jsx';
 import PrivateRoute from './privateRoute.jsx';
 import auth from '../auth';
-import Frame from '../components/layout/frame.jsx';
+import Frame from '../components/layout/Frame.jsx';
 
 const AppRouter = () => {
   const user = useSelector((state) => state.user);
@@ -46,7 +45,6 @@ const AppRouter = () => {
             </PrivateRoute>
           }
         />
-        <Route path="/help" element={Frame(<HelpPage />)} />
         <Route path="*" element={Frame(<NotFoundPage />)} />
       </Routes>
     </BrowserRouter>

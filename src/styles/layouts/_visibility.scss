@@ -1,0 +1,11 @@
+.desktop-show {
+  @media (max-width: $desktop-breakpoint) {
+    display: none;
+  }
+}
+
+.desktop-hide {
+  @media (min-width: $desktop-breakpoint) {
+    display: none;
+  }
+}

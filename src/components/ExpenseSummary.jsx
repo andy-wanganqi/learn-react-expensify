@@ -10,12 +10,9 @@ const ExpenseSummary = () => {
   const filteredExpenses = selectFilteredExpenses({ expenses, filters });
   const count = filteredExpenses.length;
   const total = selectTotalAmount({ expenses: filteredExpenses });
+
   return (
-    <div className="page_footer">
-      <div className="content-container">
-        <h1>Viewing <span>{count}</span> expense{count > 1 && 's'} totalling <span>{formatAmount(total)}</span></h1>
-      </div>
-    </div>
+    <h1>Viewing <span>{count}</span> expense{count > 1 && 's'} totalling <span>{formatAmount(total)}</span></h1>
   );
 };
 

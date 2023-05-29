@@ -7,10 +7,10 @@ import { screen, act, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import sinon from 'sinon';
-import EditExpensePage from '../../../src/components/pages/editExpensePage.jsx';
+import EditExpensePage from '../../../src/components/pages/EditExpensePage.jsx';
 import expenses from '../../fixtures/expenses.js';
 import { renderWith } from '../../utils.js';
-import db from '../../../src/db';
+import db from '../../../src/db/index.js';
 import { setUser } from '../../../src/store/slices/userSlice.js';
 import { signedInGoogleUser } from '../../fixtures/googleUsers.js';
 
@@ -43,7 +43,7 @@ describe('EditExpensePage tests', () => {
   it('Should render EditExpensePage (with expense array)', async () => {
     useParams.mockReturnValue({ id: expenses[2].id });
 
-    renderWith(<EditExpensePage />, {
+    const { store } = renderWith(<EditExpensePage />, {
       preloadedState: {
         filters: {},
         expenses
@@ -51,7 +51,11 @@ describe('EditExpensePage tests', () => {
       withProvider: true,
       withRouter: true,
     });
-    expect(screen.queryByText(/Edit Expense/i)).toBeInTheDocument();
+    await act(() => store.dispatch(setUser(signedInGoogleUser)));
+
+    waitFor(() => {
+      expect(screen.queryByText(/Edit Expense/i)).toBeInTheDocument();
+    });
   });
 
   it('Should render EditExpensePage when expense exists (without expense array)', async () => {
@@ -60,7 +64,7 @@ describe('EditExpensePage tests', () => {
       return expenses[2];
     });
 
-    renderWith(<EditExpensePage />, {
+    const { store } = renderWith(<EditExpensePage />, {
       preloadedState: {
         filters: {},
         expenses: [],
@@ -68,6 +72,8 @@ describe('EditExpensePage tests', () => {
       withProvider: true,
       withRouter: true,
     });
+    await act(() => store.dispatch(setUser(signedInGoogleUser)));
+
     waitFor(() => {
       expect(screen.queryByText(/Edit Expense/i)).toBeInTheDocument();
     });
@@ -76,10 +82,9 @@ describe('EditExpensePage tests', () => {
   it('Should navigate when expense does not exist (without expense array)', async () => {
     useParams.mockReturnValue({ id: '123' });
     readExpenseStub.callsFake(async (uid, expenseId) => {
-      console.log('return null');
       return null;
     });
-    renderWith(<EditExpensePage />, {
+    const { store } = renderWith(<EditExpensePage />, {
       preloadedState: {
         filters: {},
         expenses: [],
@@ -87,6 +92,7 @@ describe('EditExpensePage tests', () => {
       withProvider: true,
       withRouter: true,
     });
+    await act(() => store.dispatch(setUser(signedInGoogleUser)));
 
     waitFor(() => {
       const navigate = useNavigate();
@@ -110,6 +116,8 @@ describe('EditExpensePage tests', () => {
       withProvider: true,
       withRouter: true,
     });
+    await act(() => store.dispatch(setUser(signedInGoogleUser)));
+
     const user = userEvent.setup();
     await user.type(screen.getByPlaceholderText('Description', { name: /description/i }), 'CB');
     await user.type(screen.getByPlaceholderText('Amount', { name: /amount/i }), '1');
@@ -128,7 +136,7 @@ describe('EditExpensePage tests', () => {
 
   it('Should navigate when expense does not exist (with expense array)', async () => {
     useParams.mockReturnValue({ id: '123' });
-    renderWith(<EditExpensePage />, {
+    const { store } = renderWith(<EditExpensePage />, {
       preloadedState: {
         filters: {},
         expenses
@@ -136,6 +144,7 @@ describe('EditExpensePage tests', () => {
       withProvider: true,
       withRouter: true,
     });
+    await act(() => store.dispatch(setUser(signedInGoogleUser)));
 
     const navigate = useNavigate();
     expect(navigate).toHaveBeenLastCalledWith('/dashboard');

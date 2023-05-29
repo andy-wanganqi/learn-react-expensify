@@ -39,3 +39,12 @@
     margin-bottom: $sm-size;
   }
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  margin-right: $lg-size;
+}

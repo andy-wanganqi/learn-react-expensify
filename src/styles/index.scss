@@ -7,8 +7,11 @@
 @import './controls/input';
 
 @import './layouts/container';
-@import './layouts/page';
 @import './layouts/group';
+@import './layouts/list';
+@import './layouts/page';
+@import './layouts/visibility';
 
 @import './components/header';
 @import './components/login-page';
+@import './components/loader';
