@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectFilteredExpenses } from '../store/selectors/expenses.js';
 import ExpenseListItem from './ExpenseListItem.jsx';
 import ExpenseListFilters from './ExpenseListFilters.jsx';
-import ExpenseSummary from './ExpenseSummary.jsx';
 import { readExpenses } from '../store/slices/expensesSlice.js';
 
 const ExpenseList = () => {
@@ -35,7 +34,6 @@ const ExpenseList = () => {
                 </li>
               ))}
             </ul>
-            <ExpenseSummary />
           </>
         ) : (
           <>

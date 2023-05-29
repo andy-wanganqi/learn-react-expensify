@@ -42,28 +42,32 @@ const EditExpensePage = () => {
           <h1>Edit Expense</h1>
         </div>
       </div>
-      <ExpenseForm 
-        expense={expense}
-        handleSaveExpense={(updatedExpense) => {
-          const action = updateExpense({
-            uid: user.uid,
-            expense: {
-              ...updatedExpense,
-              id: expense.id,
-            },
-          });
-          dispatch(action);
-          navigate('/dashboard');
-        }}
-        handleRemoveExpense={() => {
-          const action = deleteExpense({
-            uid: user.uid,
-            expenseId: expense.id,
-          });
-          dispatch(action);
-          navigate('/dashboard');
-        }}
-      />
+      <div className='page_content'>
+        <div className='content-container'>
+          <ExpenseForm 
+            expense={expense}
+            handleSaveExpense={(updatedExpense) => {
+              const action = updateExpense({
+                uid: user.uid,
+                expense: {
+                  ...updatedExpense,
+                  id: expense.id,
+                },
+              });
+              dispatch(action);
+              navigate('/dashboard');
+            }}
+            handleRemoveExpense={() => {
+              const action = deleteExpense({
+                uid: user.uid,
+                expenseId: expense.id,
+              });
+              dispatch(action);
+              navigate('/dashboard');
+            }}
+          />
+        </div>
+      </div>
     </>
   );
 };

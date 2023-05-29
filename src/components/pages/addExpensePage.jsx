@@ -17,19 +17,23 @@ const AddExpensePage = () => {
           <h1>Add Expense</h1>
         </div>
       </div>
-      <ExpenseForm 
-        handleSaveExpense={(expense) => {
-          const action = createExpense({
-            uid: user.uid,
-            expense: {
-              ...expense,
-              id: uuid(),
-            },
-          });
-          dispatch(action);
-          navigate('/dashboard');
-        }}
-      />
+      <div className='page_content'>
+        <div className='content-container'>
+          <ExpenseForm 
+            handleSaveExpense={(expense) => {
+              const action = createExpense({
+                uid: user.uid,
+                expense: {
+                  ...expense,
+                  id: uuid(),
+                },
+              });
+              dispatch(action);
+              navigate('/dashboard');
+            }}
+          />
+        </div>
+      </div>
     </>
   );
 };
