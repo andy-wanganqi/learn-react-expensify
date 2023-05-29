@@ -7,10 +7,10 @@ import { screen, act, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import sinon from 'sinon';
-import EditExpensePage from '../../../src/components/pages/editExpensePage.jsx';
+import EditExpensePage from '../../../src/components/pages/EditExpensePage.jsx';
 import expenses from '../../fixtures/expenses.js';
 import { renderWith } from '../../utils.js';
-import db from '../../../src/db';
+import db from '../../../src/db/index.js';
 import { setUser } from '../../../src/store/slices/userSlice.js';
 import { signedInGoogleUser } from '../../fixtures/googleUsers.js';
 

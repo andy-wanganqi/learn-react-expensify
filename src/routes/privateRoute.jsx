@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import Frame from '../components/layout/frame.jsx';
+import Frame from '../components/layout/Frame.jsx';
 
 const PrivateRoute = ({
   isAllowed,

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseForm from '../ExpenseForm.jsx';
 import { updateExpense, deleteExpense } from '../../store/slices/expensesSlice.js';
-import db from '../../db';
+import db from '../../db/index.js';
 
 const EditExpensePage = () => {
   const dispatch = useDispatch();

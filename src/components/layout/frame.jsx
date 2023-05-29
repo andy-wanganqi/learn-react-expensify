@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './header.jsx';
+import Header from './Header.jsx';
 
 const Frame = (Page) => (
   <div>

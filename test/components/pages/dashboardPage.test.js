@@ -5,11 +5,11 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import sinon from 'sinon';
-import DashboardPage from '../../../src/components/pages/dashboardPage.jsx';
+import DashboardPage from '../../../src/components/pages/DashboardPage.jsx';
 import expenses from '../../fixtures/expenses.js';
 import filters from '../../fixtures/filters.js';
 import { renderWith } from '../../utils.js';
-import db from '../../../src/db';
+import db from '../../../src/db/index.js';
 
 describe('DashboardPage tests', () => {
   let readExpensesStub;

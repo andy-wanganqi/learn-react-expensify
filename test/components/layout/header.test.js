@@ -7,9 +7,9 @@ import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import sinon from 'sinon';
-import Header from '../../../src/components/layout/header.jsx';
+import Header from '../../../src/components/layout/Header.jsx';
 import { renderWith } from '../../utils.js';
-import auth from '../../../src/auth';
+import auth from '../../../src/auth/index.js';
 
 jest.mock('react-router-dom', () => {
   const mockNavigate = jest.fn();

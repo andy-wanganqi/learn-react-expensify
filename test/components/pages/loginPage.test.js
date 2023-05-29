@@ -6,9 +6,9 @@ import { screen, waitFor, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import sinon from 'sinon';
-import LoginPage from '../../../src/components/pages/loginPage.jsx';
+import LoginPage from '../../../src/components/pages/LoginPage.jsx';
 import { renderWith } from '../../utils.js';
-import auth from '../../../src/auth';
+import auth from '../../../src/auth/index.js';
 import { signedInGoogleUser } from '../../fixtures/googleUsers.js';
 import { setUser, clearUser } from '../../../src/store/slices/userSlice.js';
 
