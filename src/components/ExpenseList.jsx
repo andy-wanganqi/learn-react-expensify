@@ -24,23 +24,43 @@ const ExpenseList = () => {
   return (
     <>
       <ExpenseListFilters />
-      {
-        (selectedExpenses && selectedExpenses.length > 0) ? (
-          <>
-            <ul>
-              {selectedExpenses.map((expense) => (
-                <li key={expense.id}>
-                  <ExpenseListItem expense={expense} />
-                </li>
-              ))}
-            </ul>
-          </>
-        ) : (
-          <>
-            <p>There is no expenses.</p>
-          </>
-        )
-      }
+      <>
+        <div className='desktop-hide'>
+          <div className='list-header'>
+            <div>Expenses</div>
+          </div>
+          <div className='list-body'>
+            {(selectedExpenses && selectedExpenses.length > 0) ? (
+              selectedExpenses.map((expense) => (
+                <ExpenseListItem key={expense.id} expense={expense} />
+              ))
+            ) : (
+              <div className='list-no-items-row'>
+                  There is no expenses.
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className='desktop-show'>
+          <div className='list-header'>
+            <div>Expense</div>
+            <div>Amount</div>
+          </div>
+          <div className='list-body'>
+            {(selectedExpenses && selectedExpenses.length > 0) ? (
+              selectedExpenses.map((expense) => (
+                <ExpenseListItem key={expense.id} expense={expense} />
+              ))
+            ) : (
+              <div className='list-no-items-row'>
+                  There is no expenses.
+              </div>
+            )}
+          </div>
+        </div>
+      </>
+      
     </>
   )
 };

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import ExpenseList from '../ExpenseList.jsx';
 import ExpenseSummary from '../ExpenseSummary.jsx';
 
+// TODO: This page should be renamed as ExpenseManager
 const DashboardPage = () => {
   const expenses = useSelector((state) => state.expenses);
   const filters = useSelector((state) => state.filters);

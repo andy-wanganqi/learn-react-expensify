@@ -37,7 +37,8 @@ describe('ExpensesList component tests', () => {
     await waitFor(() => {
       expect(screen.queryByText(/There is no expenses/i)).not.toBeInTheDocument();
       expenses.forEach(expense => {
-        expect(screen.getByText(expense.description)).toBeInTheDocument();
+        const descriptionTags = screen.queryAllByText(expense.description);
+        expect(descriptionTags.length).toBeGreaterThan(0);
       })
     });
   });
@@ -56,7 +57,8 @@ describe('ExpensesList component tests', () => {
     });
 
     await waitFor(() => {
-      expect(screen.queryByText(/There is no expenses/i)).toBeInTheDocument();
+      const noExpensesTags = screen.queryAllByText(/There is no expenses/i);
+      expect(noExpensesTags.length).toBeGreaterThan(0);
     });
   });
 });

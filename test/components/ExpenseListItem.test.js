@@ -18,6 +18,7 @@ describe('ExpenseListItem component tests', () => {
       withProvider: true,
       withRouter: true,
     });
-    expect(screen.queryByText(expenses[2].description)).toBeInTheDocument();
+    const descriptionTags = screen.queryAllByText(expenses[2].description);
+    expect(descriptionTags.length).toBeGreaterThan(0);
   });
 });
