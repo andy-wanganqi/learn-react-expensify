@@ -3,12 +3,19 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseForm from '../ExpenseForm.jsx';
+import LoadingPage from './LoadingPage.jsx';
 import { createExpense } from '../../store/slices/expensesSlice.js';
 
 const AddExpensePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+
+  if (user.__authentication === undefined) {
+    return (
+      <LoadingPage />
+    )
+  }
 
   return (
     <>
