@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseForm from '../ExpenseForm.jsx';
+import LoadingPage from './LoadingPage.jsx';
 import { updateExpense, deleteExpense } from '../../store/slices/expensesSlice.js';
 import db from '../../db/index.js';
 
@@ -34,6 +35,12 @@ const EditExpensePage = () => {
       // TODO: Show auth
     }
   }, [user]);
+
+  if (user.__authentication === undefined || expense === undefined) {
+    return (
+      <LoadingPage />
+    )
+  }
 
   return (
     <>

@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const dist = path.join(__dirname, '../dist');
 
-const assetsExtensions = ['.js', '.css', '.png', '.map'];
+const assetsExtensions = ['.js', '.css', '.png', '.gif', '.map'];
 
 app.use(express.static(dist));
 app.get('*', (req, res) => {
